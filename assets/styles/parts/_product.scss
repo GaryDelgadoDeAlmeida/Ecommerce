@@ -1,0 +1,26 @@
+.product-list {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.product-card {
+    padding: 10px;
+    background-color: var(--c-white);
+
+    .-header {
+        // 
+
+        img {
+            // 
+        }
+    }
+
+    .-content {
+        // 
+
+        .-title {
+            font-size: 700;
+        }
+    }
+}

@@ -1,0 +1,52 @@
+:root {
+    // Palette
+    --c-primary: "";
+    --c-second: "";
+
+    // Primary colors
+    --c-white: #ffffff;
+    --c-lightGray: lightgray;
+    --c-gray: #a9a9a9;
+    --c-silver: #c8c8c8;
+    --c-red: #c00000;
+    --c-darkRed: #8B0000;
+    --c-green: #188038;
+    --c-orange: #ffa500;
+    --c-blue: #2962ff;
+    --c-black: #000000;
+
+    // Specific colors
+}
+
+@mixin tablet {
+    @media screen and (max-width: 991px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin tiny_mobile {
+    @media screen and (max-width: 480px) {
+        @content;
+    }
+}
+
+
+/* ----------------------------------------------- *\
+    Imports
+\* ----------------------------------------------- */
+@import "./parts/site";
+@import "./parts/form";
+@import "./parts/product";
+@import "./parts/pagination";
+@import "./parts/card";
+@import "./parts/button";
+@import "./parts/table";
+@import "./parts/badge";
+@import "./parts/helper";
+@import "./parts/notification";
