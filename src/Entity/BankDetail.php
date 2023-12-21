@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BankDetailRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BankDetailRepository::class)]
@@ -16,6 +17,18 @@ class BankDetail
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $client = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $ownerName = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $expirationDate = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $cardNumber = null;
+
+    #[ORM\Column(length: 3)]
+    private ?string $cvv = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -25,6 +38,66 @@ class BankDetail
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): static
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getOwnerName(): ?string
+    {
+        return $this->ownerName;
+    }
+
+    public function setOwnerName(string $ownerName): static
+    {
+        $this->ownerName = $ownerName;
+
+        return $this;
+    }
+
+    public function getExpirationDate(): ?\DateTimeInterface
+    {
+        return $this->expirationDate;
+    }
+
+    public function setExpirationDate(\DateTimeInterface $expirationDate): static
+    {
+        $this->expirationDate = $expirationDate;
+
+        return $this;
+    }
+
+    public function getCardNumber(): ?string
+    {
+        return $this->cardNumber;
+    }
+
+    public function setCardNumber(string $cardNumber): static
+    {
+        $this->cardNumber = $cardNumber;
+
+        return $this;
+    }
+
+    public function getCvv(): ?string
+    {
+        return $this->cvv;
+    }
+
+    public function setCvv(string $cvv): static
+    {
+        $this->cvv = $cvv;
+
+        return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
@@ -47,18 +120,6 @@ class BankDetail
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): static
-    {
-        $this->client = $client;
 
         return $this;
     }

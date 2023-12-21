@@ -48,7 +48,10 @@ Une fois les fichiers de migration générer, il faut les executer. Pour faire c
     symfony console doctrine:migration:migrate
 ```
 
-## Package
+## Packages
+
+- lexik/jwt-authentication-bundle (pour l'authentification par token. Config voir doc <a href="https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html" target="_blank">LexikJWTAuthenticationBundle</a>) 
+- symfony/webpack-encore-bundle (pour la partie fontend React)
 
 ## Commande
 

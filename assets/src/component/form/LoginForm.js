@@ -7,7 +7,7 @@ export default function Login() {
 
     const [formResponse, setFormResponse] = useState({})
     let credentials = useRef({
-        login: "",
+        email: "",
         password: ""
     })
 
@@ -16,7 +16,7 @@ export default function Login() {
         setFormResponse({})
 
         switch(fieldName) {
-            case "login":
+            case "email":
             case "password":
                 credentials.current = {
                     ...credentials.current,
@@ -36,12 +36,15 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault()
         axios
-            .post(`${window.location.origin}/api/login`, credentials.current)
+            .post(`${window.location.origin}/api/login_check`, credentials.current)
             .then((response) => {
-                console.log(
-                    response,
-                    response.data
-                )
+                /**
+                 * Normally, he should return that object
+                 * {
+                 *      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDMxNTYxNDcsImV4cCI6MTcwMzE1OTc0Nywicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJlbWFpbCI6ImdhcnkuYWxtZWlkYS53b3JrQGdtYWlsLmNvbSJ9.ZPLOmVV1ow87OB12kJDtn9vJESBS1O7jU8mYgoQh2r81X0nBVGpRWgJrZH0IziIGtsf-CHAlyaNsrfZ_GCJDICFRrklHB5waCtTHP3me6tOWpb4h4kPbZGoh1OEyuD0m9Wlp_ZoJPoK2WuM7mB2DYGPzypUr7GzkOMez0s4nOXr4vbHPJ5ZjSk_sPke0R4vJw3KFZOssxn6B_wFPh4KgVAVAMKWDFsvMEkiIh1SzaOeXSTKiT1dxa2NCnk_0eneMGfQqdAx4H78z2jkvpoyUvyGD4vGxCKFTGbYkt4YCGLBvc82B_kQ4AfuHsDMyFhf_1IwBsGtJGkj6DXOdRNMiEQ"
+                 * }
+                 */
+                localStorage.setItem("token", response.data.token)
             })
             .catch(({response}) => {
                 let errorMessage = "An error has been encountered. Please retry more later"
@@ -66,7 +69,7 @@ export default function Login() {
 
             <div className={"form-field"}>
                 <label htmlFor={"email"}>Email</label>
-                <input id={"email"} type={"email"} value={credentials.current.login} onChange={(e) => handleChange(e, "login")} />
+                <input id={"email"} type={"email"} value={credentials.current.login} onChange={(e) => handleChange(e, "email")} />
             </div>
             
             <div className={"form-field"}>

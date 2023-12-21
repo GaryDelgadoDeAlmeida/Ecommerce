@@ -56,3 +56,53 @@
 .p-t-25 {
     padding-top: 25px;
 }
+
+
+/* ----------------------------------------------- *\
+    Display
+\* ----------------------------------------------- */
+.d-col {
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.d-grid {
+    display: grid;
+    grid-gap: 15px;
+
+    &.-col-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    &.-col-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* ----------------------------------------------- *\
+    Gap
+\* ----------------------------------------------- */
+.-g-5 {
+    gap: 5px;
+}
+
+.-g-15 {
+    gap: 15px;
+}
+
+.-g-20 {
+    gap: 20px;
+}
+
+.-g-25 {
+    gap: 25px;
+}
