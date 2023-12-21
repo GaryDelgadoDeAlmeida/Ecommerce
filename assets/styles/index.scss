@@ -18,6 +18,12 @@
     // Specific colors
 }
 
+@mixin desktop {
+    @media screen and (min-width: 992px) {
+        @content;
+    }
+}
+
 @mixin tablet {
     @media screen and (max-width: 991px) {
         @content;
@@ -42,9 +48,9 @@
 \* ----------------------------------------------- */
 @import "./parts/site";
 @import "./parts/form";
-@import "./parts/product";
-@import "./parts/pagination";
 @import "./parts/card";
+@import "./parts/card_product";
+@import "./parts/pagination";
 @import "./parts/button";
 @import "./parts/table";
 @import "./parts/badge";

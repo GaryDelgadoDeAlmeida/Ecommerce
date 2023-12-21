@@ -59,8 +59,24 @@
 
 
 /* ----------------------------------------------- *\
+    Background
+\* ----------------------------------------------- */
+.bg-white {
+    background-color: var(--c-white);
+}
+
+
+/* ----------------------------------------------- *\
     Display
 \* ----------------------------------------------- */
+.d-flex {
+    display: flex;
+
+    .item {
+        flex: 1;
+    }
+}
+
 .d-col {
     gap: 15px;
     display: flex;
@@ -71,12 +87,14 @@
     display: grid;
     grid-gap: 15px;
 
-    &.-col-5 {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
-    &.-col-3 {
-        grid-template-columns: repeat(3, 1fr);
+    @include desktop {
+        &.-col-5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    
+        &.-col-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
 
     @include tablet {

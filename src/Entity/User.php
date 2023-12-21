@@ -180,7 +180,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function isAdmin(): bool {
-        // 
+        $isAdmin = false;
+
+        if(in_array("ROLE_ADMIN", $this->roles)) {
+            $isAdmin = true;
+        }
+
+        return $isAdmin;
     }
 
     /**

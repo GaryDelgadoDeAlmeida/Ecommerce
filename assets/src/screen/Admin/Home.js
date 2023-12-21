@@ -5,7 +5,9 @@ export default function Home() {
 
     return (
         <HeaderAdmin>
-            <h1>HI</h1>
+            <div className={"page-section"}>
+                <h2>Home</h2>
+            </div>
         </HeaderAdmin>
     )
 }

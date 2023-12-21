@@ -12,6 +12,7 @@ import UserHome from "./User/Home";
 
 // Admin
 import AdminHome from "./Admin/Home";
+import AdminProfile from "./Admin/Profile";
 import AdminProduct from "./Admin/Product";
 import AdminOrder from "./Admin/Order";
 import AdminOrderDetail from "./Admin/OrderDetail";
@@ -35,6 +36,7 @@ export default function RouteConfig() {
 
                 {/* Admin */}
                 <Route path={"/admin"} element={<AdminHome />} />
+                <Route path={"/admin/profile"} element={<AdminProfile />} />
                 <Route path={"/admin/product"} element={<AdminProduct />} />
                 <Route path={"/admin/order"} element={<AdminOrder />} />
                 <Route path={"/admin/order/:orderID"} element={<AdminOrderDetail />} />

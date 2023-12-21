@@ -37,7 +37,7 @@ class UserController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-    #[Route('/user', name: 'get_users', methods: ["GET"])]
+    #[Route('/users', name: 'get_users', methods: ["GET"])]
     public function get_users(Request $request): JsonResponse {
         $limit = 20;
         $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? $request->get("offset") : 1;
@@ -63,6 +63,14 @@ class UserController extends AbstractController
         }
 
         return $this->json("Route Under construction", Response::HTTP_OK);
+    }
+
+    #[Route("/profile", name: "get_profile", methods: ["GET"])]
+    public function get_profile(Request $request) : JsonResponse {
+        return $this->json(
+            $this->serializeManager->serializeContent($this->user),
+            Response::HTTP_OK
+        );
     }
 
     #[Route("/user/{userID}", name: "get_user", methods: ["GET"])]

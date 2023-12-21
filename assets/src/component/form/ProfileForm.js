@@ -48,15 +48,32 @@ export default function ProfileForm({user = null}) {
                 </div>
             </div>
             
-            <div className={"form-field"}></div>
+            <div className={"form-field"}>
+                <label htmlFor={"address"}>Address</label>
+                <input id={"address"} type={"text"} maxLength={255} onChange={(e) => handleChange(e, "address")} />
+            </div>
             
-            <div className={"form-field"}></div>
+            <div className={"form-field"}>
+                <label htmlFor={"zip_code"}>Zip code</label>
+                <input id={"zip_code"} type={"text"} maxLength={10} onChange={(e) => handleChange(e, "zip_code")} />
+            </div>
             
-            <div className={"form-field"}></div>
+            <div className={"form-field"}>
+                <label htmlFor={"city"}>City</label>
+                <input type={"text"} maxLength={255} onChange={(e) => handleChange(e, "city")} />
+            </div>
             
-            <div className={"form-field"}></div>
+            <div className={"form-field"}>
+                <label htmlFor={"country"}>Country</label>
+                <select id={"country"} onChange={(e) => handleChange(e, "country")}>
+                    <option value={""}>Select a country</option>
+                </select>
+            </div>
             
-            <div className={"form-field"}></div>
+            <div className={"form-field"}>
+                <label htmlFor={"phone"}>Phone</label>
+                <input id={"phone"} type={"tel"} maxLength={10} onChange={(e) => handleChange(e, "phone")} />
+            </div>
             
             <div className={"form-button"}>
                 <button type={"submit"} className={"btn btn-blue"}>Submit</button>
