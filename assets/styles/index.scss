@@ -5,8 +5,9 @@
 
     // Primary colors
     --c-white: #ffffff;
-    --c-lightGray: lightgray;
+    --c-lightGray: #f2f2f2;
     --c-gray: #a9a9a9;
+    --c-gray85: #d9d9d9;
     --c-silver: #c8c8c8;
     --c-red: #c00000;
     --c-darkRed: #8B0000;
@@ -16,6 +17,11 @@
     --c-black: #000000;
 
     // Specific colors
+}
+
+a, a:hover {
+    color: var(--c-black);
+    text-decoration: none;
 }
 
 @mixin desktop {
@@ -47,6 +53,7 @@
     Imports
 \* ----------------------------------------------- */
 @import "./parts/site";
+@import "./parts/site_admin";
 @import "./parts/form";
 @import "./parts/card";
 @import "./parts/card_product";

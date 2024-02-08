@@ -1,6 +1,9 @@
 # E-commerce
 
-## Contexte
+Application E-Commerce développé avec Symfony / ReactJS.
+
+La finalité du projet est de pouvoir ajouter un nouveau projet (bien fait) dans mon portfolio en ligne : <br/>
+<a href="http://garry-almeida.com/" target="_blank">http://garry-almeida.com/</a>.
 
 ## Installation
 
@@ -50,8 +53,25 @@ Une fois les fichiers de migration générer, il faut les executer. Pour faire c
 
 ## Packages
 
-- lexik/jwt-authentication-bundle (pour l'authentification par token. Config voir doc <a href="https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html" target="_blank">LexikJWTAuthenticationBundle</a>) 
-- symfony/webpack-encore-bundle (pour la partie fontend React)
+
+### Symfony
+
+- lexik/jwt-authentication-bundle
+
+### React
+
+- axios
+- sass
+- sass-loader
+- react-dom
+- react-chartjs-2
+- react-router-dom
+- symfony/webpack-encore-bundle
+
+### Images / SVG
+
+- Fontawesome (<a href="https://fontawesome.com/" target="_blank">https://fontawesome.com/</a>)
+- OnlyWebFonts (<a href="https://www.onlinewebfonts.com/" target="_blank">https://www.onlinewebfonts.com/</a>)
 
 ## Commande
 

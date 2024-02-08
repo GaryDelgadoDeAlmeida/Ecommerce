@@ -24,16 +24,41 @@ class ProductController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    #[Route('/product', name: 'product')]
+    #[Route('/products', name: 'get_products')]
     public function get_products(Request $request): JsonResponse
     {
         $limit = 25;
+        $filters = $request->get("filters", []);
         $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? $request->get("offset") : 1;
+        
+        $products = [];
+        if($filters) {
+            $maxOffset = ceil( $this->productRepository->counttProductsByParamaters($filters) / $limit );
+            $product = $this->productRepository->getProductsByParamaters($filters, $offset, $limit);
+        } else {
+            $maxOffset = ceil( $this->productRepository->countProducts() / $limit );
+            $products = $this->productRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit);
+        }
+
+        return $this->json([
+            "offset" => $offset,
+            "limit" => $limit,
+            "maxOffset" => $maxOffset,
+            "results" => $this->serializeManager->serializeContent(
+                $products
+            )
+        ], Response::HTTP_OK);
+    }
+
+    #[Route("/product/{product_id}", name: "get_product")]
+    public function get_product(int $product_id) : JsonResponse {
+        $product = $this->productRepository->find($product_id);
+        if(!$product) {
+            return $this->json("Product not found", Response::HTTP_NOT_FOUND);
+        }
 
         return $this->json(
-            $this->serializeManager->serializeContent(
-                $this->productRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
-            ), 
+            $this->serializeManager->serializeContent($product), 
             Response::HTTP_OK
         );
     }

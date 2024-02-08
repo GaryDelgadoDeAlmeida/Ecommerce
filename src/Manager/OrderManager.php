@@ -20,6 +20,20 @@ class OrderManager {
     }
 
     /**
+     * @@param array json content (sended json body)
+     * @return array checked fields
+     */
+    public function checkFields(array $jsonContent) : array {
+        $fields = [];
+
+        foreach($jsonContent as $key => $value) {
+            // 
+        }
+
+        return $fields;
+    }
+
+    /**
      * @param User user
      * @param string The status of the order. Normally it will be the 1st step
      * @param string The paid status, if the customer paid his order

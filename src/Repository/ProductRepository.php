@@ -20,29 +20,84 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+    
+    /**
+     * @param array filters
+     * @param int offset
+     * @param int limit
+     */
+    public function getProductsByParamters(array $filters, int $offset, int $limit) {
+        $qb = $this->createQueryBuilder("product");
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        if(empty($filters["search"])) {}
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if(!empty($filters["category"])) {
+            $qb
+                ->leftJoin("product.category", "category")
+                ->andWhere("category.name = :category_name")
+                ->setParameter("category_name", $filters["category"])
+            ;
+        }
+
+        if(!empty($filters["brand"])) {
+            $qb
+                ->leftJoin("product.brand", "brand")
+                ->andWher("brand.name = :brand_name")
+                ->setParameter("brand_name", $filters["brand"])
+            ;
+        }
+
+        if(empty($filters["price"])) {}
+
+        return $qb
+            ->orderBy("product.createdAt", "DESC", "product.name", "ASC")
+            ->setFirstResult(($offset - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function countProducts() {
+        return $this->createQueryBuilder("product")
+            ->select("COUNT(product.id) as nbrProducts")
+            ->getQuery()
+            ->getSingleResult()["nbrProducts"]
+        ;
+    }
+
+    /**
+     * @param array filters
+     * @return int
+     */
+    public function countProductsByParamters(array $filters) {
+        $qb = $this->createQueryBuilder("product")
+            ->select("COUNT(product.id) as nbrProducts")
+        ;
+
+        if(empty($filters["search"])) {}
+
+        if(!empty($filters["category"])) {
+            $qb
+                ->leftJoin("product.category", "category")
+                ->andWhere("category.name = :category_name")
+                ->setParameter("category_name", $filters["category"])
+            ;
+        }
+
+        if(!empty($filters["brand"])) {
+            $qb
+                ->leftJoin("product.brand", "brand")
+                ->andWher("brand.name = :brand_name")
+                ->setParameter("brand_name", $filters["brand"])
+            ;
+        }
+
+        if(empty($filters["price"])) {}
+
+        return $qb
+            ->getQuery()
+            ->getSingleResult()["nbrProducts"]
+        ;
+    }
 }

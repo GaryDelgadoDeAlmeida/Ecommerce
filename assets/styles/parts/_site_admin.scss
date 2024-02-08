@@ -1,86 +1,34 @@
 /* ----------------------------------------------- *\
-    site
+    Site
 \* ----------------------------------------------- */
-html, body, .page {
+.page-admin {
     margin: 0;
     padding: 0;
+    display: flex;
     font-size: .9rem;
-    background-color: var(--c-lightGray);
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--c-lightGray);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
     .page-header {
-        padding: 10px 25px;
+        width: 200px;
         background-color: var(--c-white);
 
-        &.-user {
+        @include tablet {
+            display: none;
+        }
+    }
+
+    .page-content {
+        min-height: 100vh;
+        width: calc(100% - 200px);
+
+        @include tablet {
             width: 100%;
         }
 
-        .header-desktop {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-
-            @include tablet {
-                display: none;
-            }
-
-            .-left {
-                display: flex;
-                margin: auto 0;
-
-                .logo {
-                    width: 50px;
-                }
-            }
-
-            .-center {
-                margin: auto 0;
-                text-align: center;
-
-                .menu {
-                    display: flex;
-
-                    a {
-                        padding: 15px;
-
-                        &:hover {
-                            background-color: var(--c-gray85);
-                            transition: .3s;
-                        }
-                    }
-                }
-            }
-
-            .-right {
-                margin: auto 0;
-            }
-        }
-
-        .header-mobile {
-            display: none;
-
-            @include tablet {
-                display: block;
-            }
-        }
-    }
-    
-    .page-content {
-        width: 100%;
-        min-height: 100vh;
-
-        &.-admin {
-            width: calc(100% - 200px);
-
-            @include tablet {
-                width: 100%;
-            }
-        }
-
+        // CHECK IF NEEDED
         .page-menu {
             margin: 0;
             padding: 0;
@@ -156,6 +104,7 @@ html, body, .page {
                 }
             }
         }
+        // CHECK IF NEEDED
     
         .page-wrapper {
             margin: auto;
@@ -202,10 +151,6 @@ html, body, .page {
             }
         }
 
-        .page-hero {
-            // 
-        }
-
         .page-section {
             padding: 25px 0;
             position: relative;
@@ -221,49 +166,6 @@ html, body, .page {
         .page-button {
             text-align: right;
             padding-top: 15px;
-        }
-    }
-    
-    .page-footer {
-        color: var(--c-black);
-        background-color: var(--c-white);
-
-        .footer-quick-links {
-            padding: 50px 0;
-            border-bottom: 1px solid var(--c-gray85);
-
-            .quick-links-wrapper {
-                margin: auto;
-                padding: 25px 0;
-                max-width: 1250px;
-                width: calc(100% - 60px);
-
-                .links-col {
-                    // 
-
-                    .-header {
-                        font-size: 20px;
-                        font-weight: 600;
-                    }
-
-                    .-content {
-                        gap: 10px;
-                        display: flex;
-                        padding-top: 10px;
-                        flex-direction: column;
-                    }
-                }
-            }
-        }
-
-        .footer-copyright {
-            padding: 30px 0;
-            text-align: center;
-
-            p {
-                margin: 0;
-                padding: 0;
-            }
         }
     }
 }

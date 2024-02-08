@@ -1,11 +1,17 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PrivateRessource(url, useToken = true) {
 
-    const loading = useRef(false)
-    const items = useRef({})
-    const error = useRef({})
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+    let 
+        items = useRef({}),
+        error = useRef({}),
+        storageUser = localStorage.getItem("user"),
+        user = storageUser.length > 0 ? JSON.parse(storageUser) : []
+    ;
     
     let headers = {
         "Content-Type": "application/json",
@@ -13,11 +19,11 @@ export default function PrivateRessource(url, useToken = true) {
         "Accept": "application/json",   
     }
     if(useToken) {
-        headers.Authorization = "Bearer " + localStorage.getItem("token")
+        headers.Authorization = "Bearer " + user.token
     }
     
     const load = () => {
-        loading.current = true
+        setLoading(true)
         
         axios
             .get(url, {
@@ -26,21 +32,25 @@ export default function PrivateRessource(url, useToken = true) {
             .then((response) => {
                 items.current = response.data
             })
-            .catch((error) => {
-                error.current = {
-                    status: error.status,
-                    message: error.response.data
-                }
+            .catch((err) => {
+                error.current = err
             })
         ;
 
-        loading.current = false
+        // If Token is expired
+        if(Object.keys(error.current).length > 0 && error.current.response.status === 401) {
+            localStorage.setItem("user", "")
+            navigate(user.role == "ROLE_ADMIN" ? "/admin-login" : "/login")
+            return
+        }
+
+        setLoading(false)
     }
 
     return {
-        load,
-        items,
         loading,
-        error
+        items: items.current,
+        load,
+        error: error.current
     }
 }

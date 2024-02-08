@@ -1,14 +1,26 @@
 import React from "react";
 import Header from "../../component/part/Header";
+import ProductCard from "../../component/part/ProductCard";
 
 export default function Home() {
 
+    // Temporary
+    const generateProductCard = () => {
+        let $html = []
+        
+        for (let index = 0; index < 10; index++) {
+            $html.push(<ProductCard key={index} />)
+        }
+
+        return $html
+    }
+
     return (
         <Header>
-            <div className={"page-home"}>
+            <div className={"page-hero"}>
                 <div className={"-hero"}>
-                    <h1 className={"-title"}>Ecommerce</h1>
-                    <small className={"-sub-title"}>Your best online shop</small>
+                    <h1 className={"-title"}>E-commerce App</h1>
+                    <p className={"-sub-title"}>Your best online shop</p>
                 </div>
             </div>
             
@@ -22,90 +34,8 @@ export default function Home() {
                 <div className={"page-wrapper"}>
                     <h2 className={"page-title"}>Featured Products</h2>
 
-                    <div className={"d-grid -col-5 m-t-25"}>
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
-                        
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
-                        
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
-                        
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
-                        
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
-                        
-                        <div className={"product-card"}>
-                            <div className={"-header"}>
-                                <img src={`${window.location.origin}/content/img/product-1.png`} alt={""} />
-                            </div>
-                            <div className={"-content"}>
-                                <h3 className={"-title"}>Product name</h3>
-                                <span className={"-category"}>Category</span>
-                                <p className={"-price"}>1000 €</p>
-                            </div>
-                            <div className={"-footer d-flex"}>
-                                <button className={"btn btn-blue item"}>Add to card</button>
-                            </div>
-                        </div>
+                    <div className={"d-grid -col-4 m-t-25"}>
+                        {generateProductCard()}
                     </div>
                 </div>
             </div>

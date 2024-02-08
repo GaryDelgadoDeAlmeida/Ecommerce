@@ -31,7 +31,6 @@ form {
         input:not([type="file"]) {
             height: 35px;
             padding: 0 20px;
-            border-radius: 25px;
             background-color: transparent;
             border: 1px solid var(--c-silver);
         }
@@ -44,7 +43,6 @@ form {
             height: 80px;
             padding: 20px;
             resize: vertical;
-            border-radius: 25px;
             background-color: transparent;
             border: 1px solid var(--c-silver);
         }
@@ -52,7 +50,6 @@ form {
         select {
             height: 35px;
             padding: 0 15px;
-            border-radius: 25px;
             background-color: transparent;
             border: 1px solid var(--c-silver);
 

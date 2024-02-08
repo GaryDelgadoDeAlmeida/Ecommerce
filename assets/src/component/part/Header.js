@@ -1,23 +1,56 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SubscribeForm from "../form/SubscribeForm"
 
 export default function Header(props) {
 
     return (
         <div className={"page"}>
             <div className={"page-header"}>
-                <div className={"menu"}>
-                    <div className={"logo"}>
-                        <img src={`${window.location.origin}/content/img/logo.png`} alt={"logo"} />
+                <div className={"header-wrapper"}>
+
+                    {/* Desktop */}
+                    <div className={"header-desktop"}>
+                        <div className={"-left"}>
+                            <img className={"logo"} src={`${window.location.origin}/content/img/logo.png`} alt={"logo"} />
+                        </div>
+                        <div className={"-center"}>
+                            <div className={"menu"}>
+                                <Link className={"-item"} to={"/"}>Home</Link>
+                                <Link className={"-item"} to={"/category"}>Category</Link>
+                                <Link className={"-item"} to={"/product"}>Products</Link>
+                                <Link className={"-item"} to={"/contacr"}>Contact</Link>
+                            </div>
+                        </div>
+                        <div className={"-right"}>
+                            <div className={"cart"}>
+                                <img src={`${window.location.origin}/content/svg/cart-shopping.svg`} />
+                                <span>1</span>
+                            </div>
+                            <Link className={"btn btn-blue btn-rounded"} to={"/login"}>Sign-in</Link>
+                        </div>
                     </div>
-                    <nav className={""}>
-                        <li className={"-item"}><Link to={"/"}>Home</Link></li>
-                        <li className={"-item"}><Link to={"/product"}>Products</Link></li>
-                        <li className={"-item"}><Link to={"/login"}>Login</Link></li>
-                    </nav>
-                    <div className={"cart"}>
-                        <img src={`${window.location.origin}/content/img/cart.svg`} />
-                        <span>1</span>
+
+                    {/* Mobile / Tablet */}
+                    <div className={"header-mobile"}>
+                        <input id={"menubard"} type={"checkbox"} hidden />
+                        <label htmlFor={"menubard"}>
+                            <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
+                        </label>
+                        
+                        <div className={"header-mobile-widget"}>
+                            <label htmlFor={"menubard"}>
+                                <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
+                            </label>
+
+                            <nav className={"menu"}>
+                                <li className={"-item"}><Link to={"/"}>Home</Link></li>
+                                <li className={"-item"}><Link to={"/category"}>Category</Link></li>
+                                <li className={"-item"}><Link to={"/product"}>Products</Link></li>
+                                <li className={"-item"}><Link to={"/contact"}>Contact</Link></li>
+                                <li className={"-item"}><Link to={"/login"}>Login</Link></li>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,11 +60,54 @@ export default function Header(props) {
             </div>
             
             <div className={"page-footer"}>
+                <div className={"footer-quick-links"}>
+                    <div className={"quick-links-wrapper"}>
+                        <div className={"d-grid -col-4"}>
+                            <div className={"links-col"}>
+                                <div className={"-header"}>
+                                    <label className={"txt-bold"}>Site links</label>
+                                </div>
+                                <div className={"-content"}>
+                                    <Link to={"/news"}>News</Link>
+                                    <Link to={"/"}>Home</Link>
+                                    <Link to={"/product"}>Product</Link>
+                                    <Link to={"/category"}>Category</Link>
+                                    <Link to={"/best-seller"}>Best seller</Link>
+                                    <Link to={"/contact"}>Contact</Link>
+                                    <Link to={"/login"}>Login</Link>
+                                </div>
+                            </div>
+                            <div className={"links-col"}>
+                                <div className={"-header"}>
+                                    <label className={"txt-bold"}>Help</label>
+                                </div>
+                                <div className={"-content"}>
+                                    <Link to={"/help"}>Help</Link>
+                                    <Link to={"/policy-and-privacy"}>Policy & Privacy</Link>
+                                    <Link to={"/terms-and-condition"}>Terms & Conditions</Link>
+                                </div>
+                            </div>
+                            <div className={"links-col"}>
+                                <div className={"-header"}>
+                                    <label className={"txt-bold"}>About</label>
+                                </div>
+                                <div className={"-content"}>
+                                    <Link to={"/about"}>About</Link>
+                                </div>
+                            </div>
+                            <div className={"links-col"}>
+                                <div className={"-header"}>
+                                    <label className={"txt-bold"}>Subscribe to the newsletter</label>
+                                </div>
+                                <div className={"-content"}>
+                                    <SubscribeForm />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className={"footer-copyright"}>
-                    <p>
-                        Copyright &copy; {(new Date()).getFullYear()} &minus; Ecommerce<br/>
-                        All Rights Reserved
-                    </p>
+                    <p>Copyright &copy; {(new Date()).getFullYear()} Ecommerce &minus; All rights reserved</p>
                 </div>
             </div>
         </div>

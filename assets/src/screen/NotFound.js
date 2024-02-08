@@ -1,3 +1,4 @@
+import React from "react";
 import Header from "../component/part/Header";
 
 export default function NotFound() {

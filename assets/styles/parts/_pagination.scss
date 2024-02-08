@@ -16,22 +16,19 @@
     .item {
         width: 20px;
         height: 100%;
+        border: none;
         text-align: center;
+        color: var(--c-black);
+        text-decoration: none;
+        background-color: transparent;
 
         &:not(:last-child) {
             margin-right: 10px;
         }
 
         &.current-page {
-            // color: var(--c-dimmGray);
-            // border-bottom: 1px solid var(--c-dimmGray);
-        }
-
-        a, button {
-            border: none;
-            color: var(--c-black);
-            text-decoration: none;
-            background-color: transparent;
+            color: var(--c-dimmGray);
+            border-bottom: 1px solid var(--c-dimmGray);
         }
     }
 }
