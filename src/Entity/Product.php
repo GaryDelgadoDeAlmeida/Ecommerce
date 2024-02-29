@@ -16,11 +16,17 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Brand $brand = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image = null;
 
     #[ORM\Column]
     private ?float $price = 0.0;
@@ -34,16 +40,17 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Characteristic::class)]
+    private Collection $characteristics;
+
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Brand $brand = null;
 
     public function __construct()
     {
         $this->productPriceHistories = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->characteristics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +186,48 @@ class Product
     public function setBrand(?Brand $brand): static
     {
         $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Characteristic>
+     */
+    public function getCharacteristics(): Collection
+    {
+        return $this->characteristics;
+    }
+
+    public function addCharacteristic(Characteristic $characteristic): static
+    {
+        if (!$this->characteristics->contains($characteristic)) {
+            $this->characteristics->add($characteristic);
+            $characteristic->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacteristic(Characteristic $characteristic): static
+    {
+        if ($this->characteristics->removeElement($characteristic)) {
+            // set the owning side to null (unless already changed)
+            if ($characteristic->getProduct() === $this) {
+                $characteristic->setProduct(null);
+            }
+        }
 
         return $this;
     }

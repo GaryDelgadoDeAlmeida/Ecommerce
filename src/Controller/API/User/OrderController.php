@@ -32,7 +32,7 @@ class OrderController extends AbstractController
 
     #[Route('/orders/history', name: 'get_orders_history', methods: ["GET"])]
     public function orders_history(Request $request): JsonResponse {
-        $limit = 25;
+        $limit = 10;
         $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? $request->get("offset") : 1;
 
         $orders = $this->orderRepository->findBy([
@@ -40,10 +40,11 @@ class OrderController extends AbstractController
             "status" => OrderDeliveryStatusEnum::STATUS_DELIVERED
         ], $limit, ($offset - 1) * $limit);
 
-        return $this->json(
-            $this->serializeManager->serializeContent($orders), 
-            Response::HTTP_OK
-        );
+        return $this->json([
+            "offset" => $offset,
+            "maxOffset" => ceil($this->orderRepository->countUserOrder($this->user, OrderDeliveryStatusEnum::STATUS_DELIVERED) / $limit),
+            "results" => $this->serializeManager->serializeContent($orders)
+        ], Response::HTTP_OK);
     }
 
     #[Route("/orders/ongoing", name: "get_orders_ongoing", methods: ["GET"])]
@@ -66,7 +67,9 @@ class OrderController extends AbstractController
     public function post_order(Request $request) : JsonResponse {
         $jsonContent = json_decode($request->getContent(), true);
         if(!$jsonContent) {
-            return $this->json("", Response::HTTP_PRECONDITION_FAILED);
+            return $this->json([
+                "message" => "An error has been encountered with the sended body"
+            ], Response::HTTP_PRECONDITION_FAILED);
         }
 
         $new_order = null;
@@ -81,5 +84,24 @@ class OrderController extends AbstractController
         }
 
         return $this->json($new_order, Response::HTTP_CREATED);
+    }
+
+    #[Route("/order/{orderID}", name: "get_order", methods: ["GET"])]
+    public function get_order(Request $request, int $orderID) : JsonResponse {
+        return $this->json([
+            "message" => "Route under construction"
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * Route used to cancel an order of an user. Naturally, in function of the progress of the
+     * order, a tax can be used. For example, if the order is about to be delivered to the user, 
+     * the user will have to pay the return
+     */
+    #[Route("/order/{orderID}/cancel", name: "cancel_order", methods: ["POST"])]
+    public function cancel_order(Request $request) : JsonResponse {
+        return $this->json([
+            "message" => "Route under construction"
+        ], Response::HTTP_OK);
     }
 }

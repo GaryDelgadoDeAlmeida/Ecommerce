@@ -13,8 +13,6 @@ export default function Notification({classname, message}) {
         icon = "/content/svg/informationmark-gray.svg"
     }
 
-    console.log(classname, message)
-
     return (
         <div className={`notification ${classname}`}>
             <div className={"icon"}>

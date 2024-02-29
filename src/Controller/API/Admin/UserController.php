@@ -4,7 +4,6 @@ namespace App\Controller\API\Admin;
 
 use App\Entity\User;
 use App\Manager\UserManager;
-use App\Manager\TokenManager;
 use App\Manager\SerializeManager;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,20 +18,17 @@ class UserController extends AbstractController
 {
     private User $user;
     private UserManager $userManager;
-    private TokenManager $tokenManager;
     private SerializeManager $serializeManager;
     private UserRepository $userRepository;
 
     public function __construct(
         Security $security,
         UserManager $userManager,
-        TokenManager $tokenManager,
         SerializeManager $serializeManager,
         UserRepository $userRepository
     ) {
         $this->user = $security->getUser();
         $this->userManager = $userManager;
-        $this->tokenManager = $tokenManager;
         $this->serializeManager = $serializeManager;
         $this->userRepository = $userRepository;
     }
@@ -52,12 +48,7 @@ class UserController extends AbstractController
 
     #[Route("/user", name: "post_user", methods: ["POST"])]
     public function post_user(Request $request) : JsonResponse {
-        $this->user = $this->user ?? $this->tokenManager->checkToken($request);
-        if(!$this->user) {
-            return $this->json("", Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        $jsonContent = [];
+        $jsonContent = json_decode($request->getContent(), true);
         if(!$jsonContent) {
             return $this->json("");
         }
@@ -75,11 +66,6 @@ class UserController extends AbstractController
 
     #[Route("/user/{userID}", name: "get_user", methods: ["GET"])]
     public function get_user(Request $request, int $userID) : JsonResponse {
-        $token = $this->tokenManager->checkToken($request);
-        if(!$token) {
-            return $this->json("", Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
         $user = $this->userRepository->find($userID);
         if(empty($user)) {
             return $this->json("User not found", Response::HTTP_NOT_FOUND);

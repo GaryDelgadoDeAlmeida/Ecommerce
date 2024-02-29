@@ -3,7 +3,6 @@
 namespace App\Controller\API\Admin;
 
 use App\Entity\User;
-use App\Manager\TokenManager;
 use App\Manager\SerializeManager;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,18 +16,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     private User $user;
-    private TokenManager $tokenManager;
     private SerializeManager $serializeManager;
     private ProductRepository $productRepository;
 
     public function __construct(
         Security $security,
-        TokenManager $tokenManager,
         SerializeManager $serializeManager,
         ProductRepository $productRepository
     ) {
         $this->user = $security->getUser();
-        $this->tokenManager = $tokenManager;
         $this->serializeManager = $serializeManager;
         $this->productRepository = $productRepository;
     }

@@ -1,0 +1,35 @@
+.carroussel {
+    gap: 25px;
+    width: 100%;
+    display: flex;
+
+    @include mobile {
+        flex-direction: column;
+    }
+
+    .-list {
+        gap: 15px;
+        display: flex;
+        margin: auto 0;
+        flex-direction: column;
+
+        @include mobile {
+            flex-direction: row;
+        }
+
+        img {
+            width: 100px;
+            cursor: pointer;
+        }
+    }
+
+    .-current {
+        flex: 1;
+        display: flex;
+        margin: auto 0;
+
+        img {
+            width: 100%;
+        }
+    }
+}

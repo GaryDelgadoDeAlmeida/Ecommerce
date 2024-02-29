@@ -11,24 +11,25 @@
     flex-direction: row;
     justify-content: center;
     background-color: var(--c-white);
-    // border: 1px solid var(--c-silver);
 
     .item {
-        width: 20px;
-        height: 100%;
         border: none;
+        min-width: 25px;
+        min-height: 25px;
         text-align: center;
         color: var(--c-black);
         text-decoration: none;
-        background-color: transparent;
+        border-radius: 25px;
+        background-color: var(--c-gray85);
 
         &:not(:last-child) {
             margin-right: 10px;
         }
 
         &.current-page {
-            color: var(--c-dimmGray);
-            border-bottom: 1px solid var(--c-dimmGray);
+            cursor: auto;
+            color: var(--c-white);
+            background-color: var(--c-blue);
         }
     }
 }

@@ -8,9 +8,9 @@ abstract class ProductEnum {
     public const PRODUCT_PRICE = "price";
 
     public array $typeName = [
-        self::PRODUCT_NAME => "name",
-        self::PRODUCT_DESCRIPTION => "description",
-        self::PRODUCT_PRICE => "price"
+        self::PRODUCT_NAME => "Name",
+        self::PRODUCT_DESCRIPTION => "Description",
+        self::PRODUCT_PRICE => "Price"
     ];
 
     public static function getAvalaibleChoices() {

@@ -34,6 +34,9 @@ class Order
     #[ORM\OneToMany(mappedBy: 'clientOrder', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
 
+    #[ORM\OneToOne(mappedBy: 'clientOrder', cascade: ['persist', 'remove'])]
+    private ?Invoice $invoice = null;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -130,6 +133,43 @@ class Order
                 $orderDetail->setClientOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotalPrice() : float {
+        $price = 0;
+
+        foreach($this->orderDetails as $orderDetail) {
+            $product = $orderDetail->getproduct();
+            if(!$product) {
+                continue;
+            }
+            
+            $price += ($product->getPrice() * $orderDetail->getQuantity());
+        }
+
+        return $price;
+    }
+
+    public function getInvoice(): ?Invoice
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(?Invoice $invoice): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($invoice === null && $this->invoice !== null) {
+            $this->invoice->setClientOrder(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($invoice !== null && $invoice->getClientOrder() !== $this) {
+            $invoice->setClientOrder($this);
+        }
+
+        $this->invoice = $invoice;
 
         return $this;
     }

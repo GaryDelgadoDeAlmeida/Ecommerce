@@ -15,9 +15,17 @@ export default function Product() {
 
     return (
         <HeaderAdmin>
-            {!loading && items.length > 0 ? (
-                <div className={"page-section"}>
-                    <table>
+            {loading && (
+                <Notification classname={"information"} message={"Loading ..."} />
+            )}
+
+            {Object.keys(error).length > 0 && (
+                <Notification classname={"danger"} message={error.message} />
+            )}
+
+            {!loading && (
+                <>
+                    <table className={"table -collapse"}>
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -29,8 +37,8 @@ export default function Product() {
                             </tr>
                         </thead>
                         <tbody>
-                            {items.results.length > 0 ? (
-                                items.results.map((item, index) => (
+                            {Object.keys(items.results ?? []).length > 0 ? (
+                                Object.values(items.results).map((item, index) => (
                                     <tr key={index}>
                                         <td className={"-product"}>{item}</td>
                                         <td className={"-branch"}></td>
@@ -45,17 +53,19 @@ export default function Product() {
                                     </tr>
                                 ))
                             ) : (
-                                <tr>
+                                <tr className={"txt-center"}>
                                     <td className={"-message"} colSpan={6}>Il n'y a aucun produit enregistrer</td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
 
-                    <Pagination offset={offset} maxOffset={items.maxOffset} setOffset={setOffset} />
-                </div>
-            ) : (
-                <Notification classname={"information"} message={"Loading ..."} />
+                    <Pagination 
+                        offset={offset} 
+                        setOffset={setOffset} 
+                        maxOffset={items.maxOffset} 
+                    />
+                </>
             )}
         </HeaderAdmin>
     )

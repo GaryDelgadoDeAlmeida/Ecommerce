@@ -5,9 +5,7 @@
 
     // Primary colors
     --c-white: #ffffff;
-    --c-lightGray: #f2f2f2;
     --c-gray: #a9a9a9;
-    --c-gray85: #d9d9d9;
     --c-silver: #c8c8c8;
     --c-red: #c00000;
     --c-darkRed: #8B0000;
@@ -17,6 +15,14 @@
     --c-black: #000000;
 
     // Specific colors
+    --c-gray85: #d9d9d9;
+    --c-lightGray: #f2f2f2;
+    --c-dimmGray: #696969;
+    --c-lightGreen: #a8f1c6;
+    --c-greenLime: #198344;
+    --c-lightOrange: #fff9f0;
+    --c-darkRed: #8B0000;
+    --c-lightRed: #ffe0e3;
 }
 
 a, a:hover {
@@ -54,12 +60,18 @@ a, a:hover {
 \* ----------------------------------------------- */
 @import "./parts/site";
 @import "./parts/site_admin";
+@import "./parts/breadcrumb";
 @import "./parts/form";
 @import "./parts/card";
 @import "./parts/card_product";
+@import "./parts/card_offered_service";
+@import "./parts/carroussel";
+@import "./parts/filter";
 @import "./parts/pagination";
 @import "./parts/button";
 @import "./parts/table";
 @import "./parts/badge";
 @import "./parts/helper";
+@import "./parts/product";
 @import "./parts/notification";
+@import "./parts/comment";

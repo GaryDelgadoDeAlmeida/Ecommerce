@@ -12,6 +12,7 @@ export default function HeaderAdmin(props) {
 
     const handleDisconnect = (e) => {
         localStorage.setItem("user", "")
+        setLogged(false)
     }
 
     const updateLoggedStatus = (status) => {
@@ -30,10 +31,17 @@ export default function HeaderAdmin(props) {
                 <div className={"page-header"}>
                     <nav className={"menu-horizontal"}>
                         <li><Link to={"/admin"}>Dashboard</Link></li>
-                        <li><Link to={"/admin/product"}>Products</Link></li>
-                        <li><Link to={"/admin/order"}>Orders</Link></li>
+                        <li><Link to={"/admin/profile"}>Profile</Link></li>
+                        <li><Link to={"/admin/users"}>Users</Link></li>
+                        <li><Link to={"/admin/brands"}>Brands</Link></li>
+                        <li><Link to={"/admin/products"}>Products</Link></li>
+                        <li><Link to={"/admin/orders"}>Orders</Link></li>
                         <li>
-                            <button type={"button"} className={"btn btn-red"} onClick={(e) => handleDisconnect(e)}>Logout</button>
+                            <button 
+                                type={"button"} 
+                                className={"btn btn-red"} 
+                                onClick={(e) => handleDisconnect(e)}
+                            >Logout</button>
                         </li>
                     </nav>
                 </div>

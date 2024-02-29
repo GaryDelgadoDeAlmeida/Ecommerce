@@ -1,0 +1,23 @@
+.offered-service-card {
+    text-align: center;
+
+    .-header {
+        gap: 15px;
+        display: flex;
+        flex-direction: column;
+
+        img {
+            width: 40px;
+            margin: auto;
+        }
+
+        label {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+    }
+
+    .-content {
+        font-size: 1rem;
+    }
+}

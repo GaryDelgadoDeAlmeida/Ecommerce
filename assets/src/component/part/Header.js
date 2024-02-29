@@ -4,6 +4,8 @@ import SubscribeForm from "../form/SubscribeForm"
 
 export default function Header(props) {
 
+    const storageUser = localStorage.getItem("user")
+
     return (
         <div className={"page"}>
             <div className={"page-header"}>
@@ -19,27 +21,40 @@ export default function Header(props) {
                                 <Link className={"-item"} to={"/"}>Home</Link>
                                 <Link className={"-item"} to={"/category"}>Category</Link>
                                 <Link className={"-item"} to={"/product"}>Products</Link>
-                                <Link className={"-item"} to={"/contacr"}>Contact</Link>
+                                <Link className={"-item"} to={"/#contact"}>Contact</Link>
                             </div>
                         </div>
                         <div className={"-right"}>
-                            <div className={"cart"}>
+                            <Link to={"/shopping-cart"} className={"cart"}>
                                 <img src={`${window.location.origin}/content/svg/cart-shopping.svg`} />
                                 <span>1</span>
-                            </div>
-                            <Link className={"btn btn-blue btn-rounded"} to={"/login"}>Sign-in</Link>
+                            </Link>
+
+                            {storageUser.length > 0 ? (
+                                <li className={"profile-menu-link"}>
+                                    <div className={"profile-avatar"}>
+                                        <img src={`${window.location.origin}/content/avatar.svg`} alt={""} />
+                                    </div>
+                                    <ul>
+                                        <li><Link to={"/user"}>Profile</Link></li>
+                                        <li><Link to={"/user/orders"}>Orders</Link></li>
+                                    </ul>
+                                </li>
+                            ) : (
+                                <Link className={"btn btn-blue btn-rounded"} to={"/login"}>Sign-in</Link>
+                            )}
                         </div>
                     </div>
 
                     {/* Mobile / Tablet */}
                     <div className={"header-mobile"}>
-                        <input id={"menubard"} type={"checkbox"} hidden />
-                        <label htmlFor={"menubard"}>
+                        <input id={"menubars"} type={"checkbox"} hidden />
+                        <label className={"menulabel"} htmlFor={"menubars"}>
                             <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
                         </label>
                         
                         <div className={"header-mobile-widget"}>
-                            <label htmlFor={"menubard"}>
+                            <label className={"menulabel"} htmlFor={"menubars"}>
                                 <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
                             </label>
 
@@ -47,7 +62,7 @@ export default function Header(props) {
                                 <li className={"-item"}><Link to={"/"}>Home</Link></li>
                                 <li className={"-item"}><Link to={"/category"}>Category</Link></li>
                                 <li className={"-item"}><Link to={"/product"}>Products</Link></li>
-                                <li className={"-item"}><Link to={"/contact"}>Contact</Link></li>
+                                <li className={"-item"}><Link to={"/#contact"}>Contact</Link></li>
                                 <li className={"-item"}><Link to={"/login"}>Login</Link></li>
                             </nav>
                         </div>
@@ -73,7 +88,7 @@ export default function Header(props) {
                                     <Link to={"/product"}>Product</Link>
                                     <Link to={"/category"}>Category</Link>
                                     <Link to={"/best-seller"}>Best seller</Link>
-                                    <Link to={"/contact"}>Contact</Link>
+                                    <Link to={"/#contact"}>Contact</Link>
                                     <Link to={"/login"}>Login</Link>
                                 </div>
                             </div>

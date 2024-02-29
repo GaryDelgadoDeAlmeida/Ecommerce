@@ -4,7 +4,8 @@ import Pagination from "../../component/part/Pagination";
 import ProductCard from "../../component/part/ProductCard";
 import Notification from "../../component/part/Notification";
 import PrivateRessource from "../../component/utils/PrivateRessource";
-import Filter from "../../component/part/Filter";
+import Filters from "../../component/part/Filters";
+import { Link } from "react-router-dom";
 
 export default function Product() {
 
@@ -16,35 +17,63 @@ export default function Product() {
         load()
     }, [offset])
 
+    // Temporary
+    const generateProductCard = () => {
+        let $html = []
+        
+        for (let index = 0; index < 10; index++) {
+            $html.push(<ProductCard key={index} />)
+        }
+
+        return $html
+    }
+
     return (
         <Header>
             <div className={"page-hero"}>
-                <h1 className={"page-title"}>Products</h1>
+                <div className={"-hero"}>
+                    <h1 className={"page-title"}>Products</h1>
+                    <div className={"site-breadcrumb"}>
+                        <Link to={"/"}>Home</Link>
+                        <span>/</span>
+                        <span>Products</span>
+                    </div>
+                </div>
             </div>
             <div className={"page-wrapper"}>
-                <div className={"page-section"}>
-                    <div className={"d-grid -col-2"}>
+                <div className={"page-product"}>
+                    <div className={"product-wrapper"}>
                         <div className={"-left"}>
-                            <Filter updateFilter={setFilters} />
+                            <Filters updateFilter={setFilters} />
                         </div>
                         <div className={"-right"}>
                             {!loading ? (
-                                Object.keys(products).length > 0 ? (
-                                    <div className={"d-col -col-4"}>
-                                        {Object.values(products).map((item, index) => (
-                                            <ProductCard key={index} product={item} />
-                                        ))}
-                                    </div>
+                                Object.keys(products.results ?? []).length > 0 ? (
+                                    <>
+                                        <div className={"product-list"}>
+                                            {Object.values(products.results).map((item, index) => (
+                                                <ProductCard 
+                                                    key={index} 
+                                                    product={item} 
+                                                />
+                                            ))}
+                                            {generateProductCard()}
+                                        </div>
+
+                                        <Pagination 
+                                            offset={offset} 
+                                            setOffset={setOffset} 
+                                            maxOffset={products.maxOffset}
+                                        />
+                                    </>
                                 ) : (
-                                    <Notification classname={"information"} message={"Il n'y aucun produit enregistrer"} />
+                                    <Notification classname={"information"} message={"Il n'y aucun produit enregistrer pour le moment"} />
                                 )
                             ) : (
                                 <Notification classname={"information"} message={"Loading ..."} />
                             )}
                         </div>
                     </div>
-
-                    <Pagination offset={offset} setOffset={setOffset} />
                 </div>
             </div>
         </Header>

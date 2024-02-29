@@ -19,6 +19,10 @@ button {
     border: 1px solid transparent;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
+    &.btn-rounded {
+        border-radius: 25px;
+    }
+
     &.-inline-flex {
         gap: 10px;
         display: inline-flex;
@@ -95,5 +99,12 @@ button {
             color: var(--c-gray);
             background-color: transparent;
         }
+    }
+
+    &.btn-radient-green {
+        color: var(--c-white);
+        border: linear-gradient(to right, #179D92, #71B353);
+        background-image: linear-gradient(to right, #179D92, #71B353);
+        box-shadow: 0 0.46875rem 2.1875rem rgba(0,0,0,.03), 0 0.9375rem 1.40625rem rgba(0,0,0,.03), 0 0.25rem 0.53125rem rgba(0,0,0,.05), 0 0.125rem 0.1875rem rgba(0,0,0,.03);
     }
 }

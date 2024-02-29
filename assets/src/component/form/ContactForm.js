@@ -19,17 +19,27 @@ export default function ContactForm() {
         })
     }
 
+    const resetCredentials = () => {
+        setCredentials({
+            fullname: "",
+            email: "",
+            subject: "",
+            message: ""
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
         axios
-            .post(`${window.location.origi}/api/contact`, credentials, {
+            .post(`${window.location.origin}/api/contact`, credentials, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/ld+json"
                 }
             })
             .then((response) => {
+                resetCredentials()
                 setFormResponse({classname: "success", message: "Thanks for your message. Our team will contact you as quickly as possible"})
             })
             .catch((error) => {
@@ -90,9 +100,10 @@ export default function ContactForm() {
                 <div className={"form-field"}>
                     <textarea 
                         placeholder={"Your message"}
+                        value={credentials.message}
                         onChange={(e) => handleChange(e, "message")}
                         required
-                    >{credentials.message}</textarea>
+                    ></textarea>
                 </div>
                 
                 <div className={"form-button"}>

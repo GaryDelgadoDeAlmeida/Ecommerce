@@ -3,7 +3,6 @@
 namespace App\Controller\API\Admin;
 
 use App\Entity\User;
-use App\Manager\TokenManager;
 use App\Manager\SerializeManager;
 use App\Repository\OrderRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,18 +16,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     private User $user;
-    private TokenManager $tokenManager;
     private SerializeManager $serializeManager;
     private OrderRepository $orderRepository;
 
     function __construct(
         Security $security,
-        TokenManager $tokenManager,
         SerializeManager $serializeManager,
         OrderRepository $orderRepository
     ) {
         $this->user = $security->getUser();
-        $this->tokenManager = $tokenManager;
         $this->serializeManager = $serializeManager;
         $this->orderRepository = $orderRepository;
     }
@@ -61,11 +57,6 @@ class OrderController extends AbstractController
 
     #[Route("/order/{orderID}", name: "get_order", methods: ["GET"])]
     public function get_order(Request $request, int $orderID) : JsonResponse {
-        $token = $this->tokenManager->checkToken($request);
-        if(empty($token)) {
-            return $this->json("", Response::HTTP_FORBIDDEN);
-        }
-        
         $order = $this->orderRepository->find($orderID);
         if(empty($order)) {
             return $this->json("", Response::HTTP_NOT_FOUND);

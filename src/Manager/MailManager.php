@@ -14,6 +14,7 @@ class MailManager extends AbstractController {
             "subject" => $subject,
             "message" => $message
         ]);
+        
         return false;
     }
 

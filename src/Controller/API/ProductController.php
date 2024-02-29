@@ -24,7 +24,7 @@ class ProductController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    #[Route('/products', name: 'get_products')]
+    #[Route('/products', name: 'get_products', methods: ["GET"])]
     public function get_products(Request $request): JsonResponse
     {
         $limit = 25;
@@ -44,13 +44,11 @@ class ProductController extends AbstractController
             "offset" => $offset,
             "limit" => $limit,
             "maxOffset" => $maxOffset,
-            "results" => $this->serializeManager->serializeContent(
-                $products
-            )
+            "results" => $this->serializeManager->serializeContent($products)
         ], Response::HTTP_OK);
     }
 
-    #[Route("/product/{product_id}", name: "get_product")]
+    #[Route("/product/{product_id}", name: "get_product", methods: ["GET"])]
     public function get_product(int $product_id) : JsonResponse {
         $product = $this->productRepository->find($product_id);
         if(!$product) {

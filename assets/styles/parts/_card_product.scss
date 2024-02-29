@@ -1,21 +1,19 @@
 .product-card {
-    padding: 10px;
     background-color: var(--c-white);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.17);
 
-    .-header {
-        // 
-
-        img {
-            // 
-        }
+    .-product-img {
+        width: 100%;
     }
 
     .-content {
-        // 
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
 
         .-title {
-            font-size: 700;
+            font-size: 1rem;
+            font-weight: 700;
         }
     }
 }
