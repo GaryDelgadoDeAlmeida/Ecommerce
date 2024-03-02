@@ -41,7 +41,7 @@ export default function ProductSingle() {
     return (
         <Header>
             <div className={"page-wrapper"}>
-                <Link className={"btn btn-blue"} to={"/product"}>Return</Link>
+                <Link className={"btn btn-blue"} to={"/products"}>Return</Link>
 
                 <div className={"page-product"}>
                     <div className={"product-header"}>

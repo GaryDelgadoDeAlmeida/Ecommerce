@@ -20,29 +20,22 @@ class BrandRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Brand::class);
     }
+    
+    public function save(Brand $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
-//    /**
-//     * @return Brand[] Returns an array of Brand objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
-//    public function findOneBySomeField($value): ?Brand
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function remove(Brand $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

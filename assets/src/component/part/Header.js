@@ -19,8 +19,8 @@ export default function Header(props) {
                         <div className={"-center"}>
                             <div className={"menu"}>
                                 <Link className={"-item"} to={"/"}>Home</Link>
-                                <Link className={"-item"} to={"/category"}>Category</Link>
-                                <Link className={"-item"} to={"/product"}>Products</Link>
+                                <Link className={"-item"} to={"/categories"}>Categories</Link>
+                                <Link className={"-item"} to={"/products"}>Products</Link>
                                 <Link className={"-item"} to={"/#contact"}>Contact</Link>
                             </div>
                         </div>
@@ -60,8 +60,8 @@ export default function Header(props) {
 
                             <nav className={"menu"}>
                                 <li className={"-item"}><Link to={"/"}>Home</Link></li>
-                                <li className={"-item"}><Link to={"/category"}>Category</Link></li>
-                                <li className={"-item"}><Link to={"/product"}>Products</Link></li>
+                                <li className={"-item"}><Link to={"/categories"}>Categories</Link></li>
+                                <li className={"-item"}><Link to={"/products"}>Products</Link></li>
                                 <li className={"-item"}><Link to={"/#contact"}>Contact</Link></li>
                                 <li className={"-item"}><Link to={"/login"}>Login</Link></li>
                             </nav>
@@ -85,8 +85,8 @@ export default function Header(props) {
                                 <div className={"-content"}>
                                     <Link to={"/news"}>News</Link>
                                     <Link to={"/"}>Home</Link>
-                                    <Link to={"/product"}>Product</Link>
-                                    <Link to={"/category"}>Category</Link>
+                                    <Link to={"/products"}>Product</Link>
+                                    <Link to={"/categories"}>Category</Link>
                                     <Link to={"/best-seller"}>Best seller</Link>
                                     <Link to={"/#contact"}>Contact</Link>
                                     <Link to={"/login"}>Login</Link>

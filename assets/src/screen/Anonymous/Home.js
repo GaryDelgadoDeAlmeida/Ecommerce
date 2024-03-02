@@ -3,6 +3,7 @@ import Header from "../../component/part/Header";
 import ContactForm from "../../component/form/ContactForm";
 import ProductCard from "../../component/part/ProductCard";
 import { Link } from "react-router-dom";
+import CategoryCard from "../../component/part/CategoryCard";
 
 export default function Home() {
 
@@ -17,6 +18,16 @@ export default function Home() {
         return $html
     }
 
+    const generateCategoryCard = () => {
+        let $html = []
+        
+        for (let index = 0; index < 4; index++) {
+            // $html.push(<CategoryCard key={index} />)
+        }
+
+        return $html
+    }
+
     return (
         <Header>
             {/* Hero */}
@@ -26,9 +37,24 @@ export default function Home() {
                     <p className={"-sub-title"}>Your best online shop</p>
                 </div>
             </div>
+
+            {/* Categories (only display some of categories) */}
+            <div className={"page-section bg-white"}>
+                <div className={"page-wrapper"}>
+                    <h2 className={"page-title"}>Categories</h2>
+
+                    <div className={"d-grid -col-4 -m-col-2 m-t-25"}>
+                        {generateCategoryCard()}
+                    </div>
+
+                    <div className={"m-t-25 txt-right"}>
+                        <Link className={"btn btn-blue"} to={"/categories"}>See all</Link>
+                    </div>
+                </div>
+            </div>
                 
             {/* Featured product */}
-            <div className={"page-section bg-white"}>
+            <div className={"page-section"}>
                 <div className={"page-wrapper"}>
                     <h2 className={"page-title"}>Featured Products</h2>
 
@@ -37,13 +63,13 @@ export default function Home() {
                     </div>
                     
                     <div className={"m-t-25 txt-right"}>
-                        <Link className={"btn btn-blue"} to={"/product"}>See all</Link>
+                        <Link className={"btn btn-blue"} to={"/products"}>See all</Link>
                     </div>
                 </div>
             </div>
 
             {/* Service */}
-            <div className={"page-section"}>
+            <div className={"page-section bg-white"}>
                 <div className={"page-wrapper"}>
                     <div className={"d-grid p-tb-50 -col-4 -m-col-2"}>
                         <div className={"offered-service-card"}>
@@ -87,7 +113,7 @@ export default function Home() {
             </div>
 
             {/* Contact */}
-            <div className={"page-section bg-white"}>
+            <div className={"page-section"}>
                 <div className={"page-wrapper"}>
                     <h2 className={"page-title"}>Contact</h2>
 

@@ -20,29 +20,22 @@ class BankDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, BankDetail::class);
     }
+    
+    public function save(BankDetail $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
-//    /**
-//     * @return BankDetail[] Returns an array of BankDetail objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
-//    public function findOneBySomeField($value): ?BankDetail
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function remove(BankDetail $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

@@ -34,6 +34,8 @@ class StatisticController extends AbstractController
         // Year benefit ??? Usefull ???
 
         // Return an response to the client
-        return $this->json("Route under construction", Response::HTTP_OK);
+        return $this->json([
+            "message" => "Route under construction"
+        ], Response::HTTP_OK);
     }
 }

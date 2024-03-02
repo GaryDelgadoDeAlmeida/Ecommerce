@@ -8,7 +8,7 @@ export default function BestSeller() {
             <div className={"page-hero"}>
                 <div className={"-hero"}>
                     <h1 className={"-title"}>Best Seller Page</h1>
-                    <p>Page that will print all most selled produts (products that attract the most peoples)</p>
+                    <p>Page that will print all most selled produts (products that attract most peoples)</p>
                 </div>
             </div>
         </Header>

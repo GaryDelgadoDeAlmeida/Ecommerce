@@ -20,29 +20,22 @@ class OrderDetailRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, OrderDetail::class);
     }
+    
+    public function save(OrderDetail $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
-//    /**
-//     * @return OrderDetail[] Returns an array of OrderDetail objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
-//    public function findOneBySomeField($value): ?OrderDetail
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function remove(OrderDetail $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

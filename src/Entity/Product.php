@@ -46,6 +46,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->productPriceHistories = new ArrayCollection();
@@ -228,6 +231,18 @@ class Product
                 $characteristic->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
