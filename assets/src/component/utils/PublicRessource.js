@@ -1,47 +1,52 @@
 import axios from "axios";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 export default function PublicRessource(url) {
-    const loading = useRef(false)
-    const items = useRef({})
-    const error = useRef({})
+    const [loading, setLoading] = useState(false)
+    let 
+        items = useRef({}),
+        error = useRef({})
+    ;
     
     const load = useCallback(() => {
-        loading.current = true
+        setLoading(true)
+        
         axios
             .get(url, {
                 headers: {
+                    "Accept": "application/ld+json",
                     "Content-Type": "application/json"
                 }
             })
             .then((response) => {
                 items.current = response.data
             })
-            .catch((error) => {
+            .catch((responseError) => {
                 let 
                     errorMessage = "", 
-                    response = error.response
+                    response = responseError.response
                 ;
-                if(typeof response.data == "string") {
-                    errorMessage = response.data
-                } else if(typeof response.data == "object") {
+                
+                if(response.data.message) {
+                    errorMessage = response.data.message
+                } else if(response.data.detail) {
                     errorMessage = response.data.detail
                 }
                 
                 error.current = {
-                    status: error.status ?? 500,
+                    status: responseError.status ?? 500,
                     message: errorMessage
                 }
             })
         ;
 
-        loading.current = false
+        setLoading(false)
     }, [url])
 
     return {
         load,
-        items,
         loading,
-        error
+        items: items.current,
+        error: error.current
     }
 }

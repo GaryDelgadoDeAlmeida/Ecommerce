@@ -47,30 +47,34 @@ export default function Product() {
                             <Filters updateFilter={setFilters} />
                         </div>
                         <div className={"-right"}>
-                            {!loading ? (
-                                Object.keys(products.results ?? []).length > 0 ? (
-                                    <>
-                                        <div className={"product-list"}>
-                                            {Object.values(products.results).map((item, index) => (
-                                                <ProductCard 
-                                                    key={index} 
-                                                    product={item} 
-                                                />
-                                            ))}
-                                            {generateProductCard()}
-                                        </div>
-
-                                        <Pagination 
-                                            offset={offset} 
-                                            setOffset={setOffset} 
-                                            maxOffset={products.maxOffset}
-                                        />
-                                    </>
-                                ) : (
-                                    <Notification classname={"information"} message={"Il n'y aucun produit enregistrer pour le moment"} />
-                                )
-                            ) : (
+                            {loading && (
                                 <Notification classname={"information"} message={"Loading ..."} />
+                            )}
+
+                            {Object.keys(error).length > 0 && (
+                                <Notification classname={"danger"} message={error.message} />
+                            )}
+
+                            {!loading && Object.keys(products.results ?? []).length > 0 ? (
+                                <>
+                                    <div className={"product-list"}>
+                                        {Object.values(products.results).map((item, index) => (
+                                            <ProductCard 
+                                                key={index} 
+                                                product={item} 
+                                            />
+                                        ))}
+                                        {generateProductCard()}
+                                    </div>
+
+                                    <Pagination 
+                                        offset={offset} 
+                                        setOffset={setOffset} 
+                                        maxOffset={products.maxOffset}
+                                    />
+                                </>
+                            ) : (
+                                <Notification classname={"information"} message={"There is no products to display"} />
                             )}
                         </div>
                     </div>

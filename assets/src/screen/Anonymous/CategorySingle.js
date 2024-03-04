@@ -45,7 +45,7 @@ export default function CategorySingle() {
                         <Notification classname={"danger"} message={error.message} />
                     )}
 
-                    {!loading && Object.keys(items.results ?? []).length > 0 && (
+                    {!loading && Object.keys(items.results ?? []).length > 0 ? (
                         <>
                             <div className={"d-grid -col-5 -m-col-2"}>
                                 {Object.values(items.results).map((item, index) => (
@@ -59,6 +59,8 @@ export default function CategorySingle() {
                                 maxOffset={items.maxOffset}
                             />
                         </>
+                    ) : (
+                        <Notification classname={"information"} message={"There is no products registered in this category to display"} />
                     )}
                 </div>
             </div>

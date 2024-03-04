@@ -13,6 +13,7 @@ import BestSeller from "./Anonymous/BestSeller";
 import Help from "./Anonymous/Help";
 import Privacy from "./Anonymous/Privacy";
 import ConditionalTerms from "./Anonymous/ConditionalTerms";
+import Cookie from "./Anonymous/Cookie";
 import ShoppingCart from "./Anonymous/ShoppingCart";
 import Login from "./Anonymous/Login";
 import Register from "./Anonymous/Register";
@@ -50,6 +51,7 @@ export default function RouteConfig() {
             <Route path={"/help"} element={<Help />} />
             <Route path={"/policy-and-privacy"} element={<Privacy />} />
             <Route path={"/terms-and-condition"} element={<ConditionalTerms />} />
+            <Route path={"/cookie"} element={<Cookie />} />
             <Route path={"/shopping-cart"} element={<ShoppingCart />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />

@@ -1,4 +1,53 @@
 .comments {
+    gap: 15px;
     display: flex;
     flex-direction: column;
+}
+
+.comment-card {
+    gap: 25px;
+    padding: 25px;
+    display: flex;
+    border-radius: 10px;
+    background-color: var(--c-white);
+
+    .-header {
+        margin: auto;
+        display: flex;
+
+        img {
+            width: 50px;
+        }
+    }
+
+    .-content {
+        gap: 10px;
+        margin: auto;
+        display: flex;
+        text-align: justify;
+        flex-direction: column;
+
+        .message {
+            margin: 0;
+            line-height: 1.5;
+            letter-spacing: .5px;
+        }
+
+        .date {
+            font-weight: 700;
+        }
+
+        .rating {
+            gap: 5px;
+            display: flex;
+        
+            img {
+                width: 15px;
+
+                &.checked {
+                    color: #ffa500;
+                }
+            }
+        }
+    }
 }

@@ -100,6 +100,7 @@ export default function Header(props) {
                                     <Link to={"/help"}>Help</Link>
                                     <Link to={"/policy-and-privacy"}>Policy & Privacy</Link>
                                     <Link to={"/terms-and-condition"}>Terms & Conditions</Link>
+                                    <Link to={"/cookie"}>Cookie</Link>
                                 </div>
                             </div>
                             <div className={"links-col"}>

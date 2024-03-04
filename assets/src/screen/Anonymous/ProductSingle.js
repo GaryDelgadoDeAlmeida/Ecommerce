@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Header from "../../component/part/Header";
 import { Link, useParams } from "react-router-dom";
+import CommentCard from "../../component/part/CommentCard";
+import CommentForm from "../../component/form/CommentForm";
 
 export default function ProductSingle() {
 
@@ -119,6 +121,16 @@ export default function ProductSingle() {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div className={"page-section"}>
+                    <h2>Comments</h2>
+
+                    <CommentForm productID={productID} />
+
+                    <div className={"comments"}>
+                        <CommentCard />
+                    </div>
                 </div>
             </div>
         </Header>

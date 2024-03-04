@@ -51,6 +51,10 @@
     margin-top: 25px;
 }
 
+.m-b-15 {
+    margin-bottom: 15px;
+}
+
 .m-b-25 {
     margin-bottom: 25px;
 }
@@ -107,6 +111,11 @@
     gap: 15px;
     display: flex;
     flex-direction: column;
+}
+
+.d-justify {
+    display: flex;
+    justify-content: space-between;
 }
 
 .d-grid {

@@ -8,9 +8,8 @@
     }
 
     .-list {
-        gap: 15px;
+        gap: 10px;
         display: flex;
-        margin: auto 0;
         flex-direction: column;
 
         @include mobile {

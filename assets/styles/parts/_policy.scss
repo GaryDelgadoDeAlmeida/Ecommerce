@@ -1,0 +1,33 @@
+.policies {
+    gap: 25px;
+    width: 100%;
+    display: flex;
+    position: relative;
+
+    .policy-menu {
+        width: 250px;
+
+        .menu-widget {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--c-white);
+
+            a {
+                padding: 15px;
+    
+                &.-active, &:hover {
+                    color: var(--c-white);
+                    background-color: var(--c-blue);
+                }
+            }
+        }
+    }
+
+    .policy-content {
+        flex: 1;
+        height: 600px;
+        padding: 25px;
+        overflow: hidden;
+        background-color: var(--c-white);
+    }
+}

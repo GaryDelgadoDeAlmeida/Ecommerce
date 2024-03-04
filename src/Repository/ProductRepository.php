@@ -77,6 +77,24 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int offset
+     * @param int limit
+     * @return Product[]
+     */
+    public function getBestSellers(int $offset, int $limit) : array {
+        return $this->createQueryBuilder("product")
+            ->select("product.id, product.name, orderDetail.id, SUM(orderDetail.quantity) as totalSelledQuantity")
+            ->leftJoin("product.orderDetails", "orderDetail")
+            ->groupBy("orderDetail.id")
+            ->orderBy("product.id")
+            ->setFirstResult(($offset - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
      * @return int
      */
     public function countProducts() {
@@ -89,10 +107,30 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param Category
-     * @return Category
+     * @return int
      */
     public function countProductsCategory(Category $category) : int {
-        // 
+        return $this->createQueryBuilder("product")
+            ->select("COUNT(product.id) as nbrProducts")
+            ->where("product.category = :category")
+            ->setParameter("category", $category)
+            ->getQuery()
+            ->getSingleResult()["nbrProducts"]
+        ;
+    }
+
+    /**
+     * @return int
+     */
+    public function countBestSellers() : int {
+        return $this->createQueryBuilder("product")
+            ->select("COUNT(product.id) as nbrProducts, orderDetail.id, SUM(orderDetail.quantity) as totalSelledQuantity")
+            ->leftJoin("product.orderDetails", "orderDetail")
+            ->groupBy("orderDetail.id")
+            ->orderBy("product.id")
+            ->getQuery()
+            ->getOneOrNullResult()["nbrProducts"] ?? 0
+        ;
     }
 
     /**

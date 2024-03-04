@@ -4,6 +4,7 @@ import ContactForm from "../../component/form/ContactForm";
 import ProductCard from "../../component/part/ProductCard";
 import { Link } from "react-router-dom";
 import CategoryCard from "../../component/part/CategoryCard";
+import Notification from "../../component/part/Notification";
 
 export default function Home() {
 
@@ -43,8 +44,14 @@ export default function Home() {
                 <div className={"page-wrapper"}>
                     <h2 className={"page-title"}>Categories</h2>
 
-                    <div className={"d-grid -col-4 -m-col-2 m-t-25"}>
-                        {generateCategoryCard()}
+                    <div className={"m-t-25"}>
+                        {generateCategoryCard().length > 0 ? (
+                            <div className={"d-grid -col-4 -m-col-2"}>
+                                {generateCategoryCard()}
+                            </div>
+                        ) : (
+                            <Notification classname={"information"} message={"There is no categories registered"} />
+                        )}
                     </div>
 
                     <div className={"m-t-25 txt-right"}>

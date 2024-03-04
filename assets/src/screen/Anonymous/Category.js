@@ -15,6 +15,11 @@ export default function Category() {
         load()
     }, [offset])
 
+    console.log(
+        loading,
+        error
+    )
+
     return (
         <Header>
             <div className={"page-hero"}>
@@ -30,17 +35,15 @@ export default function Category() {
 
             <div className={"page-section"}>
                 <div className={"page-wrapper"}>
-                    <Notification classname={"information"} message={"There is no category registered for now."} />
-
                     {loading && (
                         <Notification classname={"information"} message={"Loading . . ."} />
                     )}
-
+                    
                     {Object.keys(error).length > 0 && (
                         <Notification classname={"danger"} message={error.message} />
                     )}
-
-                    {!loading && Object.keys(items.results ?? []).length > 0 && (
+                    
+                    {!loading && Object.keys(items.results ?? []).length > 0 ? (
                         <>
                             <div className={"d-grid -col-5"}>
                                 {Object.values(items.results).map((item, index) => (
@@ -57,9 +60,9 @@ export default function Category() {
                                 maxOffset={items.maxOffset}
                             />
                         </>
+                    ) : (
+                        <Notification classname={"information"} message={"There is no category registered for now."} />
                     )}
-
-                    {/* <CategoryCard /> */}
                 </div>
             </div>
         </Header>

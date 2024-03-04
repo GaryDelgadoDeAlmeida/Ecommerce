@@ -25,8 +25,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'get_products', methods: ["GET"])]
-    public function get_products(Request $request): JsonResponse
-    {
+    public function get_products(Request $request): JsonResponse {
         $limit = 25;
         $filters = $request->get("filters", []);
         $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? $request->get("offset") : 1;
@@ -45,6 +44,21 @@ class ProductController extends AbstractController
             "limit" => $limit,
             "maxOffset" => $maxOffset,
             "results" => $this->serializeManager->serializeContent($products)
+        ], Response::HTTP_OK);
+    }
+
+    #[Route('/products/best-sellers', name: 'get_best_sellers', methods: ["GET"])]
+    public function get_best_sellers(Request $request) : JsonResponse {
+        $limit = 25;
+        $offset = $request->get("offset");
+        $offset = is_numeric($offset) && $offset > 0 ? intval($offset) : 1;
+
+        return $this->json([
+            "offset" => $offset,
+            "maxOffset" => ceil($this->productRepository->countBestSellers() / $limit),
+            "results" => $this->serializeManager->serializeContent(
+                $this->productRepository->getBestSellers($offset, $limit)
+            )
         ], Response::HTTP_OK);
     }
 

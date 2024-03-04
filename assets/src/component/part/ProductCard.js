@@ -17,7 +17,7 @@ export default function ProductCard({product}) {
                 <span className={"-category"}>Category</span>
                 <p className={"-price"}>1000 €</p>
                 
-                <div className={"d-flex -g-15"}>
+                <div className={"d-justify"}>
                     <button className={"btn btn-blue"}>Add to card</button>
                     <Link 
                         // to={`/product/${product.id}`} 
