@@ -43,8 +43,9 @@ class UserManager {
                     throw new \Exception("The firstname field can't be empty", Response::HTTP_FORBIDDEN);
                 }
 
-                if(!$this->formManager->checkMaxLength($value, 100)) {
-                    throw new \Exception("The firstname field value must not exceed 100 caracters length", Response::HTTP_FORBIDDEN);
+                $characterLength = 100;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception("The firstname field value must not exceed {$characterLength} caracters length", Response::HTTP_FORBIDDEN);
                 }
             } elseif($key == UserEnum::USER_LASTNAME) {
                 // 
@@ -59,15 +60,38 @@ class UserManager {
             } elseif($key == UserEnum::USER_PHONE) {
                 // 
             } elseif($key == UserEnum::USER_EMAIL) {
-                // 
+                if(!$this->formManager->isEmail($value)) {
+                    throw new \Exception("The sended email must be a valid email", Response::HTTP_FORBIDDEN);
+                }
+
+                $characterLength = 180;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception("The sended email mustn't exceed {$characterLength} characters length", Response::HTTP_FORBIDDEN);
+                }
+
+                if(!isset($jsonContent["id"]) && $this->userRepository->findOneBy(["email" => $value])) {
+                    throw new \Exception("An user already exist using this email", Response::HTTP_FORBIDDEN);
+                }
             } elseif($key == UserEnum::USER_PASSWORD) {
-                // 
+                $minLength = 8;
+                if(!$this->formManager->checkMinLength($value, $minLength)) {
+                    throw new \Exception("The password must be at least {$minLength} characters length", Response::HTTP_FORBIDDEN);
+                }
+
+                if(!$this->formManager->isSecurePassword($value)) {
+                    throw new \Exception("The password is not secured enought", Response::HTTP_FORBIDDEN);
+                }
             }
+
+            $fields[$key] = $value;
         }
 
         return $fields;
     }
 
+    /**
+     * 
+     */
     public function postUser(
         string $firstname,
         string $lastname,
@@ -102,7 +126,32 @@ class UserManager {
      * @param array fields / attribute to update
      * @return User
      */
-    public function updateUser(User $user, array $fields) : User {
+    public function fillUser(array $fields, ?User $user = new User()) : User {
+        $currentTime = new \DateTimeImmutable();
+
+        if(!$user->getId()) {
+            $user->setCreatedAt($currentTime);
+        } else {
+            $user->setUpdatedAt($currentTime);
+        }
+
+        foreach($fields as $fieldName => $fieldValue) {
+            if($fieldName == UserEnum::USER_FIRSTNAME) $user->setFirstname($fieldValue);
+            elseif($fieldName == UserEnum::USER_LASTNAME) $user->setLastname($fieldValue);
+            elseif($fieldName == UserEnum::USER_ADDRESS) $user->setAddress($fieldValue);
+            elseif($fieldName == UserEnum::USER_CITY) $user->setCity($fieldValue);
+            elseif($fieldName == UserEnum::USER_ZIP_CODE) $user->setZipCode($fieldValue);
+            elseif($fieldName == UserEnum::USER_COUNTRY) $user->setCountry($fieldValue);
+            elseif($fieldName == UserEnum::USER_PHONE) $user->setPhone($fieldValue);
+            elseif($fieldName == UserEnum::USER_PASSWORD) $user->setPassword($this->encoder->hashPassword($user, $fieldValue));
+        }
+
+        try {
+            $this->userRepository->save($user, true);
+        } catch(\Exception $e) {
+            return $e->getMessage();
+        }
+
         return $user;
     }
 }

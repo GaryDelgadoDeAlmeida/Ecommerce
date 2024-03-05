@@ -21,7 +21,7 @@ export default function SubscribeForm() {
             .post(`${window.location.origin}/api/newsletter/register`, credentials, {
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/ld+json"
+                    "Accept": "application/json+ld"
                 }
             })
             .then((response) => {})

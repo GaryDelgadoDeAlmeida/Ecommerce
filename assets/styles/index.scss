@@ -25,6 +25,10 @@
     --c-lightRed: #ffe0e3;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 a, a:hover {
     color: var(--c-black);
     text-decoration: none;

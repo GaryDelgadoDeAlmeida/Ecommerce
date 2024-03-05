@@ -36,7 +36,7 @@ export default function CommentForm({productID}) {
         axios
             .post(`${window.location.origin}/api/user/comment`, credentials, {
                 headers: {
-                    "Accept": "application/ld+json",
+                    "Accept": "application/json+ld",
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + user.token
                 }

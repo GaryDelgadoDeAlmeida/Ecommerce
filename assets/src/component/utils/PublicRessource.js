@@ -8,13 +8,13 @@ export default function PublicRessource(url) {
         error = useRef({})
     ;
     
-    const load = useCallback(() => {
+    const load = useCallback(async () => {
         setLoading(true)
         
-        axios
+        await axios
             .get(url, {
                 headers: {
-                    "Accept": "application/ld+json",
+                    // "Accept": "application/json+ld",
                     "Content-Type": "application/json"
                 }
             })

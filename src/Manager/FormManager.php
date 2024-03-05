@@ -33,7 +33,7 @@ class FormManager {
     public function isEmail(string $value): bool {
         $isValid = true;
 
-        if(!preg_match(RegexEnum::REGEX_EMAIL, $value)) {
+        if(!preg_match($this::REGEX_EMAIL, $value)) {
             $isValid = false;
         }
 

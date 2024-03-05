@@ -120,7 +120,7 @@ export default function Home() {
             </div>
 
             {/* Contact */}
-            <div className={"page-section"}>
+            <div id={"contact"} className={"page-section"}>
                 <div className={"page-wrapper"}>
                     <h2 className={"page-title"}>Contact</h2>
 

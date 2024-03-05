@@ -15,11 +15,6 @@ export default function Category() {
         load()
     }, [offset])
 
-    console.log(
-        loading,
-        error
-    )
-
     return (
         <Header>
             <div className={"page-hero"}>

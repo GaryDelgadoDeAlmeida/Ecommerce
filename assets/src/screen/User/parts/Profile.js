@@ -21,9 +21,7 @@ export default function Profile() {
 
     return (
         <div className={"profile"}>
-            {Object.keys(items.results ?? []).length > 0 && (
-                <ProfileForm user={items.results} />
-            )}
+            <ProfileForm user={items.results} />
         </div>
     )
 }

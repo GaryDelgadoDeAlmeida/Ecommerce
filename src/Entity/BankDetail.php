@@ -18,16 +18,25 @@ class BankDetail
     private ?User $client = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $cardType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $ownerName = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $expirationDate = null;
-
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $cardNumber = null;
 
-    #[ORM\Column(length: 3)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $expirationDate = null;
+
+    #[ORM\Column(length: 3, nullable: true)]
     private ?string $cvv = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $bic = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $iban = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -52,6 +61,18 @@ class BankDetail
         return $this;
     }
 
+    public function getCardType(): ?string
+    {
+        return $this->cardType;
+    }
+
+    public function setCardType(string $cardType): static
+    {
+        $this->cardType = $cardType;
+
+        return $this;
+    }
+
     public function getOwnerName(): ?string
     {
         return $this->ownerName;
@@ -60,18 +81,6 @@ class BankDetail
     public function setOwnerName(string $ownerName): static
     {
         $this->ownerName = $ownerName;
-
-        return $this;
-    }
-
-    public function getExpirationDate(): ?\DateTimeInterface
-    {
-        return $this->expirationDate;
-    }
-
-    public function setExpirationDate(\DateTimeInterface $expirationDate): static
-    {
-        $this->expirationDate = $expirationDate;
 
         return $this;
     }
@@ -88,6 +97,18 @@ class BankDetail
         return $this;
     }
 
+    public function getExpirationDate(): ?\DateTimeInterface
+    {
+        return $this->expirationDate;
+    }
+
+    public function setExpirationDate(\DateTimeInterface $expirationDate): static
+    {
+        $this->expirationDate = $expirationDate;
+
+        return $this;
+    }
+
     public function getCvv(): ?string
     {
         return $this->cvv;
@@ -96,6 +117,30 @@ class BankDetail
     public function setCvv(string $cvv): static
     {
         $this->cvv = $cvv;
+
+        return $this;
+    }
+
+    public function getBic(): ?string
+    {
+        return $this->bic;
+    }
+
+    public function setBic(?string $bic): static
+    {
+        $this->bic = $bic;
+
+        return $this;
+    }
+
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    public function setIban(?string $iban): static
+    {
+        $this->iban = $iban;
 
         return $this;
     }

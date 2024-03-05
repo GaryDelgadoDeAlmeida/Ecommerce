@@ -22,10 +22,10 @@ export default function PrivateRessource(url, useToken = true) {
         headers.Authorization = "Bearer " + user.token
     }
     
-    const load = () => {
+    const load = async () => {
         setLoading(true)
         
-        axios
+        await axios
             .get(url, {
                 headers: headers
             })

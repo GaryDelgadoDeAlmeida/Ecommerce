@@ -33,11 +33,13 @@ export default function BankCoordinateForm() {
             .post(`${window.location.origin}/api/user/bank-coordinate`, credentials, {
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/ld+json",
+                    "Accept": "application/json+ld",
                     "Authorization": "Bearer " + user ? user.token : ""
                 }
             })
-            .then((response) => {})
+            .then((response) => {
+                setFormResponse({classname: "success", message: "Your bank coordinate has been successfully updated"})
+            })
             .catch((error) => {
                 let errorMessage = "An error has been encountered. Please, retry later or contact the admin"
                 if(error.response.data.message) {
@@ -45,6 +47,7 @@ export default function BankCoordinateForm() {
                 } else if(error.response.data.detail) {
                     errorMessage = error.response.data.detail
                 }
+                
                 setFormResponse({classname: "danger", message: errorMessage})
             })
         ;

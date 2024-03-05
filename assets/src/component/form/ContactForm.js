@@ -35,7 +35,7 @@ export default function ContactForm() {
             .post(`${window.location.origin}/api/contact`, credentials, {
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/ld+json"
+                    "Accept": "application/json+ld"
                 }
             })
             .then((response) => {

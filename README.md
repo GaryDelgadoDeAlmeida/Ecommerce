@@ -2,8 +2,7 @@
 
 Application E-Commerce développé avec Symfony / ReactJS.
 
-La finalité du projet est de pouvoir ajouter un nouveau projet (bien fait) dans mon portfolio en ligne : <br/>
-<a href="http://garry-almeida.com/" target="_blank">http://garry-almeida.com/</a>.
+La finalité du projet est de pouvoir le vendre sur le marché et ajouter une nouvelle ligne dans mon portfolio :<br/><a href="http://garry-almeida.com/" target="_blank">http://garry-almeida.com/</a>.
 
 ## Installation
 

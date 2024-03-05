@@ -4,7 +4,7 @@ import SubscribeForm from "../form/SubscribeForm"
 
 export default function Header(props) {
 
-    const storageUser = localStorage.getItem("user")
+    let storageUser = localStorage.getItem("user")
 
     return (
         <div className={"page"}>
@@ -21,7 +21,7 @@ export default function Header(props) {
                                 <Link className={"-item"} to={"/"}>Home</Link>
                                 <Link className={"-item"} to={"/categories"}>Categories</Link>
                                 <Link className={"-item"} to={"/products"}>Products</Link>
-                                <Link className={"-item"} to={"/#contact"}>Contact</Link>
+                                <a className={"-item"} href={"/#contact"}>Contact</a>
                             </div>
                         </div>
                         <div className={"-right"}>
@@ -62,7 +62,7 @@ export default function Header(props) {
                                 <li className={"-item"}><Link to={"/"}>Home</Link></li>
                                 <li className={"-item"}><Link to={"/categories"}>Categories</Link></li>
                                 <li className={"-item"}><Link to={"/products"}>Products</Link></li>
-                                <li className={"-item"}><Link to={"/#contact"}>Contact</Link></li>
+                                <li className={"-item"}><a href={"/#contact"}>Contact</a></li>
                                 <li className={"-item"}><Link to={"/login"}>Login</Link></li>
                             </nav>
                         </div>
@@ -88,7 +88,7 @@ export default function Header(props) {
                                     <Link to={"/products"}>Product</Link>
                                     <Link to={"/categories"}>Category</Link>
                                     <Link to={"/best-seller"}>Best seller</Link>
-                                    <Link to={"/#contact"}>Contact</Link>
+                                    <a href={"/#contact"}>Contact</a>
                                     <Link to={"/login"}>Login</Link>
                                 </div>
                             </div>

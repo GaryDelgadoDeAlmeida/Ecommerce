@@ -4,15 +4,15 @@ namespace App\Enum;
 
 abstract class UserEnum {
 
-    private const USER_FIRSTNAME = "firtname";
-    private const USER_LASTNAME = "lastname";
-    private const USER_ADDRESS = "address";
-    private const USER_CITY = "city";
-    private const USER_ZIP_CODE = "zip_code";
-    private const USER_COUNTRY = "country";
-    private const USER_PHONE = "phone";
-    private const USER_EMAIL = "email";
-    private const USER_PASSWORD = "password";
+    public const USER_FIRSTNAME = "firtname";
+    public const USER_LASTNAME = "lastname";
+    public const USER_ADDRESS = "address";
+    public const USER_CITY = "city";
+    public const USER_ZIP_CODE = "zipCode";
+    public const USER_COUNTRY = "country";
+    public const USER_PHONE = "phone";
+    public const USER_EMAIL = "email";
+    public const USER_PASSWORD = "password";
 
     public static array $typeName = [
         self::USER_FIRSTNAME => "Firstname",
