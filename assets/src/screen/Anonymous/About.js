@@ -16,7 +16,7 @@ export default function About() {
             <div className={"page-section"}>
                 <div className={"page-wrapper"}>
                     {/* Content */}
-                    <div className={"d-flex -g-25"}>
+                    <div className={"d-flex -g-25 bg-white"}>
                         <div className={"-item"}>
                             <img src={`${window.location.origin}/content/img/logo.png`} alt={""} />
                         </div>
@@ -38,7 +38,7 @@ export default function About() {
                         </div>
                     </div>
                     
-                    <div className={"d-flex -g-25"}>
+                    <div className={"d-flex -g-25 bg-white"}>
                         <div className={"-item"}>
                             <span>Our commitment to substainability</span>
                             <h2>We're building a 100 year company</h2>
@@ -49,7 +49,8 @@ export default function About() {
                         </div>
                     </div>
 
-                    <div className={"d-grid -col-3"}>
+                    {/* Client service offered */}
+                    <div className={"d-grid -col-3 m-t-25"}>
                         {/* Service 1 */}
                         <div className={"offered-service-card"}>
                             <div className={"-header"}>

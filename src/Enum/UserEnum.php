@@ -26,6 +26,19 @@ abstract class UserEnum {
         self::USER_PASSWORD => "Password"
     ];
 
+    public static function getRequiredFields() : array {
+        return [
+            self::USER_FIRSTNAME,
+            self::USER_LASTNAME,
+            self::USER_ADDRESS,
+            self::USER_CITY,
+            self::USER_ZIP_CODE,
+            self::USER_COUNTRY,
+            self::USER_EMAIL,
+            self::USER_PASSWORD
+        ];
+    }
+
     public static function getAvailableChoices() : array {
         return [
             self::USER_FIRSTNAME,

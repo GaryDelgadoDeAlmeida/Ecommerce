@@ -1,7 +1,7 @@
 import React from "react";
 import StarRating from "./StarRating";
 
-export default function CommentCard() {
+export default function CommentCard({comment}) {
 
     return (
         <div className={"comment-card"}>

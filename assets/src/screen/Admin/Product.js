@@ -13,18 +13,28 @@ export default function Product() {
         load()
     }, [offset])
 
+    if(loading) {
+        return (
+            <HeaderAdmin>
+                <Notification classname={"information"} message={"Loading ..."} />
+            </HeaderAdmin>
+        )
+    }
+
+    if(Object.keys(error).length > 0) {
+        return (
+            <HeaderAdmin>
+                <Notification classname={"danger"} message={error.message} />
+            </HeaderAdmin>
+        )
+    }
+
     return (
         <HeaderAdmin>
-            {loading && (
-                <Notification classname={"information"} message={"Loading ..."} />
-            )}
-
-            {Object.keys(error).length > 0 && (
-                <Notification classname={"danger"} message={error.message} />
-            )}
+            <Link className={"btn btn-blue"} to={"/admin/product/create"}>Add a new product</Link>
 
             {!loading && (
-                <>
+                <div className={"m-t-25"}>
                     <table className={"table -collapse"}>
                         <thead>
                             <tr>
@@ -65,7 +75,7 @@ export default function Product() {
                         setOffset={setOffset} 
                         maxOffset={items.maxOffset} 
                     />
-                </>
+                </div>
             )}
         </HeaderAdmin>
     )

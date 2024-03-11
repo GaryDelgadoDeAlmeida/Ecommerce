@@ -29,14 +29,14 @@ class OrderController extends AbstractController
         $this->orderRepository = $orderRepository;
     }
     
-    #[Route('/order', name: "get_orders", methods: ["GET"])]
+    #[Route('/orders', name: "get_orders", methods: ["GET"])]
     public function get_orders(Request $request): JsonResponse {
         $offset = $request->get("offset", 1);
         $offset = is_numeric($offset) && $offset > 1 ? $offset : 1;
         $limit = 20;
 
         return $this->json(
-            $this->serializeManager->serializeConten(
+            $this->serializeManager->serializeContent(
                 $this->orderRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
             ), 
             Response::HTTP_OK

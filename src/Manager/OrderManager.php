@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\OrderDetail;
 use App\Repository\OrderRepository;
+use App\Enum\OrderDeliveryStatusEnum;
 use App\Repository\OrderDetailRepository;
 
 class OrderManager {
@@ -70,5 +71,20 @@ class OrderManager {
         $this->orderDetailRepository->save($orderDetail, true);
 
         return $orderDetail;
+    }
+
+    /**
+     * @param Order
+     */
+    public function cancelOrder(Order $order) : Order {
+        try {
+            $order->setStatus(OrderDeliveryStatusEnum::STATUS_CANCELLED);
+
+            $this->orderRepository->save($order, true);
+        } catch(\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return $order;
     }
 }

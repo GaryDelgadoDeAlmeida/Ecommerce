@@ -1,0 +1,47 @@
+.shopping-card {
+    gap: 25px;
+    display: flex;
+    padding: 25px;
+    margin: auto 0;
+    border-top: .5px solid var(--c-gray85);
+
+    &:last-child {
+        border-bottom: .5px solid var(--c-gray85);
+    }
+
+    .-header {
+        // 
+
+        img {
+            width: 100px;
+        }
+    }
+
+    .-content {
+        width: 100%;
+        display: flex;
+        margin: auto 0;
+        font-size: 1rem;
+        justify-content: space-around;
+
+        .name {
+            word-break: break-all;
+        }
+
+        .quantity {
+            display: flex;
+
+            button {
+                width: 30px;
+                border: none;
+                background-color: var(--c-gray85);
+            }
+
+            input {
+                width: 30px;
+                text-align: center;
+                border: .5px solid var(--c-gray85);
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@ import Pagination from "../../component/part/Pagination";
 import HeaderAdmin from "../../component/part/HeaderAdmin";
 import Notification from "../../component/part/Notification";
 import PrivateRessource from "../../component/utils/PrivateRessource";
+import { Link } from "react-router-dom";
 
 export default function Brand() {
 
@@ -29,16 +30,20 @@ export default function Brand() {
                     {Object.keys(items.results ?? []).length > 0 ? (
                         Object.values(items.results).map((item, index) => (
                             <tr key={index}>
-                                <td className={"-brand"}></td>
+                                <td className={"-brand"}>{item.name}</td>
                                 <td className={"-address"}></td>
                                 <td className={"-category"}></td>
-                                <td className={"-nbr-products"}></td>
-                                <td className={"-actions"}></td>
+                                <td className={"-nbr-products"}>{item.products.length}</td>
+                                <td className={"-actions"}>
+                                    <Link className={"btn btn-blue -inline-flex"} to={`/admin/brand/${item.id}`}>
+                                        <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
+                                    </Link>
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td className={"-message"} colSpan={5}></td>
+                            <td className={"-message"} colSpan={5}>There no brand registered in our database</td>
                         </tr>
                     )}
                 </tbody>

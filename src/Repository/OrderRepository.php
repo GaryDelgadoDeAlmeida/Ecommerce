@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Order;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -21,6 +22,10 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    /**
+     * @param Order entity
+     * @param bool flush (save changes into database)
+     */
     public function save(Order $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +35,10 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Order entity
+     * @param bool flush (save chenges/remove into database)
+     */
     public function remove(Order $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -40,21 +49,32 @@ class OrderRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return int
+     */
+    public function countOrders() : int {
+        return $this->createQueryBuilder("clientOrder")
+            ->select("COUNT(clientOrder.id) as nbrOrders")
+            ->getQuery()
+            ->setSingleResult()["nbrOrders"]
+        ;
+    }
+
+    /**
      * @param User user
      * @param string status
      * @return int
      */
-    public function countUserOrder(User $user, string $status) : int {
-        return $this->createQueryBuilder("order")
-            ->select("COUNT(order.id) as nbrOrders")
-            ->where("order.user = :user")
-            ->andWhere("order.status = :status")
+    public function countUserOrders(User $user, string $status) : int {
+        return $this->createQueryBuilder("clientOrder")
+            ->select("COUNT(clientOrder.id) as nbrOrders")
+            ->where("clientOrder.client = :user")
+            ->andWhere("clientOrder.status = :status")
             ->setParameters([
                 "user" => $user,
                 "status" => $status
             ])
             ->getQuery()
-            ->getResult()["nbrOrders"]
+            ->getSingleResult()["nbrOrders"]
         ;
     }
 }

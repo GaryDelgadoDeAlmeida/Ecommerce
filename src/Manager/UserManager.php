@@ -31,6 +31,7 @@ class UserManager {
      */
     public function checkFields(array $jsonContent) : array {
         $fields = [];
+        $requiredFields = UserEnum::getRequiredFields();
         $allowedFields = UserEnum::getAvailableChoices();
 
         foreach($jsonContent as $key => $value) {
@@ -38,27 +39,66 @@ class UserManager {
                 continue;
             }
 
-            if($key == UserEnum::USER_FIRSTNAME) {
+            // Check if the current row is a required data
+            if(in_array($key, $requiredFields)) {
                 if($this->formManager->isEmpty($value)) {
-                    throw new \Exception("The firstname field can't be empty", Response::HTTP_FORBIDDEN);
+                    throw new \Exception(
+                        sprintf("The %s field can't be empty", $fieldName), 
+                        Response::HTTP_FORBIDDEN
+                    );
                 }
+            }
 
+            if($key == UserEnum::USER_FIRSTNAME) {
                 $characterLength = 100;
                 if(!$this->formManager->checkMaxLength($value, $characterLength)) {
-                    throw new \Exception("The firstname field value must not exceed {$characterLength} caracters length", Response::HTTP_FORBIDDEN);
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
                 }
             } elseif($key == UserEnum::USER_LASTNAME) {
-                // 
+                $characterLength = 150;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
+                }
             } elseif($key == UserEnum::USER_ADDRESS) {
-                // 
+                $characterLength = 255;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
+                }
             } elseif($key == UserEnum::USER_CITY) {
-                // 
+                $characterLength = 20;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
+                }
             } elseif($key == UserEnum::USER_ZIP_CODE) {
-                // 
+                $characterLength = 10;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
+                }
             } elseif($key == UserEnum::USER_COUNTRY) {
                 // 
             } elseif($key == UserEnum::USER_PHONE) {
-                // 
+                $characterLength = 10;
+                if(!$this->formManager->checkMaxLength($value, $characterLength)) {
+                    throw new \Exception(
+                        sprintf("The %s field value must not exceed %s caracters length", $key, $characterLength), 
+                        Response::HTTP_FORBIDDEN
+                    );
+                }
             } elseif($key == UserEnum::USER_EMAIL) {
                 if(!$this->formManager->isEmail($value)) {
                     throw new \Exception("The sended email must be a valid email", Response::HTTP_FORBIDDEN);

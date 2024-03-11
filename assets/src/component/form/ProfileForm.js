@@ -3,7 +3,7 @@ import Notification from "../part/Notification";
 import PublicRessource from "../utils/PublicRessource";
 import axios from "axios";
 
-export default function ProfileForm({user = null}) {
+export default function ProfileForm({user = null, isAdmin = false}) {
 
     const storageUser = localStorage.getItem("user")
     const jsonUser = storageUser.length > 0 ? JSON.parse(storageUser) : []
@@ -37,6 +37,11 @@ export default function ProfileForm({user = null}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        let apiURL = `${window.location.origin}/api/user/profile`
+        if(isAdmin) {
+            apiURL = `${window.location.origin}/api/admin/profile`
+        }
 
         axios
             .put(`${window.location.origin}/api/user/profile`, credentials, {

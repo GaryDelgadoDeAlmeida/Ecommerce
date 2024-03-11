@@ -6,11 +6,13 @@ abstract class OrderDeliveryStatusEnum {
     
     public const STATUS_WAITING = "waiting";
     public const STATUS_ONGOING = "ongoing";
+    public const STATUS_CANCELLED = "cancelled";
     public const STATUS_DELIVERED = "delivery";
 
     public array $typeName = [
         self::STATUS_WAITING => "WAITING",
         self::STATUS_ONGOING => "ONGOING",
+        self::STATUS_CANCELLED => "CANCELLED",
         self::STATUS_DELIVERED => "DELIVERED",
     ];
 
@@ -18,6 +20,7 @@ abstract class OrderDeliveryStatusEnum {
         return [
             self::STATUS_WAITING,
             self::STATUS_ONGOING,
+            self::STATUS_CANCELLED,
             self::STATUS_DELIVERED,
         ];
     }

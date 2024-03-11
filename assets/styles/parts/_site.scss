@@ -371,6 +371,97 @@ html, body, .page {
             }
         }
 
+        .page-shopping {
+            display: flex;
+            
+            @include tablet {
+                gap: 25px;
+                flex-direction: column;
+            }
+
+            .-left {
+                flex: 1;
+                padding: 25px;
+                background-color: var(--c-white);
+            }
+            
+            .-right {
+                margin: 0;
+                padding: 0;
+
+                .shopping-resume {
+                    width: 300px;
+                    display: flex;
+                    padding: 25px;
+                    flex-direction: column;
+                    background-color: var(--c-white);
+                    border-left: 1px solid var(--c-gray85);
+
+                    @include tablet {
+                        width: auto;
+                        border-left: none;
+                    }
+
+                    .-content {
+                        gap: 25px;
+                        display: flex;
+                        flex-direction: column;
+
+                        .-order-resume {
+                            width: 100%;
+    
+                            .-row {
+                                display: flex;
+
+                                &:not(:last-child) {
+                                    margin-bottom: 10px;
+                                }
+    
+                                span {
+                                    flex: 1;
+    
+                                    &:nth-child(1) {
+                                        text-align: left;
+                                    }
+    
+                                    &:nth-child(2) {
+                                        text-align: right;
+                                    }
+                                }
+                            }
+                        }
+
+                        .-order-price {
+                            padding: 25px 0;
+                            border-top: 1px solid var(--c-black);
+
+                            .-row {
+                                display: flex;
+    
+                                span {
+                                    flex: 1;
+    
+                                    &:nth-child(1) {
+                                        text-align: left;
+                                        font-weight: 700;
+                                    }
+    
+                                    &:nth-child(2) {
+                                        text-align: right;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .-footer {
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                }
+            }
+        }
+
         .page-button {
             text-align: right;
             padding-top: 15px;

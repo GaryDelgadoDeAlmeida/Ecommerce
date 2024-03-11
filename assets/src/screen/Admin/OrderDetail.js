@@ -61,7 +61,7 @@ export default function OrderDetail() {
                     </div>
                 </div>
             ) : (
-                <Notification classsname="information" message="Loading ..." />
+                <Notification classname={"information"} message={"Loading ..."} />
             )}
         </HeaderAdmin>
     )

@@ -3,6 +3,7 @@
 namespace App\Controller\API\User;
 
 use App\Entity\User;
+use App\Manager\MailManager;
 use App\Manager\SerializeManager;
 use App\Repository\OrderRepository;
 use App\Enum\OrderDeliveryStatusEnum;
@@ -17,15 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     private User $user;
+    private MailManager $mailManager;
     private SerializeManager $serializeManager;
     private OrderRepository $orderRepository;
 
     function __construct(
         Security $security,
+        MailManager $mailManager,
         SerializeManager $serializeManager,
         OrderRepository $orderRepository
     ) {
         $this->user = $security->getUser();
+        $this->mailManager = $mailManager;
         $this->serializeManager = $serializeManager;
         $this->orderRepository = $orderRepository;
     }
@@ -38,11 +42,11 @@ class OrderController extends AbstractController
         $orders = $this->orderRepository->findBy([
             "client" => $this->user, 
             "status" => OrderDeliveryStatusEnum::STATUS_DELIVERED
-        ], $limit, ($offset - 1) * $limit);
+        ], ["createdAt" => "DESC"], $limit, ($offset - 1) * $limit);
 
         return $this->json([
             "offset" => $offset,
-            "maxOffset" => ceil($this->orderRepository->countUserOrder($this->user, OrderDeliveryStatusEnum::STATUS_DELIVERED) / $limit),
+            "maxOffset" => ceil($this->orderRepository->countUserOrders($this->user, OrderDeliveryStatusEnum::STATUS_DELIVERED) / $limit),
             "results" => $this->serializeManager->serializeContent($orders)
         ], Response::HTTP_OK);
     }
@@ -55,12 +59,13 @@ class OrderController extends AbstractController
         $orders = $this->orderRepository->findBy([
             "client" => $this->user, 
             "status" => [OrderDeliveryStatusEnum::STATUS_WAITING, OrderDeliveryStatusEnum::STATUS_ONGOING]
-        ], $limit, ($offset - 1) * $limit);
+        ], ["createdAt" => "DESC"], $limit, ($offset - 1) * $limit);
 
-        return $this->json(
-            $this->serializeManager->serializeContent($orders), 
-            Response::HTTP_OK
-        );
+        return $this->json([
+            "offset" => $offset,
+            "maxOffset" => 0,
+            "results" => $this->serializeManager->serializeContent($orders)
+        ], Response::HTTP_OK);
     }
 
     #[Route("/order", name: "post_order", methods: ["POST"])]
@@ -88,8 +93,15 @@ class OrderController extends AbstractController
 
     #[Route("/order/{orderID}", name: "get_order", methods: ["GET"])]
     public function get_order(Request $request, int $orderID) : JsonResponse {
+        $order = $this->orderRepository->findOneBy(["id" => $orderID, "client" => $this->user]);
+        if(!$order) {
+            return $this->json([
+                "message" => "Order not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         return $this->json([
-            "message" => "Route under construction"
+            "results" => $this->serializeManager->serializeContent($order)
         ], Response::HTTP_OK);
     }
 
@@ -99,9 +111,27 @@ class OrderController extends AbstractController
      * the user will have to pay the return
      */
     #[Route("/order/{orderID}/cancel", name: "cancel_order", methods: ["POST"])]
-    public function cancel_order(Request $request) : JsonResponse {
-        return $this->json([
-            "message" => "Route under construction"
-        ], Response::HTTP_OK);
+    public function cancel_order(Request $request, int $orderID) : JsonResponse {
+        $order = $this->orderRepository->findOneBy(["id" => $orderID, "client" => $this->user]);
+        if(!$order) {
+            return $this->json([
+                "message" => "Order not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        if($order->getStatus() == OrderDeliveryStatusEnum::STATUS_CANCELLED) {
+            return $this->json([
+                "message" => "Your order has been already cancelled."
+            ], Response::HTTP_ALREADY_REPORTED);
+        }
+
+        $response = $this->orderManager->cancelOrder($order);
+        if(is_string($response)) {
+            return $this->json([
+                "message" => $response
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -6,6 +6,7 @@ import BankCoordinate from "./parts/BankCoordinate";
 import OngoingOrder from "./parts/OngoingOrder";
 import PastOrder from "./parts/PastOrder";
 import Setting from "./parts/Setting";
+import Comment from "./parts/Comment";
 
 export default function Home() {
 
@@ -25,6 +26,10 @@ export default function Home() {
         {
             value: "past-orders",
             text: "Past Orders"
+        },
+        {
+            value: "comments",
+            text: "Comments"
         },
         {
             value: "settings",
@@ -79,6 +84,10 @@ export default function Home() {
                             
                             {currentOnglet == "past-orders" && (
                                 <PastOrder />
+                            )}
+                            
+                            {currentOnglet == "comments" && (
+                                <Comment />
                             )}
                             
                             {currentOnglet == "settings" && (

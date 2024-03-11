@@ -6,6 +6,11 @@ export default function HeaderPolicy(props) {
     const currentOnglet = props.currentOnglet ?? null
     const pages = [
         {
+            url: "/help",
+            value: "help",
+            text: "Help"
+        },
+        {
             url: "/policy-and-privacy",
             value: "policy-and-privacy",
             text: "Policy & Privacy"

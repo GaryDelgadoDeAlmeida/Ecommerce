@@ -25,7 +25,7 @@ export default function PastOrder() {
                         <td>39.99 €</td>
                         <td>3</td>
                         <td>
-                            <Link className={"btn -inline-flex"} to={`/user/order/1`}>
+                            <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                                 <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                             </Link>
                         </td>
@@ -37,8 +37,8 @@ export default function PastOrder() {
                         </td>
                         <td>39.99 €</td>
                         <td>3</td>
-                        <td>
-                            <Link className={"btn -inline-flex"} to={`/user/order/1`}>
+                        <td className={"-actions"}>
+                            <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                                 <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                             </Link>
                         </td>
@@ -51,7 +51,7 @@ export default function PastOrder() {
                         <td>39.99 €</td>
                         <td>3</td>
                         <td>
-                            <Link className={"btn -inline-flex"} to={`/user/order/1`}>
+                            <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                                 <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                             </Link>
                         </td>

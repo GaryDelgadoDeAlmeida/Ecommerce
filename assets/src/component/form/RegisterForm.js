@@ -90,12 +90,12 @@ export default function RegisterForm() {
                 <div className={"form-field-inline"}>
                     <div className={"form-field"}>
                         <label htmlFor={"firstname"}>Firstname</label>
-                        <input type={"text"} maxLength={255} onChange={(e) => handleChange(e, "firstname")} />
+                        <input type={"text"} maxLength={100} onChange={(e) => handleChange(e, "firstname")} />
                     </div>
                     
                     <div className={"form-field"}>
                         <label htmlFor={"lastname"}>Lastname</label>
-                        <input type={"text"} maxLength={255} onChange={(e) => handleChange(e, "lastname")} />
+                        <input type={"text"} maxLength={150} onChange={(e) => handleChange(e, "lastname")} />
                     </div>
                 </div>
                 

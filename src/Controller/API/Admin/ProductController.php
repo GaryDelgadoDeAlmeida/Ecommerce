@@ -29,18 +29,19 @@ class ProductController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    #[Route('/product', name: "get_products", methods: ["GET"])]
+    #[Route('/products', name: "get_products", methods: ["GET"])]
     public function get_products(Request $request): JsonResponse {
         $offset = $request->get("offset", 1);
         $offset = is_numeric($offset) && $offset > 1 ? $offset : 1;
         $limit = 20;
 
-        return $this->json(
-            $this->serializeManager->serializeContent(
+        return $this->json([
+            "offset" => $offset,
+            "maxOffset" => ceil($this->productRepository->countProducts() / $limit),
+            "results" => $this->serializeManager->serializeContent(
                 $this->productRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
-            ), 
-            Response::HTTP_OK
-        );
+            )
+        ], Response::HTTP_OK);
     }
 
     #[Route("/product", name: "post_product", methods: ["POST"])]
