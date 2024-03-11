@@ -16,44 +16,48 @@ export default function Brand() {
 
     return (
         <HeaderAdmin>
-            <table className={"table -collapse"}>
-                <thead>
-                    <tr>
-                        <th>Brand</th>
-                        <th>Address</th>
-                        <th>Category</th>
-                        <th>Nbr products</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.keys(items.results ?? []).length > 0 ? (
-                        Object.values(items.results).map((item, index) => (
-                            <tr key={index}>
-                                <td className={"-brand"}>{item.name}</td>
-                                <td className={"-address"}></td>
-                                <td className={"-category"}></td>
-                                <td className={"-nbr-products"}>{item.products.length}</td>
-                                <td className={"-actions"}>
-                                    <Link className={"btn btn-blue -inline-flex"} to={`/admin/brand/${item.id}`}>
-                                        <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td className={"-message"} colSpan={5}>There no brand registered in our database</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <Link className={"btn btn-blue"} to={"/admin/brand/create"}>Add a brand</Link>
 
-            <Pagination
-                offset={offset}
-                setOffset={setOffset}
-                maxOffset={items.maxOffset}
-            />
+            <div className={"m-t-25"}>
+                <table className={"table -collapse"}>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Address</th>
+                            <th>Category</th>
+                            <th>Nbr products</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(items.results ?? []).length > 0 ? (
+                            Object.values(items.results).map((item, index) => (
+                                <tr key={index}>
+                                    <td className={"-brand"}>{item.name}</td>
+                                    <td className={"-address"}></td>
+                                    <td className={"-category"}></td>
+                                    <td className={"-nbr-products"}>{item.products.length}</td>
+                                    <td className={"-actions"}>
+                                        <Link className={"btn btn-blue -inline-flex"} to={`/admin/brand/${item.id}`}>
+                                            <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td className={"-message"} colSpan={5}>There no brand registered in our database</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
+                <Pagination
+                    offset={offset}
+                    setOffset={setOffset}
+                    maxOffset={items.maxOffset}
+                />
+            </div>
         </HeaderAdmin>
     )
 }

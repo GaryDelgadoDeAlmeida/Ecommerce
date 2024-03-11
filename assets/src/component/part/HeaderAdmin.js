@@ -11,6 +11,7 @@ export default function HeaderAdmin(props) {
     }, [storageUser])
 
     const handleDisconnect = (e) => {
+        e.preventDefault()
         localStorage.setItem("user", "")
         setLogged(false)
     }
@@ -24,33 +25,52 @@ export default function HeaderAdmin(props) {
     return (
         <>
             {!logged && (
-                <Navigate to={"/admin-login"} />
+                <Navigate to={"/login"} />
             )}
 
             <div className={"page-admin"}>
                 <div className={"page-header"}>
                     <nav className={"menu-horizontal"}>
                         <li><Link to={"/admin"}>Dashboard</Link></li>
-                        <li><Link to={"/admin/profile"}>Profile</Link></li>
                         <li><Link to={"/admin/users"}>Users</Link></li>
                         <li><Link to={"/admin/brands"}>Brands</Link></li>
                         <li><Link to={"/admin/products"}>Products</Link></li>
                         <li><Link to={"/admin/orders"}>Orders</Link></li>
-                        <li>
-                            <button 
-                                type={"button"} 
-                                className={"btn btn-red"} 
-                                onClick={(e) => handleDisconnect(e)}
-                            >Logout</button>
-                        </li>
+                        <li><Link to={"/admin/settings"}>Settings</Link></li>
+                        <li><Link to={"#"} onClick={(e) => handleDisconnect(e)}>Logout</Link></li>
                     </nav>
                 </div>
                 
                 <div className={"page-content"}>
-                    <div className={"page-banner"}>
-                        <Link className={"btn -inline-flex"} to={"/admin/profile"}>
-                            <img src={`${window.location.origin}/content/svg/user.svg`} alt={""} />
+                    <div className={"page-menu"}>
+                        <Link className={"link-avatar"} to={"/admin/profile"}>
+                            <div className={"avatar-infos"}>
+                                <span>Garry ALMEIDA</span>
+                                <span className={"txt-bold"}>Administrateur</span>
+                            </div>
+                            <div className={"avatar-img"}>
+                                <img src={`${window.location.origin}/content/svg/avatar.svg`} alt={""} />
+                            </div>
                         </Link>
+
+                        <label className={"icon-menu"} htmlFor={"burger"}>
+                            <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
+                        </label>
+
+                        <input id={"burger"} type={"checkbox"} hidden />
+                        <ul className={"mobile-menu"}>
+                            <li><Link to={"/admin"}>Dashboard</Link></li>
+                            <li><Link to={"/admin/profile"}>Profile</Link></li>
+                            <li><Link to={"/admin/users"}>Users</Link></li>
+                            <li><Link to={"/admin/brands"}>Brands</Link></li>
+                            <li><Link to={"/admin/products"}>Products</Link></li>
+                            <li><Link to={"/admin/orders"}>Orders</Link></li>
+                            <li><Link to={"/admin/settings"}>Settings</Link></li>
+                            <li><Link to={"/logout"} onClick={(e) => handleLogout(e)}>logout</Link></li>
+                            <label className={"icon-menu"} htmlFor={"burger"}>
+                                <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
+                            </label>
+                        </ul>
                     </div>
                     <div className={"page-wrapper"}>
                         {props.children}

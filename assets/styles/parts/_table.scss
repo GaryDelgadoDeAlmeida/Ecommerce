@@ -60,7 +60,7 @@
                 padding: 15px;
                 text-align: center;
 
-                &.-action {
+                &.-actions {
                     gap: 5px;
                     display: flex;
                     text-align: center;
@@ -79,8 +79,8 @@
                         padding: 15px;
                         font-size: 14px;
                         line-height: 1.2;
+                        font-weight: 500;
                         position: absolute;
-                        font-weight: unset;
                         color: var(--c-black);
                     }
 
@@ -106,6 +106,25 @@
                     }
 
                     // Product
+                    &.-product::before {
+                        content: "Nom du produit";
+                    }
+
+                    &.-brand::before {
+                        content: "Vendeur";
+                    }
+
+                    &.-category::before {
+                        content: "Categorie";
+                    }
+
+                    &.-description::before {
+                        content: "Description";
+                    }
+
+                    &.-unit-price::before {
+                        content: "Prix unitaire";
+                    }
 
                     // Order
                     &.-order-id::before {
@@ -114,6 +133,10 @@
 
                     &.-customer::before {
                         content: "Client";
+                    }
+
+                    &.-quantity::before {
+                        content: "Quantité";
                     }
 
                     &.-paid-status::before {
@@ -129,11 +152,19 @@
                         content: "Message";
                     }
 
-                    &.-action {
+                    &.-created-at::before {
+                        content: "Créer à";
+                    }
+
+                    &.-total-amount::before {
+                        content: "Montant total";
+                    }
+
+                    &.-actions {
                         text-align: left;
 
                         &::before {
-                            content: "Action";
+                            content: "Actions";
                         }
                     }
                 }

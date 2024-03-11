@@ -4,7 +4,9 @@ namespace App\Controller\API\Admin;
 
 use App\Entity\User;
 use App\Manager\SerializeManager;
+use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +19,22 @@ class ProductController extends AbstractController
 {
     private User $user;
     private SerializeManager $serializeManager;
+    private BrandRepository $brandRepository;
     private ProductRepository $productRepository;
+    private CategoryRepository $categoryRepository;
 
     public function __construct(
         Security $security,
         SerializeManager $serializeManager,
-        ProductRepository $productRepository
+        BrandRepository $brandRepository,
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository
     ) {
         $this->user = $security->getUser();
         $this->serializeManager = $serializeManager;
+        $this->brandRepository = $brandRepository;
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     #[Route('/products', name: "get_products", methods: ["GET"])]
@@ -42,6 +50,17 @@ class ProductController extends AbstractController
                 $this->productRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
             )
         ], Response::HTTP_OK);
+    }
+
+    #[Route('/product/form-needs', name: "get_product_form_needs", methods: ["GET"])]
+    public function get_product_form_needs(Request $request) : JsonResponse {
+        return $this->json(
+            $this->serializeManager->serializeContent([
+                "brands" => $this->brandRepository->findAll(),
+                "categories" => $this->categoryRepository->findAll()
+            ]), 
+            Response::HTTP_OK
+        );
     }
 
     #[Route("/product", name: "post_product", methods: ["POST"])]

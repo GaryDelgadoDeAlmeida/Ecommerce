@@ -23,7 +23,7 @@ export default function OngoingOrder() {
                     </td>
                     <td>39.99 €</td>
                     <td>3</td>
-                    <td>
+                    <td className={"-actions"}>
                         <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                             <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                         </Link>
@@ -36,7 +36,7 @@ export default function OngoingOrder() {
                     </td>
                     <td>39.99 €</td>
                     <td>3</td>
-                    <td>
+                    <td className={"-actions"}>
                         <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                             <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                         </Link>
@@ -49,7 +49,7 @@ export default function OngoingOrder() {
                     </td>
                     <td>39.99 €</td>
                     <td>3</td>
-                    <td>
+                    <td className={"-actions"}>
                         <Link className={"btn btn-blue -inline-flex"} to={`/user/order/1`}>
                             <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                         </Link>

@@ -31,6 +31,10 @@
     text-align: right;
 }
 
+.txt-bold {
+    font-weight: 700;
+}
+
 
 /* ----------------------------------------------- *\
     Margin
@@ -67,6 +71,10 @@
     margin: auto 0;
 }
 
+.m-tb-15 {
+    margin: 15px 0;
+}
+
 
 /* ----------------------------------------------- *\
     Padding
@@ -85,6 +93,14 @@
 
 .p-t-25 {
     padding-top: 25px;
+}
+
+.p-tb-5 {
+    padding: 5px 0;
+}
+
+.p-tb-15 {
+    padding: 15px 0;
 }
 
 .p-tb-50 {
@@ -158,6 +174,12 @@
         &.-m-col-2 {
             grid-template-columns: repeat(2, 1fr);
         }
+    }
+}
+
+@include tablet {
+    .t-d-hidden {
+        display: none;
     }
 }
 

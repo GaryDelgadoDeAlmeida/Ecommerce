@@ -28,9 +28,13 @@ import AdminHome from "./Admin/Home";
 import AdminProfile from "./Admin/Profile";
 import AdminUser from "./Admin/User";
 import AdminBrand from "./Admin/Brand";
+import AdminBrandCreate from "./Admin/BrandCreate";
+import AdminBrandDetail from "./Admin/BrandDetail";
 import AdminProduct from "./Admin/Product";
+import AdminProductCreate from "./Admin/ProductCreate";
 import AdminOrder from "./Admin/Order";
 import AdminOrderDetail from "./Admin/OrderDetail";
+import AdminSetting from "./Admin/Setting";
 
 // Common
 import NotFound from "./NotFound";
@@ -66,9 +70,13 @@ export default function RouteConfig() {
             <Route path={"/admin/users"} element={<AdminUser />} />
             <Route path={"/admin/profile"} element={<AdminProfile />} />
             <Route path={"/admin/brands"} element={<AdminBrand />} />
+            <Route path={"/admin/brand/create"} element={<AdminBrandCreate />} />
+            <Route path={"/admin/brand/:brandID"} element={<AdminBrandDetail />} />
             <Route path={"/admin/products"} element={<AdminProduct />} />
+            <Route path={"/admin/product/create"} element={<AdminProductCreate />} />
             <Route path={"/admin/orders"} element={<AdminOrder />} />
             <Route path={"/admin/order/:orderID"} element={<AdminOrderDetail />} />
+            <Route path={"/admin/settings"} element={<AdminSetting />} />
 
             {/* Common */}
             <Route path={"*"} element={<NotFound />} />

@@ -87,7 +87,7 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route("/profile", name: "get_profile", methods: ["UPDATE", "PUT"])]
+    #[Route("/profile", name: "update_profile", methods: ["UPDATE", "PUT"])]
     public function update_profile(Request $request) : JsonResponse {
         $jsonContent = json_decode($request->getContent(), true);
         if(!$jsonContent) {

@@ -22,10 +22,10 @@ export default function Profile() {
                     <Notification classname={"danger"} message={error.message} />
                 )}
 
-                {!loading && Object.keys(user).length > 0 && (
+                {Object.keys(user).length > 0 && (
                     <div className={"card"}>
                         <div className={"-content"}>
-                            <ProfileForm user={user.results} />
+                            <ProfileForm user={user} />
                         </div>
                     </div>
                 )}

@@ -51,11 +51,11 @@ export default function Product() {
                                 Object.values(items.results).map((item, index) => (
                                     <tr key={index}>
                                         <td className={"-product"}>{item}</td>
-                                        <td className={"-branch"}></td>
+                                        <td className={"-brand"}></td>
                                         <td className={"-category"}></td>
                                         <td className={"-description"}></td>
                                         <td className={"-unit-price"}></td>
-                                        <td className={"-action"}>
+                                        <td className={"-actions"}>
                                             <Link to={`/admin/product/${item.id}`}>
                                                 <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
                                             </Link>

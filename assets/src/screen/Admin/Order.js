@@ -4,8 +4,8 @@ import Badge from "../../component/part/Badge";
 import Pagination from "../../component/part/Pagination";
 import HeaderAdmin from "../../component/part/HeaderAdmin";
 import Notification from "../../component/part/Notification";
-import { formatDate } from "../../component/utils/DomControl";
 import PrivateRessource from "../../component/utils/PrivateRessource";
+import { formatDate, findChildren, findParent } from "../../component/utils/DomControl";
 import axios from "axios";
 
 export default function Order() {
@@ -19,16 +19,34 @@ export default function Order() {
 
     const handleCancel = (e, orderID) => {
         console.log("Hi handleCancel")
+        console.log(e.currentTarget)
+        return
 
         axios
             .delete(`${window.location.origin}/api/admin/order/${orderID}/cancel`)
-            .then((response) => {})
-            .catch((error) => {})
+            .then((response) => {
+                console.log(
+                    response,
+                    response.status,
+                    e.currentTarget
+                )
+            })
+            .catch((error) => {
+                let errorMessage = "An error has been encountered with the sended body"
+                if(error.response.data.message) {
+                    errorMessage = error.response.data.message
+                } else if(error.response.data.detail) {
+                    errorMessage = error.response.data.detail
+                }
+                
+                alert(errorMessage)
+            })
         ;
     }
 
     const handleRemove = (e, orderID) => {
         console.log("Hi handleRemove")
+        console.log(e.currentTarget)
         
         if(!confirm("Are you sure to delete this order ? This action will be irreversible !")) {
             return
@@ -36,8 +54,23 @@ export default function Order() {
 
         axios
             .delete(`${window.location.origin}/api/admin/order/${orderID}/remove`)
-            .then((response) => {})
-            .catch((error) => {})
+            .then((response) => {
+                console.log(
+                    response,
+                    response.status,
+                    e.currentTarget
+                )
+            })
+            .catch((error) => {
+                let errorMessage = "An error has been encountered with the sended body"
+                if(error.response.data.message) {
+                    errorMessage = error.response.data.message
+                } else if(error.response.data.detail) {
+                    errorMessage = error.response.data.detail
+                }
+                
+                alert(errorMessage)
+            })
         ;
     }
 
@@ -62,26 +95,26 @@ export default function Order() {
             <table className={"table -collapse"}>
                 <thead>
                     <tr>
-                        <th className={"column-order-id"}>Command id</th>
-                        <th className={"column-customer"}>Customer</th>
-                        <th className={"column-paid-status"}>Paid Status</th>
-                        <th className={"column-status"}>Status</th>
-                        <th className={"column-created-at"}>Created at</th>
-                        <th className={"column-action"}></th>
+                        <th>Command id</th>
+                        <th>Customer</th>
+                        <th>Paid Status</th>
+                        <th>Status</th>
+                        <th>Created at</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th className={"-order-id"}>Order-3</th>
-                        <th className={"-customer"}>Garry ALMEIDA</th>
-                        <th className={"-paid-status"}>
+                        <td className={"-order-id"}>Order-3</td>
+                        <td className={"-customer"}>Garry ALMEIDA</td>
+                        <td className={"-paid-status"}>
                             <Badge txtContent={"paid"} />
-                        </th>
-                        <th className={"-status"}>
+                        </td>
+                        <td className={"-status"}>
                             <Badge txtContent={"ongoing"} />
-                        </th>
-                        <th className={"-created-at"}>11/12/2023 22:13:01</th>
-                        <th className={"-actions"}>
+                        </td>
+                        <td className={"-created-at"}>11/12/2023 22:13:01</td>
+                        <td className={"-actions"}>
                             <Link className={"btn btn-blue -inline-flex"} to={`/admin/order/1`}>
                                 <img src={`${window.location.origin}/content/svg/eye.svg`} alt={"see more"} />
                             </Link>
@@ -91,7 +124,7 @@ export default function Order() {
                                 className={"btn btn-red -inline"} 
                                 onClick={(e) => handleCancel(e, 1)}
                             >
-                                <img src={`${window.location.origin}/content/svg/ban.svg`} alt={"remove"} />
+                                <img src={`${window.location.origin}/content/svg/ban.svg`} alt={"cancel"} />
                             </button>
                             
                             <button 
@@ -101,7 +134,7 @@ export default function Order() {
                             >
                                 <img src={`${window.location.origin}/content/svg/trash.svg`} alt={"remove"} />
                             </button>
-                        </th>
+                        </td>
                     </tr>
 
                     {Object.keys(items.results ?? []).length > 0 ? (
