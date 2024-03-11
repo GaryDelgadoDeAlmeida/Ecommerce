@@ -34,6 +34,7 @@ export default function HeaderAdmin(props) {
                         <li><Link to={"/admin"}>Dashboard</Link></li>
                         <li><Link to={"/admin/users"}>Users</Link></li>
                         <li><Link to={"/admin/brands"}>Brands</Link></li>
+                        <li><Link to={"/admin/categories"}>Categories</Link></li>
                         <li><Link to={"/admin/products"}>Products</Link></li>
                         <li><Link to={"/admin/orders"}>Orders</Link></li>
                         <li><Link to={"/admin/settings"}>Settings</Link></li>
@@ -63,6 +64,7 @@ export default function HeaderAdmin(props) {
                             <li><Link to={"/admin/profile"}>Profile</Link></li>
                             <li><Link to={"/admin/users"}>Users</Link></li>
                             <li><Link to={"/admin/brands"}>Brands</Link></li>
+                            <li><Link to={"/admin/categories"}>Categories</Link></li>
                             <li><Link to={"/admin/products"}>Products</Link></li>
                             <li><Link to={"/admin/orders"}>Orders</Link></li>
                             <li><Link to={"/admin/settings"}>Settings</Link></li>

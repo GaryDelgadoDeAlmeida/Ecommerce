@@ -51,7 +51,7 @@ export default function Product() {
                                 <Notification classname={"information"} message={"Loading ..."} />
                             )}
 
-                            {Object.keys(error).length > 0 && (
+                            {!loading && Object.keys(error).length > 0 && (
                                 <Notification classname={"danger"} message={error.message} />
                             )}
 

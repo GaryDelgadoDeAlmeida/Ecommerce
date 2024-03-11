@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function CategoryCard({category}) {
+export default function CategoryCard({category, url = "/category"}) {
 
     return (
-        <Link to={`/category/${category.id}`} className={"category-card"}>
+        <Link to={`${url}/${category.id}`} className={"category-card"}>
             {/* Will contain the title of category */}
             <div className={"-header"}>
                 <label>{category.name}</label>

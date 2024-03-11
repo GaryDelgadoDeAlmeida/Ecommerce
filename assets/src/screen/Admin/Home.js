@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
 
-    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/admin`)
+    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/admin/statistics`)
 
     useEffect(() => {
         load()
