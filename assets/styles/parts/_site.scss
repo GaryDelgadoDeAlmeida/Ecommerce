@@ -19,6 +19,7 @@ html, body, .page {
             width: 100%;
         }
 
+        // Desktop version of the menu
         .header-desktop {
             margin: 0;
             padding: 0;
@@ -57,7 +58,38 @@ html, body, .page {
             }
 
             .-right {
+                gap: 10px;
+                display: flex;
                 margin: auto 0;
+
+                .cart {
+                    display: flex;
+                    width: 40px;
+                    height: 40px;
+                    position: relative;
+
+                    img {
+                        margin: auto;
+                        width: 23px;
+                    }
+
+                    .-in-cart {
+                        right: 0;
+                        width: 25px;
+                        height: 25px;
+                        bottom: -13px;
+                        display: flex;
+                        position: absolute;
+                        border-radius: 50%;
+                        justify-content: center;
+                        background-color: var(--c-red);
+
+                        span {
+                            margin: auto;
+                            color: var(--c-white);
+                        }
+                    }
+                }
             }
         }
 
@@ -73,7 +105,7 @@ html, body, .page {
                 display: flex;
             }
 
-            #menuField {
+            #menubars {
                 display: none;
 
                 &:checked ~ .mobile-menu {
@@ -99,9 +131,9 @@ html, body, .page {
                 right: -100%;
                 height: 100%;
                 position: fixed;
-                transition: .3s;
+                transition: .5s;
                 overflow: scroll;
-                background-color: var(--c-palette-one);
+                background-color: var(--c-white);
 
                 .mobile-menu-widget {
                     height: 100%;
@@ -114,21 +146,20 @@ html, body, .page {
                         justify-content: end;
                     }
     
-                    .vertical-menu {
+                    .menu {
                         display: flex;
                         padding-top: 50px;
                         flex-direction: column;
     
-                        li {
+                        .-item {
                             display: flex;
     
                             &:hover {
                                 transition: .3s;
-                                background-color: var(--c-palette-four);
+                                background-color: var(--c-lightGray);
     
                                 a {
                                     transition: .3s;
-                                    color: var(--c-black);
                                 }
                             }
     
@@ -137,9 +168,56 @@ html, body, .page {
                                 padding: 25px;
                                 font-size: 1rem;
                                 font-weight: 600;
-                                color: var(--c-white);
+                                color: var(--c-black);
                                 text-decoration: none;
                             }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Profile menu
+        .profile-menu-link {
+            list-style: none;
+            position: relative;
+
+            .profile-avatar {
+                display: flex;
+
+                &:hover ~ .profile-menu-sublinks {
+                    display: initial;
+                }
+
+                img {
+                    width: 25px;
+                    margin: auto 0;
+                }
+            }
+
+            .profile-menu-sublinks {
+                right: 0;
+                padding: 0;
+                // bottom: 0;
+                // display: none;
+                list-style: none;
+                position: absolute;
+                border: 1px solid var(--c-gray85);
+
+                li {
+                    display: flex;
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid var(--c-gray85);
+                    }
+
+                    a {
+                        padding: 10px;
+                        min-width: 150px;
+                        background-color: var(--c-white);
+
+                        &:hover {
+                            background-color: var(--c-gray85);
                         }
                     }
                 }

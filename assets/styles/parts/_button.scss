@@ -56,6 +56,19 @@ button {
             background-color: transparent;
         }
     }
+    
+    &.btn-dark-blue {
+        font-weight: 600;
+        padding: 10px 1.5rem;
+        color: var(--c-white);
+        border-color: var(--c-darkBlue);
+        background-color: var(--c-darkBlue);
+
+        &:hover {
+            color: var(--c-darkBlue);
+            background-color: transparent;
+        }
+    }
 
     &.btn-green {
         color: var(--c-white);

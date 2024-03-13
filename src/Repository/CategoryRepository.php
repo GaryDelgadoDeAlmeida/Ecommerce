@@ -43,6 +43,10 @@ class CategoryRepository extends ServiceEntityRepository
      * @return int
      */
     public function countCategories() : int {
-        return 1;
+        return $this->createQueryBuilder("category")
+            ->select("COUNT(category.id) as nbrCategories")
+            ->getQuery()
+            ->getSingleResult()["nbrCategories"]
+        ;
     }
 }

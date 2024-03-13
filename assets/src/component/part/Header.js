@@ -1,10 +1,25 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import SubscribeForm from "../form/SubscribeForm"
 
 export default function Header(props) {
 
     let storageUser = localStorage.getItem("user")
+    const [logged, setLogged] = useState(storageUser.length > 0 ? true : false)
+
+    useEffect(() => {
+        updateLoggedStatus()
+    }, [storageUser])
+
+    const handleLogout = (e) => {
+        e.preventDefault()
+        localStorage.setItem("user", "")
+        setLogged(false)
+    }
+
+    const updateLoggedStatus = () => {
+        setLogged(storageUser.length > 0 ? true : false)
+    }
 
     return (
         <div className={"page"}>
@@ -27,21 +42,24 @@ export default function Header(props) {
                         <div className={"-right"}>
                             <Link to={"/shopping-cart"} className={"cart"}>
                                 <img src={`${window.location.origin}/content/svg/cart-shopping.svg`} />
-                                <span>1</span>
+                                <div className={"-in-cart"}>
+                                    <span>1</span>
+                                </div>
                             </Link>
 
-                            {storageUser.length > 0 ? (
+                            {logged ? (
                                 <li className={"profile-menu-link"}>
                                     <div className={"profile-avatar"}>
-                                        <img src={`${window.location.origin}/content/avatar.svg`} alt={""} />
+                                        <img src={`${window.location.origin}/content/svg/avatar.svg`} alt={""} />
                                     </div>
-                                    <ul>
+                                    <ul className={"profile-menu-sublinks"}>
                                         <li><Link to={"/user"}>Profile</Link></li>
                                         <li><Link to={"/user/orders"}>Orders</Link></li>
+                                        <li><Link to={"#logout"} onClick={(e) => handleLogout(e)}>Logout</Link></li>
                                     </ul>
                                 </li>
                             ) : (
-                                <Link className={"btn btn-blue btn-rounded"} to={"/login"}>Sign-in</Link>
+                                <Link className={"btn btn-dark-blue btn-rounded"} to={"/login"}>Sign-in</Link>
                             )}
                         </div>
                     </div>
@@ -49,22 +67,28 @@ export default function Header(props) {
                     {/* Mobile / Tablet */}
                     <div className={"header-mobile"}>
                         <input id={"menubars"} type={"checkbox"} hidden />
-                        <label className={"menulabel"} htmlFor={"menubars"}>
+                        <label className={"labelBars"} htmlFor={"menubars"}>
                             <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
                         </label>
                         
-                        <div className={"header-mobile-widget"}>
-                            <label className={"menulabel"} htmlFor={"menubars"}>
-                                <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
-                            </label>
+                        <div className={"mobile-menu"}>
+                            <div className={"mobile-menu-widget"}>
+                                <label className={"labelBars"} htmlFor={"menubars"}>
+                                    <img src={`${window.location.origin}/content/svg/bars.svg`} alt={""} />
+                                </label>
 
-                            <nav className={"menu"}>
-                                <li className={"-item"}><Link to={"/"}>Home</Link></li>
-                                <li className={"-item"}><Link to={"/categories"}>Categories</Link></li>
-                                <li className={"-item"}><Link to={"/products"}>Products</Link></li>
-                                <li className={"-item"}><a href={"/#contact"}>Contact</a></li>
-                                <li className={"-item"}><Link to={"/login"}>Login</Link></li>
-                            </nav>
+                                <nav className={"menu"}>
+                                    <li className={"-item"}><Link to={"/"}>Home</Link></li>
+                                    <li className={"-item"}><Link to={"/categories"}>Categories</Link></li>
+                                    <li className={"-item"}><Link to={"/products"}>Products</Link></li>
+                                    <li className={"-item"}><a href={"/#contact"}>Contact</a></li>
+                                    {logged ? (
+                                        <li className={"-item"}><Link to={"#logout"} onClick={(e) => handleLogout(e)}>Logout</Link></li>
+                                    ) : (
+                                        <li className={"-item"}><Link to={"/login"}>Login</Link></li>
+                                    )}
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -12,20 +12,27 @@
     background-color: var(--c-white);
 
     .-header {
-        margin: auto;
+        width: 100px;
         display: flex;
 
         img {
             width: 50px;
+            margin: auto;
         }
     }
 
     .-content {
+        flex: 1;
         gap: 10px;
         margin: auto;
         display: flex;
         text-align: justify;
         flex-direction: column;
+
+        .username {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
 
         .message {
             margin: 0;

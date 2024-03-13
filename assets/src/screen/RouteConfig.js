@@ -28,6 +28,7 @@ import AdminHome from "./Admin/Home";
 import AdminProfile from "./Admin/Profile";
 import AdminUser from "./Admin/User";
 import AdminCategory from "./Admin/Category";
+import AdminCategoryCreate from "./Admin/CategoryCreate";
 import AdminBrand from "./Admin/Brand";
 import AdminBrandCreate from "./Admin/BrandCreate";
 import AdminBrandDetail from "./Admin/BrandDetail";
@@ -71,6 +72,7 @@ export default function RouteConfig() {
             <Route path={"/admin/users"} element={<AdminUser />} />
             <Route path={"/admin/profile"} element={<AdminProfile />} />
             <Route path={"/admin/categories"} element={<AdminCategory />} />
+            <Route path={"/admin/category/create"} element={<AdminCategoryCreate />} />
             <Route path={"/admin/brands"} element={<AdminBrand />} />
             <Route path={"/admin/brand/create"} element={<AdminBrandCreate />} />
             <Route path={"/admin/brand/:brandID"} element={<AdminBrandDetail />} />
