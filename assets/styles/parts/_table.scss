@@ -131,6 +131,14 @@
                         content: "Commande";
                     }
 
+                    &.-ordered-at::before {
+                        content: "Commender le";
+                    }
+
+                    &.-invoice-number::before {
+                        content: "Numéro de commande";
+                    }
+
                     &.-customer::before {
                         content: "Client";
                     }

@@ -446,6 +446,10 @@ html, body, .page {
             .-right {
                 flex: 1;
                 min-height: 500px;
+
+                @include tablet {
+                    min-height: auto;
+                }
             }
         }
 

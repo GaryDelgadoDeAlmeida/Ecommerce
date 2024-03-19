@@ -11,7 +11,7 @@ abstract class CategoryEnum {
         self::CATEGORY_DESCRIPTION => "Description"
     ];
 
-    public function getAvailableChoices() : array {
+    public static function getAvailableChoices() : array {
         return [
             self::CATEGORY_NAME,
             self::CATEGORY_DESCRIPTION

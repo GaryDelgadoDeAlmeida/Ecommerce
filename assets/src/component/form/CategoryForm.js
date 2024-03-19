@@ -8,7 +8,7 @@ export default function CategoryForm({category = null}) {
     const userJson = JSON.parse(userStorage.length > 0 ? userStorage : null)
 
     const [formResponse, setFormResponse] = useState({})
-    const [credentials, setCredentials] = useState({
+    const [credentials, setCredentials] = useState(category ?? {
         name: "",
         description: ""
     })

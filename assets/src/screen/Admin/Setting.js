@@ -11,7 +11,7 @@ export default function Setting() {
                     <label>Update your password</label>
                 </div>
                 <div className={"-content"}>
-                    <PasswordForm />
+                    <PasswordForm isAdmin={true} />
                 </div>
             </div>
         </HeaderAdmin>

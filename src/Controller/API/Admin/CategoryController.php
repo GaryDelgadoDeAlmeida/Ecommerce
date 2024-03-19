@@ -65,6 +65,20 @@ class CategoryController extends AbstractController
         return $this->json(null, Response::HTTP_CREATED);
     }
 
+    #[Route('/category/{categoryID}', name: 'get_category', methods: ["GET"])]
+    public function get_category(Request $request, int $categoryID) : JsonResponse {
+        $category = $this->categoryRepository->find($categoryID);
+        if(!$category) {
+            return $this->json([
+                "message" => "Category not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json([
+            "results" => $category
+        ], Response::HTTP_OK);
+    }
+
     #[Route('/category/{categoryID}', name: 'update_category', methods: ["PUT", "UPDATE"])]
     public function update_category(Request $request, int $categoryID): JsonResponse {
         $category = $this->categoryRepository->find($categoryID);
