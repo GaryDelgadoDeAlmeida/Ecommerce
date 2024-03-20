@@ -15,11 +15,17 @@ export default function Filter({updateFilter}) {
             }
         ]
     }
+    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/products-filters`, false)
     const [credentials, setCredentials] = useState({
         search: "",
-        category: ""
+        price: "",
+        category: "",
+        brand: ""
     })
-    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/categories`, false)
+
+    useEffect(() => {
+        load()
+    }, [])
 
     useEffect(() => {
         updateFilter(credentials)
@@ -76,57 +82,31 @@ export default function Filter({updateFilter}) {
                         <label>Category</label>
                     </div>
                     <div className={"-content"}>
-                        <li>
-                            <input id={"category-1"} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
-                            <label htmlFor={"category-1"}>Clothes</label>
-                        </li>
-                        <li>
-                            <input id={"category-2"} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
-                            <label htmlFor={"category-2"}>Technology</label>
-                        </li>
-                        <li>
-                            <input id={"category-3"} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
-                            <label htmlFor={"category-3"}>Accessories</label>
-                        </li>
-                        <li>
-                            <input id={"category-4"} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
-                            <label htmlFor={"category-4"}>Books</label>
-                        </li>
-                        <li>
-                            <input id={"category-5"} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
-                            <label htmlFor={"category-5"}>Furnitures</label>
-                        </li>
+                        {!loading && Object.values(items.categories ?? []).map((item, index) => (
+                            <li key={index}>
+                                <input id={`category-${index + 1}`} type={"checkbox"} onChange={(e) => handleFilter(e, "category")} />
+                                <label htmlFor={`category-${index + 1}`}>{item.name}</label>
+                            </li>
+                        ))}
                     </div>
                 </div>
 
                 {/* Brands Section */}
-                <div className={"-filter-card"}>
-                    <div className={"-header"}>
-                        <label>Brands</label>
+                {!loading && Object.keys(items.brands ?? []).length > 0 && (
+                    <div className={"-filter-card"}>
+                        <div className={"-header"}>
+                            <label>Brands</label>
+                        </div>
+                        <div className={"-content"}>
+                            {Object.values(items.brands ?? []).map((item, index) => (
+                                <li key={index}>
+                                    <input id={`brand-${index + 1}`} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
+                                    <label htmlFor={`brand-${index + 1}`}>{item.name}</label>
+                                </li>
+                            ))}
+                        </div>
                     </div>
-                    <div className={"-content"}>
-                        <li>
-                            <input id={"brand-1"} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
-                            <label htmlFor={"brand-1"}>Brand A</label>
-                        </li>
-                        <li>
-                            <input id={"brand-2"} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
-                            <label htmlFor={"brand-2"}>Brand B</label>
-                        </li>
-                        <li>
-                            <input id={"brand-3"} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
-                            <label htmlFor={"brand-3"}>Brand C</label>
-                        </li>
-                        <li>
-                            <input id={"brand-4"} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
-                            <label htmlFor={"brand-4"}>Brand D</label>
-                        </li>
-                        <li>
-                            <input id={"brand-5"} type={"checkbox"} onChange={(e) => handleFilter(e, "brand")} />
-                            <label htmlFor={"brand-5"}>Brand E</label>
-                        </li>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     )

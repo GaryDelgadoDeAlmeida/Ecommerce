@@ -3,6 +3,7 @@
 namespace App\Controller\API\Admin;
 
 use App\Entity\User;
+use App\Manager\ProductManager;
 use App\Manager\SerializeManager;
 use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     private User $user;
+    private ProductManager $productManager;
     private SerializeManager $serializeManager;
     private BrandRepository $brandRepository;
     private ProductRepository $productRepository;
@@ -25,12 +27,14 @@ class ProductController extends AbstractController
 
     public function __construct(
         Security $security,
+        ProductManager $productManager,
         SerializeManager $serializeManager,
         BrandRepository $brandRepository,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository
     ) {
         $this->user = $security->getUser();
+        $this->productManager = $productManager;
         $this->serializeManager = $serializeManager;
         $this->brandRepository = $brandRepository;
         $this->productRepository = $productRepository;
@@ -68,10 +72,32 @@ class ProductController extends AbstractController
         // Decode the JSON content into an array
         $jsonContent = json_decode($request->getContent());
         if(!$jsonContent) {
-            return $this->json("Empty body", Response::HTTP_PRECONDITION_FAILED);
+            return $this->json([
+                "message" => "An error has been encountered with the sended body"
+            ], Response::HTTP_PRECONDITION_FAILED);
         }
 
-        return $this->json("Route Under construction", Response::HTTP_OK);
+        try {
+            $fields = $this->productManager->checkFields($jsonContent);
+            if(empty($fields)) {
+                return $this->json([
+                    "message" => "An error has been encountered with the sended body"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $response = $this->productManager->fillProduct($fields);
+            if(is_string($response)) {
+                return $this->json([
+                    "message" => $response
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch(\Exception $e) {
+            return $this->json([
+                "message" => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->json(null, Response::HTTP_CREATED);
     }
 
     #[Route("/product/{productID}", name: "get_product", methods: ["GET"])]

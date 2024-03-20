@@ -28,8 +28,13 @@ export default function CategoryForm({category = null}) {
             return
         }
 
+        let apiUrl = `${window.location.origin}/api/admin/category`
+        if(category != null && typeof category == "object") {
+            apiUrl = `${window.location.origin}/api/admin/category/${category.id}`
+        }
+
         axios
-            .post(`${window.location.origin}/api/admin/category`, credentials, {
+            .post(apiUrl, credentials, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json+ld",

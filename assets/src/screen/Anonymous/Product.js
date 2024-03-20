@@ -11,22 +11,11 @@ export default function Product() {
 
     const [filters, setFilters] = useState({})
     const [offset, setOffset] = useState(1)
-    const {load, items: products, loading, error} = PrivateRessource(`${window.location.origin}/api/product?offset=${offset}`, false)
+    const {load, items: products, loading, error} = PrivateRessource(`${window.location.origin}/api/products?offset=${offset}&` + new URLSearchParams(filters).toString(), false)
     
     useEffect(() => {
         load()
     }, [offset])
-
-    // Temporary
-    const generateProductCard = () => {
-        let $html = []
-        
-        for (let index = 0; index < 10; index++) {
-            $html.push(<ProductCard key={index} />)
-        }
-
-        return $html
-    }
 
     return (
         <Header>
@@ -51,31 +40,34 @@ export default function Product() {
                                 <Notification classname={"information"} message={"Loading ..."} />
                             )}
 
-                            {!loading && Object.keys(error).length > 0 && (
-                                <Notification classname={"danger"} message={error.message} />
-                            )}
-
-                            {!loading && Object.keys(products.results ?? []).length > 0 ? (
+                            {!loading ? (
                                 <>
-                                    <div className={"product-list"}>
-                                        {Object.values(products.results).map((item, index) => (
-                                            <ProductCard 
-                                                key={index} 
-                                                product={item} 
+                                    {Object.keys(error).length > 0 && (
+                                        <Notification classname={"danger"} message={error.message} />
+                                    )}
+                                    
+                                    {Object.keys(products.results ?? []).length > 0 ? (
+                                        <>
+                                            <div className={"product-list"}>
+                                                {Object.values(products.results).map((item, index) => (
+                                                    <ProductCard 
+                                                        key={index} 
+                                                        product={item} 
+                                                    />
+                                                ))}
+                                            </div>
+        
+                                            <Pagination 
+                                                offset={offset} 
+                                                setOffset={setOffset} 
+                                                maxOffset={products.maxOffset}
                                             />
-                                        ))}
-                                        {generateProductCard()}
-                                    </div>
-
-                                    <Pagination 
-                                        offset={offset} 
-                                        setOffset={setOffset} 
-                                        maxOffset={products.maxOffset}
-                                    />
+                                        </>
+                                    ) : (
+                                        <Notification classname={"information"} message={"There is no products to display"} />
+                                    )}
                                 </>
-                            ) : (
-                                <Notification classname={"information"} message={"There is no products to display"} />
-                            )}
+                            ) : null}
                         </div>
                     </div>
                 </div>

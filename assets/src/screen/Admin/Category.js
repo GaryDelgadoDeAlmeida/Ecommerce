@@ -35,6 +35,7 @@ export default function Category() {
                                 <CategoryCard 
                                     key={index} 
                                     category={item} 
+                                    isAdmin={true}
                                     url={"/admin/category"}
                                 />
                             ))}

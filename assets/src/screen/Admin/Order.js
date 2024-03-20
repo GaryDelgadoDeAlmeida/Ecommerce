@@ -132,7 +132,7 @@ export default function Order() {
                                 className={"btn btn-red -inline"} 
                                 onClick={(e) => handleRemove(e)}
                             >
-                                <img src={`${window.location.origin}/content/svg/trash.svg`} alt={"remove"} />
+                                <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={"remove"} />
                             </button>
                         </td>
                     </tr>
@@ -167,7 +167,7 @@ export default function Order() {
                                         className={"btn btn-red -inline"} 
                                         onClick={(e) => handleRemove(e, item.id)}
                                     >
-                                        <img src={`${window.location.origin}/content/svg/trash.svg`} alt={"remove"} />
+                                        <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={"remove"} />
                                     </button>
                                 </td>
                             </tr>

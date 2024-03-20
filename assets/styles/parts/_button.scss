@@ -86,10 +86,10 @@ button {
         border: 1px solid var(--c-red);
         background-color: var(--c-red);
 
-        &:hover {
-            color: var(--c-red);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-red);
+        //     background-color: transparent;
+        // }
     }
 
     &.btn-orange {

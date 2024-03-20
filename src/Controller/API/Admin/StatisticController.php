@@ -2,6 +2,7 @@
 
 namespace App\Controller\API\Admin;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;

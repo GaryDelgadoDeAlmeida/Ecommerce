@@ -79,7 +79,7 @@ class CategoryController extends AbstractController
         ], Response::HTTP_OK);
     }
 
-    #[Route('/category/{categoryID}', name: 'update_category', methods: ["PUT", "UPDATE"])]
+    #[Route('/category/{categoryID}', name: 'update_category', methods: ["POST", "PUT", "UPDATE"])]
     public function update_category(Request $request, int $categoryID): JsonResponse {
         $category = $this->categoryRepository->find($categoryID);
         if(!$category) {

@@ -22,10 +22,12 @@ export default function ProductForm({product = null}) {
         load()
     }, [])
 
+    const handleNewRow = (e) => {}
+
     const handleChange = (e, fieldName) => {
         setCredentials({
             ...credentials,
-            [fieldName]: e.target.value
+            [fieldName]: fieldName == "photo" ? e.target.files[0] : e.target.value
         })
     }
 
@@ -69,7 +71,7 @@ export default function ProductForm({product = null}) {
             <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
                 <div className={"form-field"}>
                     <label>Photo</label>
-                    <input type={"file"} required />
+                    <input type={"file"} onChange={(e) => handleChange(e, "photo")} required />
                 </div>
 
                 <div className={"form-field"}>
@@ -124,6 +126,8 @@ export default function ProductForm({product = null}) {
                 
                 <div className={"form-field"}>
                     <label>Characteristics</label>
+                    <div id={"characteristics-fields"}></div>
+                    <button className={"btn btn-blue"}>+</button>
                 </div>
                 
                 <div className={"form-button"}>
