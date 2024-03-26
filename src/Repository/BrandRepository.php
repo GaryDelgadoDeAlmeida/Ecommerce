@@ -38,4 +38,15 @@ class BrandRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return int
+     */
+    public function countBrands() : int {
+        return $this->createQueryBuilder("brand")
+            ->select("COUNT(brand.id) as nbrBrands")
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
 }

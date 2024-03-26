@@ -30,16 +30,19 @@ export default function OrderDetail() {
 
             <div className={"page-section"}>
                 <div className={"page-wrapper"}>
-                    {Object.values(error).length > 0 && (
-                        <Notification classname={"danger"} message={error.message} />
-                    )}
-
                     {loading && (
                         <Notification classname={"information"} message={"Loading ..."} />
                     )}
 
-                    {!loading && (
-                        <></>
+
+                    {Object.values(error).length > 0 && (
+                        <Notification classname={"danger"} message={error.message} />
+                    )}
+
+                    {!loading && Object.keys(items.results ?? []).length > 0 && (
+                        Object.values(items.results).map((item, index) => (
+                            <p></p>
+                        ))
                     )}
                 </div>
             </div>

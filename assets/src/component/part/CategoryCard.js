@@ -10,6 +10,10 @@ export default function CategoryCard({category, url = "/category", isAdmin = fal
 
     const handleRemove = (e, categoryID) => {
         e.preventDefault()
+        if(!confirm("Are you sure you want to remove this category ?")) {
+            return
+        }
+
         const parent = findParent(e.currentTarget, "category-card")
         if(parent.length == 0) {
             return

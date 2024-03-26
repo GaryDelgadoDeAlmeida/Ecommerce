@@ -32,19 +32,31 @@ class CategoryController extends AbstractController
      * Route used to display all categories to the public user to simplify access to a specific product category
      */
     #[Route('/categories', name: 'get_categories', methods: ["GET"])]
-    public function get_categories(Request $request): JsonResponse
+    public function get_categories(Request $request): JsonResponse 
     {
-        $limit = 20;
-        $offset = $request->get("offset");
-        $offset = is_numeric($offset) && $offset > 0 ? $offset : 1;
+        $response = [];
+        $option = $request->get("option", "pagined");
+        if($option == "pagined") {
+            $limit = 20;
+            $offset = $request->get("offset");
+            $offset = is_numeric($offset) && $offset > 0 ? $offset : 1;
 
-        return $this->json([
-            "offset" => $offset,
-            "maxOffset" => ceil($this->categoryRepository->countCategories() / $limit),
-            "results" => $this->serializeManager->serializeContent(
-                $this->categoryRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
-            )
-        ], Response::HTTP_OK);
+            $response = [
+                "offset" => $offset,
+                "maxOffset" => ceil($this->categoryRepository->countCategories() / $limit),
+                "results" => $this->serializeManager->serializeContent(
+                    $this->categoryRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
+                )
+            ];
+        } elseif($option == "all") {
+            $response = [
+                "results" => $this->serializeManager->serializeContent(
+                    $this->categoryRepository->findBy([], ["name" => "ASC"])
+                )
+            ];
+        }
+
+        return $this->json($response, Response::HTTP_OK);
     }
 
     /**

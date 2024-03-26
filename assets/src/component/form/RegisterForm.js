@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Notification from "../part/Notification";
-import PublicRessource from "../utils/PublicRessource";
+import CountryField from "./parts/CountryField";
 import axios from "axios";
 
 export default function RegisterForm() {
     const [formResponse, setFormResponse] = useState({})
-    const { loading, items: countries, load, error } = PublicRessource("https://restcountries.com/v3.1/all?fields=name")
-
-    const credentials = useRef({
+    const [credentials, setCredentials] = useState({
         firstname: "",
         lastname: "",
         address: "",
@@ -19,9 +17,12 @@ export default function RegisterForm() {
         password: ""
     })
 
-    useEffect(() => {
-        load()
-    }, [])
+    const updateCredentials = (fieldName, fieldValue) => {
+        setCredentials({
+            ...credentials,
+            [fieldName]: fieldValue
+        })
+    }
 
     const handleChange = (e, fieldName) => {
         let fieldValue = e.target.value
@@ -45,10 +46,10 @@ export default function RegisterForm() {
                 })
         }
 
-        credentials.current = {
-            ...credentials.current,
+        setCredentials({
+            ...credentials,
             [fieldName]: fieldValue
-        }
+        })
     }
 
     const handleSubmit = (e) => {
@@ -114,20 +115,12 @@ export default function RegisterForm() {
                         <label htmlFor={"city"}>City</label>
                         <input type={"text"} maxLength={255} onChange={(e) => handleChange(e, "city")} />
                     </div>
-                    
-                    <div className={"form-field"}>
-                        <label htmlFor={"country"}>Country</label>
-                        {!loading && Object.keys(countries ?? []).length > 0 ? (
-                            <select onChange={(e) => handleChange(e, "country")}>
-                                <option value={""}>Select a country</option>
-                                {Object.values(countries).map((item, index) => (
-                                    <option key={index} value={item.name.common}>{item.name.common}</option>
-                                ))}
-                            </select>
-                        ) : (
-                            <span>Loading ...</span>
-                        )}
-                    </div>
+
+                    <CountryField 
+                        printLabel={true}
+                        updateCredentials={updateCredentials}
+                        countryCredential={credentials.country}
+                    />
                 </div>
                 
                 <div className={"form-field"}>

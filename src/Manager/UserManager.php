@@ -121,6 +121,16 @@ class UserManager {
                 if(!$this->formManager->isSecurePassword($value)) {
                     throw new \Exception("The password is not secured enought", Response::HTTP_FORBIDDEN);
                 }
+            } elseif($key == UserEnum::USER_NEW_PASSWORD) {
+                if(!isset($jsonContent[UserEnum::USER_CONFIRM_NEW_PASSWORD])) {
+                    throw new \Exception("An important field don't exist.", Response::HTTP_FORBIDDEN);
+                }
+
+                if($jsonContent[UserEnum::USER_CONFIRM_NEW_PASSWORD] !== $value) {
+                    throw new \Exception("The password isn't correct. Please, check all fields", Response::HTTP_FORBIDDEN);
+                }
+
+                $key = UserEnum::USER_PASSWORD;
             }
 
             $fields[$key] = $value;

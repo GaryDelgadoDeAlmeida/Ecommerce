@@ -13,6 +13,9 @@ abstract class UserEnum {
     public const USER_PHONE = "phone";
     public const USER_EMAIL = "email";
     public const USER_PASSWORD = "password";
+    
+    public const USER_NEW_PASSWORD = "new_password";
+    public const USER_CONFIRM_NEW_PASSWORD = "confirm_new_password";
 
     public static array $typeName = [
         self::USER_FIRSTNAME => "Firstname",
@@ -23,7 +26,8 @@ abstract class UserEnum {
         self::USER_COUNTRY => "Country",
         self::USER_PHONE => "Phone number",
         self::USER_EMAIL => "Email",
-        self::USER_PASSWORD => "Password"
+        self::USER_PASSWORD => "Password",
+        self::USER_NEW_PASSWORD => "New Password"
     ];
 
     public static function getRequiredFields() : array {
@@ -35,7 +39,9 @@ abstract class UserEnum {
             self::USER_ZIP_CODE,
             self::USER_COUNTRY,
             self::USER_EMAIL,
-            self::USER_PASSWORD
+            self::USER_PASSWORD,
+            self::USER_NEW_PASSWORD,
+            self::USER_CONFIRM_NEW_PASSWORD
         ];
     }
 
@@ -49,7 +55,8 @@ abstract class UserEnum {
             self::USER_COUNTRY,
             self::USER_PHONE,
             self::USER_EMAIL,
-            self::USER_PASSWORD
+            self::USER_PASSWORD,
+            self::USER_NEW_PASSWORD,
         ];
     }
 

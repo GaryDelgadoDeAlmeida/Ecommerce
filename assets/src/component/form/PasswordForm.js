@@ -9,9 +9,8 @@ export default function PasswordForm({isAdmin = false}) {
 
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
-        password: "",
         new_password: "",
-        new_password_confirm: ""
+        confirm_new_password: ""
     })
 
     const handleChange = (e, fieldName) => {
@@ -24,7 +23,17 @@ export default function PasswordForm({isAdmin = false}) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        let apiURL = `${window.location.origin}/api/profile`
+        if(credentials.new_password.length == 0 || credentials.confirm_new_password.length == 0) {
+            setFormResponse({classname: "danger", message: "To update your password, all fields must have a value"})
+            return
+        }
+
+        if(credentials.new_password != credentials.confirm_new_password) {
+            setFormResponse({classname: "danger", message: "Your confirmation password is different of your new password"})
+            return
+        }
+
+        let apiURL = `${window.location.origin}/api/user/profile`
         if(isAdmin) {
             apiURL = `${window.location.origin}/api/admin/profile`
         }
@@ -60,16 +69,6 @@ export default function PasswordForm({isAdmin = false}) {
             )}
 
             <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
-                <div className={"form-field"}>
-                    <input 
-                        type={"password"} 
-                        placeholder={"Old password"} 
-                        value={credentials.password}
-                        onChange={(e) => handleChange(e, "password")} 
-                        required 
-                    />
-                </div>
-                
                 <div className={"form-field-inline"}>
                     <div className={"form-field"}>
                         <input 
@@ -84,8 +83,8 @@ export default function PasswordForm({isAdmin = false}) {
                         <input 
                             type={"password"} 
                             placeholder={"Confirm new password"} 
-                            value={credentials.new_password_confirm}
-                            onChange={(e) => handleChange(e, "new_password_confirm")} 
+                            value={credentials.confirm_new_password}
+                            onChange={(e) => handleChange(e, "confirm_new_password")} 
                             required 
                         />
                     </div>

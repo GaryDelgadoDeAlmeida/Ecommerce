@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Notification from "../part/Notification";
-import PublicRessource from "../utils/PublicRessource";
+import CountryField from "./parts/CountryField";
 import axios from "axios";
 
 export default function ProfileForm({user = null, isAdmin = false}) {
@@ -8,7 +8,6 @@ export default function ProfileForm({user = null, isAdmin = false}) {
     const storageUser = localStorage.getItem("user")
     const jsonUser = storageUser.length > 0 ? JSON.parse(storageUser) : []
 
-    const { loading, items: countries, load, error } = PublicRessource("https://restcountries.com/v3.1/all?fields=name")
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState(user ?? {
         firstname: "",
@@ -22,9 +21,12 @@ export default function ProfileForm({user = null, isAdmin = false}) {
         password: ""
     })
 
-    useEffect(() => {
-        load()
-    }, [])
+    const updateCredentials = (fieldName, fieldValue) => {
+        setCredentials({
+            ...credentials,
+            [fieldName]: fieldValue
+        })
+    }
 
     const handleChange = (e, fieldName) => {
         let fieldValue = e.target.value
@@ -101,21 +103,12 @@ export default function ProfileForm({user = null, isAdmin = false}) {
                         <label htmlFor={"city"}>City</label>
                         <input type={"text"} value={credentials.city} maxLength={255} onChange={(e) => handleChange(e, "city")} />
                     </div>
-                    
-                    <div className={"form-field"}>
-                        <label htmlFor={"country"}>Country</label>
-                        <select id={"country"} value={credentials.country} onChange={(e) => handleChange(e, "country")}>
-                            <option value={""}>Select a country</option>
-                            {!loading && countries.length > 0 && (
-                                countries.map((item, index) => (
-                                    <option 
-                                        key={index} 
-                                        value={item.name.common} 
-                                    >{item.name.common}</option>
-                                ))
-                            )}
-                        </select>
-                    </div>
+
+                    <CountryField 
+                        printLabel={true}
+                        updateCredentials={updateCredentials}
+                        countryCredential={credentials.country}
+                    />
                 </div>
                 
                 <div className={"form-field"}>

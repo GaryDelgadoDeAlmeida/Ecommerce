@@ -9,6 +9,7 @@ export default function Product() {
 
     const [offset, setOffset] = useState(1)
     const {loading, items, load, error} = PrivateRessource(`${window.location.origin}/api/products?offset=${offset}`)
+    
     useEffect(() => {
         load()
     }, [offset])

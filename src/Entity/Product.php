@@ -19,6 +19,9 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Brand $brand = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -31,8 +34,11 @@ class Product
     #[ORM\Column]
     private ?float $price = 0.0;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPriceHistory::class)]
-    private Collection $productPriceHistories;
+    #[ORM\Column]
+    private ?bool $isDeleted = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Characteristic::class)]
+    private Collection $characteristics;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -40,17 +46,17 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Characteristic::class)]
-    private Collection $characteristics;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPriceHistory::class)]
+    private Collection $productPriceHistories;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Category $category = null;
-
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Comment::class)]
     private Collection $comments;
+
+    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
+    private ?Stock $stock = null;
 
     public function __construct()
     {
@@ -63,6 +69,42 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): static
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -97,6 +139,48 @@ class Product
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function isIsDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): static
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Characteristic>
+     */
+    public function getCharacteristics(): Collection
+    {
+        return $this->characteristics;
+    }
+
+    public function addCharacteristic(Characteristic $characteristic): static
+    {
+        if (!$this->characteristics->contains($characteristic)) {
+            $this->characteristics->add($characteristic);
+            $characteristic->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacteristic(Characteristic $characteristic): static
+    {
+        if ($this->characteristics->removeElement($characteristic)) {
+            // set the owning side to null (unless already changed)
+            if ($characteristic->getProduct() === $this) {
+                $characteristic->setProduct(null);
+            }
+        }
 
         return $this;
     }
@@ -185,72 +269,6 @@ class Product
         return $this;
     }
 
-    public function getBrand(): ?Brand
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(?Brand $brand): static
-    {
-        $this->brand = $brand;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Characteristic>
-     */
-    public function getCharacteristics(): Collection
-    {
-        return $this->characteristics;
-    }
-
-    public function addCharacteristic(Characteristic $characteristic): static
-    {
-        if (!$this->characteristics->contains($characteristic)) {
-            $this->characteristics->add($characteristic);
-            $characteristic->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacteristic(Characteristic $characteristic): static
-    {
-        if ($this->characteristics->removeElement($characteristic)) {
-            // set the owning side to null (unless already changed)
-            if ($characteristic->getProduct() === $this) {
-                $characteristic->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
@@ -277,6 +295,28 @@ class Product
                 $comment->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($stock === null && $this->stock !== null) {
+            $this->stock->setProduct(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($stock !== null && $stock->getProduct() !== $this) {
+            $stock->setProduct($this);
+        }
+
+        $this->stock = $stock;
 
         return $this;
     }

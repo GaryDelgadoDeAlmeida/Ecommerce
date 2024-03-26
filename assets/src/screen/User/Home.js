@@ -70,29 +70,33 @@ export default function Home() {
                             </nav>
                         </div>
                         <div className={"-right"}>
-                            {currentOnglet == "profile" && (
-                                <Profile />
-                            )}
+                            <div className={"card p-15"}>
+                                <div className={"-content"}>
+                                    {currentOnglet == "profile" && (
+                                        <Profile />
+                                    )}
 
-                            {currentOnglet == "bank-coordinate" && (
-                                <BankCoordinate />
-                            )}
+                                    {currentOnglet == "bank-coordinate" && (
+                                        <BankCoordinate />
+                                    )}
 
-                            {currentOnglet == "ongoing-orders" && (
-                                <OngoingOrder />
-                            )}
-                            
-                            {currentOnglet == "past-orders" && (
-                                <PastOrder />
-                            )}
-                            
-                            {currentOnglet == "comments" && (
-                                <Comment />
-                            )}
-                            
-                            {currentOnglet == "settings" && (
-                                <Setting />
-                            )}
+                                    {currentOnglet == "ongoing-orders" && (
+                                        <OngoingOrder />
+                                    )}
+                                    
+                                    {currentOnglet == "past-orders" && (
+                                        <PastOrder />
+                                    )}
+                                    
+                                    {currentOnglet == "comments" && (
+                                        <Comment />
+                                    )}
+                                    
+                                    {currentOnglet == "settings" && (
+                                        <Setting />
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

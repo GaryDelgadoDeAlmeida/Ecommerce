@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Notification from "../part/Notification";
 import PrivateRessource from "../utils/PrivateRessource";
+import CharacteristicField from "./parts/CharacteristicField";
 import axios from "axios";
+import ImageField from "./parts/ImageField";
+import BrandField from "./parts/BrandField";
+import CategoryField from "./parts/CategoryField";
 
 export default function ProductForm({product = null}) {
 
@@ -11,18 +15,25 @@ export default function ProductForm({product = null}) {
     const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/admin/product/form-needs`)
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
+        brand: "",
+        category: "",
         name: "",
         description: "",
-        category: "",
         quantity: 0,
-        price: 0
+        price: 0,
+        characteristics: {}
     })
 
     useEffect(() => {
         load()
     }, [])
 
-    const handleNewRow = (e) => {}
+    const updateCredentials = (fieldName, fieldValue) => {
+        setCredentials({
+            ...credentials,
+            [fieldName]: fieldValue
+        })
+    }
 
     const handleChange = (e, fieldName) => {
         setCredentials({
@@ -69,10 +80,7 @@ export default function ProductForm({product = null}) {
             )}
 
             <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
-                <div className={"form-field"}>
-                    <label>Photo</label>
-                    <input type={"file"} onChange={(e) => handleChange(e, "photo")} required />
-                </div>
+                <ImageField updateCredentials={updateCredentials} fieldName={"photo"} />
 
                 <div className={"form-field"}>
                     <label htmlFor={"product_name"}>Product name</label>
@@ -93,25 +101,15 @@ export default function ProductForm({product = null}) {
                     ></textarea>
                 </div>
 
-                <div className={"form-field"}>
-                    <label>Category</label>
-                    <select onChange={(e) => handleChange(e, "category")}>
-                        <option value={""}>Select a category</option>
-                        {Object.values(items.categories ?? []).map((item, index) => (
-                            <option key={index} value={item.name}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
+                <CategoryField 
+                    updateCredentials={updateCredentials}
+                    categoryCredential={credentials.category}
+                />
                 
-                <div className={"form-field"}>
-                    <label>Brand</label>
-                    <select onChange={(e) => handleChange(e, "brand")}>
-                        <option value={""}>Select a brand</option>
-                        {Object.values(items.brands ?? []).map((item, index) => (
-                            <option key={index} value={item.name}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
+                <BrandField 
+                    updateCredentials={updateCredentials}
+                    brandCredential={credentials.brand}
+                />
                 
                 <div className={"form-field"}>
                     <label>Price</label>
@@ -124,11 +122,10 @@ export default function ProductForm({product = null}) {
                     />
                 </div>
                 
-                <div className={"form-field"}>
-                    <label>Characteristics</label>
-                    <div id={"characteristics-fields"}></div>
-                    <button className={"btn btn-blue"}>+</button>
-                </div>
+                <CharacteristicField 
+                    updateCredentials={updateCredentials}
+                    characteristicsCredential={credentials.characteristics}
+                />
                 
                 <div className={"form-button"}>
                     <button type={"submit"} className={"btn btn-blue"}>Submit</button>

@@ -3,7 +3,9 @@
 namespace App\Controller\API\Admin;
 
 use App\Entity\User;
+use App\Manager\SerializeManager;
 use App\Repository\BrandRepository;
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,31 +17,91 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BrandController extends AbstractController
 {
     private User $user;
+    private SerializeManager $serializeManager;
     private BrandRepository $brandRepository;
+    private ProductRepository $productRepository;
 
-    function __construct(Security $security, BrandRepository $brandRepository) {
+    function __construct(
+        Security $security, 
+        SerializeManager $serializeManager, 
+        BrandRepository $brandRepository,
+        ProductRepository $productRepository
+    ) {
         $this->user = $security->getUser();
+        $this->serializeManager = $serializeManager;
         $this->brandRepository = $brandRepository;
+        $this->productRepository = $productRepository;
     }
     
     #[Route('/brands', name: 'get_brands', methods: ["GET"])]
     public function get_brands(Request $request): JsonResponse {
-        return $this->json([
-            "message" => "Route under constructions"
-        ], Response::HTTP_OK);
+        $option = $request->get("option", "pagined");
+        $offset = $request->get("offset");
+        $limit = 20;
+        $response = [];
+        
+        if($option == "all") {
+            $response = [
+                "results" => $this->serializeManager->serializeContent(
+                    $this->brandRepository->findAll()
+                )
+            ];
+        } elseif($option == "pagined") {
+            $response = [
+                "offset" => $offset,
+                "maxOffset" => ceil($this->brandRepository->countBrands() / $limit),
+                "results" => $this->serializeManager->serializeContent(
+                    $this->brandRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit)
+                )
+            ];
+        }
+        
+        return $this->json($response, Response::HTTP_OK);
     }
 
     #[Route('/brand', name: 'post_brand', methods: ["POST"])]
     public function post_brand(Request $request) : JsonResponse {
-        return $this->json([
-            "message" => "Route under constructions"
-        ], Response::HTTP_OK);
+        $jsonContent = json_decode($request->getContent(), true);
+        if(!$jsonContent) {
+            return $this->json([
+                "message" => "An error has been encountered with the sended body."
+            ], Response::HTTP_PRECONDITION_FAILED);
+        }
+
+        try {
+            $fields = $this->brandManager->checkFields($jsonContent);
+            if(empty($fields)) {
+                return $this->json([
+                    "message" => "An error has been encountered with the sended body."
+                ], Response::HTTP_PRECONDITION_FAILED);
+            }
+
+            $response = $this->brandManager->fillBrand($fields);
+            if(is_string($response)) {
+                return $this->json([
+                    "message" => $response
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch(\Exception $e) {
+            return $this->json([
+                "message" => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->json(null, Response::HTTP_ACCEPTED);
     }
 
     #[Route('/brand/{brandID}', name: 'get_brand', methods: ["GET"])]
     public function get_brand(Request $request, int $brandID) : JsonResponse {
+        $brand = $this->brandRepository->find($brandID);
+        if(!$brand) {
+            return $this->json([
+                "message" => "Brand not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         return $this->json([
-            "message" => "Route under constructions"
+            "results" => $this->serializeManager->serializeContent($brand)
         ], Response::HTTP_OK);
     }
 
@@ -52,8 +114,29 @@ class BrandController extends AbstractController
 
     #[Route('/brand/{brandID}/remove', name: 'delete_brand', methods: ["DELETE"])]
     public function remove_brand(Request $request, int $brandID) : JsonResponse {
-        return $this->json([
-            "message" => "Route under constructions"
-        ], Response::HTTP_OK);
+        $brand = $this->brandRepository->find($brandID);
+        if(!$brand) {
+            return $this->json([
+                "message" => "Brand not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $brand->setIsDeleted(true);
+            
+            // To avoid deleting product and produce errors, i'll only set the products in deleted state
+            foreach($brand->getProducts() as $product) {
+                $product->setIsDeleted(true);
+                $this->productRepository->save($product, true);
+            }
+
+            $this->brandRepository->save($brand, true);
+        } catch(\Exception $e) {
+            return $this->json([
+                "message" => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }
