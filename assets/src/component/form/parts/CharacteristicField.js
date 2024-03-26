@@ -5,6 +5,7 @@ export default function CharacteristicField({updateCredentials, characteristicsC
 
     const rowCounter = useRef(0)
     const [characteristics, setCharacteristics] = useState({...characteristicsCredential})
+    const characteristicsKeys = Object.keys(characteristics)
 
     useEffect(() => {
         if(updateCredentials != null) {
@@ -15,7 +16,7 @@ export default function CharacteristicField({updateCredentials, characteristicsC
     const handleNewRow = () => {
         setCharacteristics({
             ...characteristics,
-            [rowCounter]: {
+            [rowCounter.current]: {
                 label: "",
                 description: ""
             }
@@ -57,7 +58,7 @@ export default function CharacteristicField({updateCredentials, characteristicsC
             
             <div className={"p-b-15 d-col"}>
                 {Object.values(characteristics).map((item, index) => (
-                    <div id={index} key={index} className={"card"}>
+                    <div id={characteristicsKeys[index]} key={index} className={"card"}>
                         <div className={"-content"}>
                             <div className={"form-field"}>
                                 <input 
