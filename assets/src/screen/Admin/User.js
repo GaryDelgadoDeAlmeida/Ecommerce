@@ -56,7 +56,7 @@ export default function User() {
                                 <td className={"-nbr-orders"}>{item.orders.length}</td>
                                 <td className={"-actions"}>
                                     <Link className={"btn btn-blue -inline-flex"} to={`/admin/user/${item.id}`}>
-                                        <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
+                                        <img src={`${window.location.origin}/content/svg/eye-white.svg`} alt={""} />
                                     </Link>
                                 </td>
                             </tr>

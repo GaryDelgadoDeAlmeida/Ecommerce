@@ -10,7 +10,7 @@ export default function PrivateRessource(url, useToken = true) {
         items = useRef({}),
         error = useRef({}),
         storageUser = localStorage.getItem("user"),
-        user = storageUser.length > 0 ? JSON.parse(storageUser) : []
+        user = JSON.parse(storageUser.length > 0 ? storageUser : null)
     ;
     
     let headers = {
@@ -18,8 +18,9 @@ export default function PrivateRessource(url, useToken = true) {
         "Credentials": "same-origin",
         "Accept": "application/json",   
     }
+    
     if(useToken) {
-        headers.Authorization = "Bearer " + user.token
+        headers.Authorization = "Bearer " + (user ? user.token : "")
     }
     
     const load = async () => {
@@ -40,7 +41,7 @@ export default function PrivateRessource(url, useToken = true) {
         // If Token is expired
         if(Object.keys(error.current).length > 0 && error.current.response.status === 401) {
             localStorage.setItem("user", "")
-            navigate(user.role == "ROLE_ADMIN" ? "/admin-login" : "/login")
+            navigate(user && user.role == "ROLE_ADMIN" ? "/admin-login" : "/login")
             return
         }
 

@@ -15,27 +15,6 @@ export default function Home() {
         load()
     }, [])
 
-    // Temporary
-    const generateProductCard = () => {
-        let $html = []
-        
-        for (let index = 0; index < 4; index++) {
-            $html.push(<ProductCard key={index} />)
-        }
-
-        return $html
-    }
-
-    const generateCategoryCard = () => {
-        let $html = []
-        
-        for (let index = 0; index < 4; index++) {
-            // $html.push(<CategoryCard key={index} />)
-        }
-
-        return $html
-    }
-
     return (
         <Header>
             {/* Hero */}

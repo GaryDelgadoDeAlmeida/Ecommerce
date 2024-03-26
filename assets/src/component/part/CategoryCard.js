@@ -6,7 +6,7 @@ import { findParent } from "../utils/DomControl";
 export default function CategoryCard({category, url = "/category", isAdmin = false}) {
 
     const storageUser = localStorage.getItem("user")
-    const jsonUser = JSON.parse(storageUser.length > 0 ? storageUser : [])
+    const jsonUser = JSON.parse(storageUser.length > 0 ? storageUser : null)
 
     const handleRemove = (e, categoryID) => {
         e.preventDefault()

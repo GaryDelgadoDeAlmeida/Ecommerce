@@ -17,6 +17,7 @@ import Cookie from "./Anonymous/Cookie";
 import ShoppingCart from "./Anonymous/ShoppingCart";
 import Login from "./Anonymous/Login";
 import Register from "./Anonymous/Register";
+import ResetPassword from "./Anonymous/ResetPassword";
 
 // User
 import UserHome from "./User/Home";
@@ -27,6 +28,7 @@ import UserOrderDetail from "./User/OrderDetail";
 import AdminHome from "./Admin/Home";
 import AdminProfile from "./Admin/Profile";
 import AdminUser from "./Admin/User";
+import AdminUserSingle from "./Admin/UserSingle";
 import AdminCategory from "./Admin/Category";
 import AdminCategoryCreate from "./Admin/CategoryCreate";
 import AdminCategoryEdit from "./Admin/CategoryEdit";
@@ -62,6 +64,7 @@ export default function RouteConfig() {
             <Route path={"/shopping-cart"} element={<ShoppingCart />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/register"} element={<Register />} />
+            <Route path={"/reset-password"} element={<ResetPassword />} />
             
             {/* User */}
             <Route path={"/user"} element={<UserHome />} />
@@ -71,6 +74,7 @@ export default function RouteConfig() {
             {/* Admin */}
             <Route path={"/admin"} element={<AdminHome />} />
             <Route path={"/admin/users"} element={<AdminUser />} />
+            <Route path={"/admin/user/:userID"} element={<AdminUserSingle />} />
             <Route path={"/admin/profile"} element={<AdminProfile />} />
             <Route path={"/admin/categories"} element={<AdminCategory />} />
             <Route path={"/admin/category/create"} element={<AdminCategoryCreate />} />
