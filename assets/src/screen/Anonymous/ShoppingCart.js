@@ -1,12 +1,13 @@
 import React from "react";
-import Header from "../../component/part/Header";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Header from "../../component/part/Header";
+import CartCard from "../../component/part/CartCard";
+import Notification from "../../component/part/Notification";
 
 export default function ShoppingCart() {
 
-    const handleQuantity = (e) => {}
-
-    const handleRemoveProduct = (e) => {}
+    const { carts, user } = useSelector(state => state);
 
     const handlePayNow = (e) => {}
 
@@ -31,66 +32,13 @@ export default function ShoppingCart() {
                                 <h2 className={"m-0"}>Ordered products</h2>
                                 <span>4 items</span>
                             </div>
-                            <div className={"shopping-card"}>
-                                <div className={"-header"}>
-                                    <img src={`${window.location.origin}/content/img/hero-background.jpg`} alt={""} />
-                                </div>
-                                <div className={"-content"}>
-                                    <span className={"name"}>Product name</span>
-                                    
-                                    <div className={"quantity"}>
-                                        <button>&minus;</button>
-                                        <input type={"number"} value={1} min={1} />
-                                        <button>&#43;</button>
-                                    </div>
-                                    
-                                    <span className={"price"}>300 €</span>
-                                    
-                                    <button type={"button"} className={"btn btn-red btn-sm -inline-flex"}>
-                                        <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={""} />
-                                    </button>
-                                </div>
-                            </div>
-                            <div className={"shopping-card"}>
-                                <div className={"-header"}>
-                                    <img src={`${window.location.origin}/content/img/hero-background.jpg`} alt={""} />
-                                </div>
-                                <div className={"-content"}>
-                                    <span>Product name</span>
-                                    
-                                    <div className={"quantity"}>
-                                        <button>&minus;</button>
-                                        <input type={"number"} value={1} min={1} />
-                                        <button>&#43;</button>
-                                    </div>
-                                    
-                                    <span>300 €</span>
-                                    
-                                    <button type={"button"} className={"btn btn-red btn-sm -inline-flex"}>
-                                        <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={""} />
-                                    </button>
-                                </div>
-                            </div>
-                            <div className={"shopping-card"}>
-                                <div className={"-header"}>
-                                    <img src={`${window.location.origin}/content/img/hero-background.jpg`} alt={""} />
-                                </div>
-                                <div className={"-content"}>
-                                    <span>Product name</span>
-                                    
-                                    <div className={"quantity"}>
-                                        <button>&minus;</button>
-                                        <input type={"number"} value={1} min={1} />
-                                        <button>&#43;</button>
-                                    </div>
-                                    
-                                    <span>300 €</span>
-                                    
-                                    <button type={"button"} className={"btn btn-red btn-sm -inline-flex"}>
-                                        <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={""} />
-                                    </button>
-                                </div>
-                            </div>
+                            {carts.length > 0 ? (
+                                carts.map((item, index) => (
+                                    <CartCard key={index} product={item} />
+                                ))
+                            ) : (
+                                <Notification classname={"information"} message={"There is no product in your cart to command"} />
+                            )}
                         </div>
                         <div className={"-right"}>
                             <div className={"shopping-resume"}>
