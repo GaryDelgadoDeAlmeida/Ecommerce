@@ -5,6 +5,7 @@ namespace App\Controller\API\Admin;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\BrandRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class StatisticController extends AbstractController
     private User $user;
     private UserRepository $userRepository;
     private BrandRepository $brandRepository;
+    private OrderRepository $orderRepository;
     private ProductRepository $productRepository;
     private CategoryRepository $categoryRepository;
 
@@ -27,18 +29,22 @@ class StatisticController extends AbstractController
         Security $security,
         UserRepository $userRepository,
         BrandRepository $brandRepository,
+        OrderRepository $orderRepository,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository
     ) {
         $this->user = $security->getUser();
         $this->userRepository = $userRepository;
         $this->brandRepository = $brandRepository;
+        $this->orderRepository = $orderRepository;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
     }
 
     #[Route('/statistics', name: 'get_statistics')]
     public function get_statistics(Request $request): JsonResponse {
+        $currentTime = new \DateTimeImmutable();
+
         // Top product selled ??? Monthly or Current year ???
 
         // Top Buyer
@@ -49,15 +55,15 @@ class StatisticController extends AbstractController
 
         // Return an response to the client
         return $this->json([
-            "nbrUsers" => 0,
-            "nbrOrders" => 0,
-            "nbrProducts" => 0,
-            "nbrBrands" => 0,
+            "nbrCustomers" => $this->userRepository->countUsers(),
+            "nbrOrders" => $this->orderRepository->countOrders(),
+            "nbrProducts" => $this->productRepository->countProducts(),
+            "nbrBrands" => $this->brandRepository->countBrands(),
             "salesReport" => [],
             "activeUsers" => [],
-            "topSellingProducts" => [],
+            "topSellingProducts" => $this->productRepository->getMonthBestSellers($currentTime),
             "topSellingCategories" => [], // Max selled products in a category
-            "newCustomers" => []
+            "newCustomers" => $this->userRepository->findBy([], ["createdAt" => "DESC"], 5, 0)
         ], Response::HTTP_OK);
     }
 }

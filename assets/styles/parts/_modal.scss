@@ -1,0 +1,40 @@
+.modal {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    position: absolute;
+    background-color: rgba(#000, $alpha: .8);
+
+    &.-active {
+        margin: auto;
+        display: initial;
+    }
+
+    .modal-wrapper {
+        overflow: scroll;
+        max-width: 600px;
+        margin: 25px auto;
+        max-height: 600px;
+        border-radius: 5px;
+        scrollbar-width: 0px;
+        background-color: var(--c-white);
+
+        .-header, .-content {
+            padding: 25px;
+        }
+
+        .-header {
+            border-bottom: .5px solid var(--c-black);
+
+            img {
+                cursor: pointer;
+            }
+        }
+
+        .-content {
+            // 
+        }
+    }
+}

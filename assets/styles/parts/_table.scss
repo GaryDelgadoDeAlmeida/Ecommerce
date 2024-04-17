@@ -89,6 +89,14 @@
                         content: "Prénom & Nom";
                     }
 
+                    &.-firstname::before {
+                        content: "Prénom";
+                    }
+
+                    &.-lastname::before {
+                        content: "Nom de famille";
+                    }
+
                     &.-address::before {
                         content: "Adresse";
                     }
@@ -124,6 +132,15 @@
 
                     &.-unit-price::before {
                         content: "Prix unitaire";
+                    }
+
+                    // Product Characteristics
+                    &.-characteristic-label::before {
+                        content: "Label";
+                    }
+                    
+                    &.-characteristic-description::before {
+                        content: "Description";
                     }
 
                     // Order
@@ -162,6 +179,10 @@
 
                     &.-created-at::before {
                         content: "Créer à";
+                    }
+
+                    &.-amount::before {
+                        content: "Montant";
                     }
 
                     &.-total-amount::before {

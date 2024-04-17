@@ -37,6 +37,7 @@ export default function HeaderAdmin(props) {
                         <li><Link to={"/admin/categories"}>Categories</Link></li>
                         <li><Link to={"/admin/products"}>Products</Link></li>
                         <li><Link to={"/admin/orders"}>Orders</Link></li>
+                        <li><Link to={"/admin/statistics"}>Statistics</Link></li>
                         <li><Link to={"/admin/settings"}>Settings</Link></li>
                         <li><Link to={"#"} onClick={(e) => handleDisconnect(e)}>Logout</Link></li>
                     </nav>
@@ -67,6 +68,7 @@ export default function HeaderAdmin(props) {
                             <li><Link to={"/admin/categories"}>Categories</Link></li>
                             <li><Link to={"/admin/products"}>Products</Link></li>
                             <li><Link to={"/admin/orders"}>Orders</Link></li>
+                            <li><Link to={"/admin/statistics"}>Statistics</Link></li>
                             <li><Link to={"/admin/settings"}>Settings</Link></li>
                             <li><Link to={"/logout"} onClick={(e) => handleLogout(e)}>logout</Link></li>
                             <label className={"icon-menu"} htmlFor={"burger"}>

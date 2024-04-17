@@ -22,14 +22,14 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $image = null;
 
     #[ORM\Column]
     private ?float $price = 0.0;
@@ -40,7 +40,7 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Characteristic::class)]
     private Collection $characteristics;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]

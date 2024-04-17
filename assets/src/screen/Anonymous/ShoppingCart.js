@@ -11,6 +11,10 @@ export default function ShoppingCart() {
 
     const handlePayNow = (e) => {}
 
+    if(carts.message) {
+        return <Notification classname={"danger"} message={carts.message} />
+    }
+
     return (
         <Header>
             <div className={"page-hero"}>
@@ -30,11 +34,11 @@ export default function ShoppingCart() {
                         <div className={"-left"}>
                             <div className={"d-justify p-b-15"}>
                                 <h2 className={"m-0"}>Ordered products</h2>
-                                <span>4 items</span>
+                                <span>{carts.length} items</span>
                             </div>
                             {carts.length > 0 ? (
                                 carts.map((item, index) => (
-                                    <CartCard key={index} product={item} />
+                                    <CartCard key={index} item={item} />
                                 ))
                             ) : (
                                 <Notification classname={"information"} message={"There is no product in your cart to command"} />

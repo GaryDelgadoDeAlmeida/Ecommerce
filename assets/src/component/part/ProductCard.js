@@ -21,14 +21,14 @@ export default function ProductCard({product}) {
             <img 
                 className={"-product-img"} 
                 src={`${window.location.origin}/content/img/products/mineral.jpg`} 
-                // src={`${window.location.origin}/content/img/${product.img}`}
+                // src={`${window.location.origin}/content/img/${product.image}`}
                 alt={""} 
             />
 
             <div className={"-content"}>
-                <h3 className={"-title"}>Product name</h3>
-                <span className={"-category"}>Category</span>
-                <p className={"-price"}>1000 €</p>
+                <h3 className={"-title"}>{product.name}</h3>
+                <span className={"-category"}>{product.category ? product.category.name : ""}</span>
+                <p className={"-price"}>{product.price} €</p>
                 
                 <div className={"d-justify"}>
                     <button 
@@ -37,8 +37,7 @@ export default function ProductCard({product}) {
                     >Add to card</button>
                     
                     <Link 
-                        // to={`/product/${product.id}`} 
-                        to={`/product/1`} 
+                        to={`/product/${product.id}`} 
                         className={"btn btn-green"}
                     >See more</Link>
                 </div>

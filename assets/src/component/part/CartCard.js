@@ -1,9 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { findParent } from "../utils/DomControl";
 import { cartRemoveProduct, cartUpdateProduct } from "../../redux/actions/cart-actions-types";
 
-export default function CartCard({product}) {
+export default function CartCard({item}) {
 
     const dispatch = useDispatch();
 
@@ -14,17 +13,10 @@ export default function CartCard({product}) {
         }))
     }
 
-    const handleRemoveProduct = (e) => {
-        const parent = findParent(e.currentTarget, "shopping-card")
-        if(!parent) {
-            return
-        }
-
+    const handleRemoveProduct = (e, productID) => {
         dispatch(cartRemoveProduct({
-            id: 1
+            id: productID
         }))
-
-        parent.remove()
     }
 
     return (
@@ -33,17 +25,17 @@ export default function CartCard({product}) {
                 <img src={`${window.location.origin}/content/img/hero-background.jpg`} alt={""} />
             </div>
             <div className={"-content"}>
-                <span className={"name"}>Product name</span>
+                <span className={"name"}>{item.product.name}</span>
                 
                 <div className={"quantity"}>
                     <button>&minus;</button>
-                    <input type={"number"} value={1} min={1} onChange={(e) => handleQuantity(e)} />
+                    <input type={"number"} value={item.quantity} min={1} onChange={(e) => handleQuantity(e)} />
                     <button>&#43;</button>
                 </div>
                 
-                <span className={"price"}>300 €</span>
+                <span className={"price"}>{item.product.price * item.quantity} €</span>
                 
-                <button type={"button"} className={"btn btn-red btn-sm -inline-flex"} onClick={(e) => handleRemoveProduct(e)}>
+                <button type={"button"} className={"btn btn-red btn-sm -inline-flex"} onClick={(e) => handleRemoveProduct(e, item.product.id)}>
                     <img src={`${window.location.origin}/content/svg/trash-white.svg`} alt={""} />
                 </button>
             </div>

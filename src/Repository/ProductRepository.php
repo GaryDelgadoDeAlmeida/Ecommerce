@@ -96,6 +96,24 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int offset
+     * @param int limit
+     * @return Product[]
+     */
+    public function getMonthBestSellers(\DateTimeImmutable $time) : array {
+        return $this->createQueryBuilder("product")
+            ->select("product.id, product.name, orderDetail.id, SUM(orderDetail.quantity) as totalSelledQuantity")
+            ->leftJoin("product.orderDetails", "orderDetail")
+            ->groupBy("orderDetail.id, orderDetail.createdAt")
+            ->having("orderDetail.createdAt = :time")
+            ->orderBy("product.id")
+            ->setParameter("time", $time->format("Y-m"))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
      * @return int
      */
     public function countProducts() {

@@ -116,7 +116,7 @@ export default function Order() {
                         <td className={"-created-at"}>11/12/2023 22:13:01</td>
                         <td className={"-actions"}>
                             <Link className={"btn btn-blue -inline-flex"} to={`/admin/order/1`}>
-                                <img src={`${window.location.origin}/content/svg/eye.svg`} alt={"see more"} />
+                                <img src={`${window.location.origin}/content/svg/eye-white.svg`} alt={"see more"} />
                             </Link>
                             
                             <button 
@@ -124,7 +124,7 @@ export default function Order() {
                                 className={"btn btn-red -inline"} 
                                 onClick={(e) => handleCancel(e, 1)}
                             >
-                                <img src={`${window.location.origin}/content/svg/ban.svg`} alt={"cancel"} />
+                                <img src={`${window.location.origin}/content/svg/ban-white.svg`} alt={"cancel"} />
                             </button>
                             
                             <button 
@@ -151,7 +151,7 @@ export default function Order() {
                                 <td className={"-created-at"}>{formatDate()}</td>
                                 <td className={"-actions"}>
                                     <Link className={"btn btn-blue -inline-flex"} to={`/admin/order/${item.id}`}>
-                                        <img src={`${window.location.origin}/content/svg/eye.svg`} alt={"see more"} />
+                                        <img src={`${window.location.origin}/content/svg/eye-white.svg`} alt={"see more"} />
                                     </Link>
                                     
                                     <button 
@@ -159,7 +159,7 @@ export default function Order() {
                                         className={"btn btn-red -inline"} 
                                         onClick={(e) => handleCancel(e, item.id)}
                                     >
-                                        <img src={`${window.location.origin}/content/svg/ban.svg`} alt={"remove"} />
+                                        <img src={`${window.location.origin}/content/svg/ban-white.svg`} alt={"remove"} />
                                     </button>
                                     
                                     <button 

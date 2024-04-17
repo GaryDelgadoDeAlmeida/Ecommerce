@@ -5,7 +5,9 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Enum\OrderEnum;
 use App\Entity\OrderDetail;
+use App\Enum\OrderDetailEnum;
 use App\Repository\OrderRepository;
 use App\Enum\OrderDeliveryStatusEnum;
 use App\Repository\OrderDetailRepository;
@@ -26,49 +28,118 @@ class OrderManager {
      */
     public function checkFields(array $jsonContent) : array {
         $fields = [];
+        $allowedChoices = OrderEnum::getAvalaibleChoices();
 
-        foreach($jsonContent as $key => $value) {
-            // 
+        foreach($jsonContent as $fieldName => $fieldValue) {
+            if(!in_array($fieldName, $allowedChoices)) {
+                continue;
+            }
+            
+            if($fieldName == OrderEnum::ORDER_CLIENT) {
+                // 
+            } elseif($fieldName == OrderEnum::ORDER_STATUS) {
+                // 
+            } elseif($fieldName == OrderEnum::ORDER_PAID_STATUS) {
+                // 
+            } elseif($fieldName == OrderEnum::ORDER_DETAILS) {
+                // 
+            }
+
+            $fields[$fieldName] = $fieldValue;
         }
 
         return $fields;
     }
 
     /**
-     * @param User user
-     * @param string The status of the order. Normally it will be the 1st step
-     * @param string The paid status, if the customer paid his order
-     * @return Order
+     * @param array json content
+     * @return array fields
      */
-    public function postOrder(User $user, string $status, string $paid_status) : Order {
-        $order = (new Order())
-            ->setClient($user)
-            ->setStatus($status)
-            ->setPaidStatus($paid_status)
-            ->setUpdatedAt(new \DateTimeImmutable())
-            ->setCreatedAt(new \DateTimeImmutable())
-        ;
+    public function checkOrderDetails(array $jsonContent) : array {
+        $fields = [];
+        $allowedChoices = OrderDetailEnum::getAvalaibleChoices();
 
-        $this->orderRepository->save($order, true);
+        foreach($jsonContent as $fieldName => $fieldValue) {
+            if(!in_array($fieldName, $allowedChoices)) {
+                continue;
+            }
+        
+            if($fieldName == OrderDetailEnum::ORDER_DETAIL_ORDER) {
+                // 
+            } elseif($fieldName == OrderDetailEnum::ORDER_DETAIL_PRODUCT) {
+                // 
+            } elseif($fieldName == OrderDetailEnum::ORDER_DETAIL_QUANTITY) {
+                // 
+            }
+
+            $fields[$fieldName] = $fieldValue;
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @param array fields
+     * @param User user
+     * @param ?Order order
+     * @return Order|string
+     */
+    public function fillOrder(array $fields, User $user, ?Order $order = new Order()): Order|string {
+        $currentTime = new \DateTimeImmutable();
+
+        if($order->getId()) {
+            $order
+                ->setUpdatedAt($currentTime)
+            ;
+        } else {
+            $order
+                ->setClient($user)
+                ->setCreatedAt($currentTime)
+            ;
+        }
+
+        try {
+            foreach($fields as $fieldName => $fieldValue) {
+                if($fieldName == OrderEnum::ORDER_CLIENT) {
+                    // 
+                } elseif($fieldName == OrderEnum::ORDER_STATUS) {
+                    // 
+                } elseif($fieldName == OrderEnum::ORDER_PAID_STATUS) {
+                    // 
+                } elseif($fieldName == OrderEnum::ORDER_DETAILS) {
+                    // 
+                }
+            }
+        } catch(\Exception $e) {
+            return $e->getMessage();
+        }
 
         return $order;
     }
 
     /**
-     * @param Order order
-     * @param Product product
-     * @param int quantity
-     * @return OrderDetail
+     * @param array fields
+     * @param ?Order order
+     * @param ?OrderDetail order detail
+     * @return OrderDetail|string
      */
-    public function addOrderDetail(Order $order, Product $product, int $quantity) : OrderDetail {
-        $orderDetail = (new OrderDetail())
-            ->setClientOrder($order)
-            ->setProduct($product)
-            ->setQuantity($quantity)
-            ->setCreatedAt(new \DateTimeImmutable())
-        ;
+    public function fillOrderDetail(array $fields, ?Order $order, ?OrderDetail $orderDetail = new OrderDetail()) : OrderDetail|string {
+        $currentTime = new \DateTimeImmutable();
+        if(!$orderDetail->getId()) {
+            $orderDetail
+                ->setClientOrder($order)
+                ->setCreatedAt($currentTime)
+            ;
+        }
 
-        $this->orderDetailRepository->save($orderDetail, true);
+        try {
+            foreach($fields as $fieldName => $fieldValue) {
+                if($fieldName == OrderDetailEnum::ORDER_DETAIL_PRODUCT) $orderDetail->setProduct($fieldValue);
+                elseif($fieldName == OrderDetailEnum::ORDER_DETAIL_QUANTITY) $orderDetail->setQuantity($fieldValue);
+            }
+        } catch(\Exception $e) {
+            return $e->getMessage();
+        }
 
         return $orderDetail;
     }

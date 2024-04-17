@@ -64,6 +64,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function countUsers() : int {
         return $this->createQueryBuilder("user")
             ->select("COUNT(user.id) as nbrUsers")
+            ->where("user.roles NOT IN ('ROLE_ADMIN')")
             ->getQuery()
             ->getSingleResult()["nbrUsers"]
         ;

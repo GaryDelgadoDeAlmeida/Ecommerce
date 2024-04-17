@@ -56,6 +56,7 @@ symfony console doctrine:migration:migrate
 ### Symfony
 
 - lexik/jwt-authentication-bundle
+- doctrine/doctrine-fixtures-bundle (dans l'environnement de dev)
 
 ### React
 
@@ -112,6 +113,29 @@ Pour générer un mot de passe hasher
 ```bash
 php bin/console security:hash-password
 ```
+
+## Fixtures
+
+Pour créer des `fixtures` (se sont de fausse données qu'on a insérer dans la base. Cette fonctionnalité est utile quand-t-on a besoin d'informations pour tester l'application). Pour utiliser les fixtures, il faudra ajouter la depandence dans l'environnement de dev uniquement (on ne veut pas qu'elle soit déployer dans l'env de la production) :
+```bash
+composer require orm-fixtures --dev
+```
+
+Pour créer un fichier veuillez, il faut utiliser la commande suivante et suivre les instructions données :
+```bash
+symfony console m:fixtures
+```
+
+Pour exécuter les fixtures (a exécuter uniquement dans l'environnement de dev)
+```bash
+symfony console doctrine:fixtures:load
+```
+
+Cette commande va exécuter toutes les fixtures du dossier `DataFixtures` mais pour exécuter spécifiquement un fichier du dossier, il faudra utiliser la commande suivante (attention, pas besoin de mettre l'extension du fichier a appelé) :
+```bash
+symfony console doctrine:fixtures:load <nom_du_fichier>
+```
+
 
 ## Fonctionnalités
 

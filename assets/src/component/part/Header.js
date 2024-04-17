@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import SubscribeForm from "../form/SubscribeForm"
+import React, { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import SubscribeForm from "../form/SubscribeForm";
 
 export default function Header(props) {
 
+    const { carts, user } = useSelector((state) => state)
     let storageUser = localStorage.getItem("user")
     const [logged, setLogged] = useState(storageUser.length > 0 ? true : false)
 
@@ -42,9 +44,12 @@ export default function Header(props) {
                         <div className={"-right"}>
                             <Link to={"/shopping-cart"} className={"cart"}>
                                 <img src={`${window.location.origin}/content/svg/cart-shopping.svg`} />
-                                <div className={"-in-cart"}>
-                                    <span>1</span>
-                                </div>
+
+                                {carts.length > 0 && (
+                                    <div className={"-in-cart"}>
+                                        <span>{carts.length}</span>
+                                    </div>
+                                )}
                             </Link>
 
                             {logged ? (

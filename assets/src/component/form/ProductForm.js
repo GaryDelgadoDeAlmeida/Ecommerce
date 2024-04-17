@@ -12,21 +12,16 @@ export default function ProductForm({product = null}) {
     const storageUser = localStorage.getItem("user")
     const jsonUser = storageUser.length > 0 ? JSON.parse(storageUser) : []
 
-    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/admin/product/form-needs`)
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
-        brand: "",
-        category: "",
-        name: "",
-        description: "",
+        brand: product && product.brand ? product.brand.name : "",
+        category: product && product.category ? product.category.name : "",
+        name: product ? product.name : "",
+        description: product ? product.description : "",
         quantity: 0,
-        price: 0,
-        characteristics: {}
+        price: product ? product.price : 0,
+        characteristics: product ? product.characteristics : {}
     })
-
-    useEffect(() => {
-        load()
-    }, [])
 
     const updateCredentials = (fieldName, fieldValue) => {
         setCredentials({
@@ -45,8 +40,13 @@ export default function ProductForm({product = null}) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        let url = `${window.location.origin}/api/admin/product`
+        if(product) {
+            url = `${window.location.origin}/api/admin/product/${product.id}/update`
+        }
+
         axios
-            .post(`${window.location.origin}/api/admin/product`, credentials, {
+            .post(url, credentials, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json+ld",
@@ -69,10 +69,6 @@ export default function ProductForm({product = null}) {
         ;
     }
 
-    if(loading) {
-        return <Notification classname={"information"} message={"Loading ..."} />
-    }
-
     return (
         <>
             {Object.keys(formResponse).length > 0 && (
@@ -87,6 +83,7 @@ export default function ProductForm({product = null}) {
                     <input 
                         type={"text"} 
                         id={"product_name"} 
+                        value={credentials.name}
                         placeholder={"Product name ..."}
                         onChange={(e) => handleChange(e, "name")} 
                     />

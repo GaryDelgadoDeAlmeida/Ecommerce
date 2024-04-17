@@ -1,16 +1,16 @@
-import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT } from "../constants/cart";
+import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT, CART_RESET } from "../constants/cart";
 
-export const cartAddProduct = (product) => {
+export const cartAddProduct = (payload) => {
     return {
         type: CART_ADD_PRODUCT,
-        payload: product,
+        payload: payload,
     }
 }
 
-export const cartUpdateProduct = (product) => {
+export const cartUpdateProduct = (payload) => {
     return {
         type: CART_UPDATE_PRODUCT,
-        payload: product,
+        payload: payload,
     }
 }
 
@@ -18,5 +18,11 @@ export const cartRemoveProduct = (product) => {
     return {
         type: CART_REMOVE_PRODUCT,
         payload: product.id,
+    }
+}
+
+export const cartReset = () => {
+    return {
+        type: CART_RESET
     }
 }

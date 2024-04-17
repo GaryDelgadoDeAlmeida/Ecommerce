@@ -1,4 +1,4 @@
-import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT, deepCardsCopy } from "./constants/cart";
+import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT, deepCardsCopy, CART_RESET } from "./constants/cart";
 import { USER_SIGN_IN_ACCOUNT, USER_LOGOUT_ACCOUNT, USER_EXPIRED_TOKEN } from "./constants/user";
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
         token: "",
         role: ""
     },
-    carts: {}
+    carts: []
 }
 
 const copyInitialState = JSON.parse(JSON.stringify(initialState));
@@ -16,16 +16,27 @@ const reducer = (state = copyInitialState, action) => {
 
     switch(action.type) {
         case CART_ADD_PRODUCT:
-            if(state.dragons.includes(action.payload)) {
+            carts = deepCardsCopy(state)
+            let existingCarts = carts.filter((item) => item.product.id == action.payload.product.id)
+            console.error(existingCarts, action)
+            
+            if(existingCarts.length > 0) {
+            // if(carts.includes(state.product)) {
                 return {
                     ...state,
                     message: "Attention, vous ne pouvez pas ajouter deux fois le même produit"
                 }
+
+                // existingCarts = existingCarts[0]
+                existingCarts.quantity = action.payload.quantity
+                carts[cartIndex] = {...cart}
+            } else {
+                carts = carts.concat(action.payload)
             }
 
             return {
                 ...state,
-                carts: state.carts.concat(action.payload)
+                carts: carts
             }
     
         case CART_UPDATE_PRODUCT:
@@ -35,13 +46,19 @@ const reducer = (state = copyInitialState, action) => {
     
         case CART_REMOVE_PRODUCT:
             carts = deepCardsCopy(state)
-            carts.filter((item) => item.id != action.payload)
+            carts.filter((item) => item.product.id != action.payload)
             
             return {
                 ...state,
                 carts: {
                     ...carts
                 }
+            }
+
+        case CART_RESET:
+            return {
+                ...state,
+                carts: {}
             }
 
         case USER_SIGN_IN_ACCOUNT:

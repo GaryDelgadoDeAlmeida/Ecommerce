@@ -55,7 +55,7 @@ class OrderRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("clientOrder")
             ->select("COUNT(clientOrder.id) as nbrOrders")
             ->getQuery()
-            ->setSingleResult()["nbrOrders"]
+            ->getSingleResult()["nbrOrders"]
         ;
     }
 

@@ -6,15 +6,22 @@ use App\Entity\Product;
 use App\Enum\ProductEnum;
 use App\Repository\ProductRepository;
 use App\Manager\CharacteristicManager;
+use App\Repository\CategoryRepository;
 
 class ProductManager {
 
     private CharacteristicManager $characteristicManager;
     private ProductRepository $productRepository;
+    private CategoryRepository $categoryRepository;
 
-    function __construct(CharacteristicManager $characteristicManager, ProductRepository $productRepository) {
+    function __construct(
+        CharacteristicManager $characteristicManager, 
+        ProductRepository $productRepository,
+        CategoryRepository $categoryRepository
+    ) {
         $this->characteristicManager = $characteristicManager;
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -39,9 +46,18 @@ class ProductManager {
             } elseif($fieldName == ProductEnum::PRODUCT_PRICE) {
                 // 
             } elseif($fieldName == ProductEnum::PRODUCT_BRAND) {
-                // 
+                if($fieldValue == null) {
+                    continue;
+                }
             } elseif($fieldName == ProductEnum::PRODUCT_CATEGORY) {
-                // 
+                if($fieldValue == null) {
+                    continue;
+                }
+
+                $fieldValue = $this->categoryRepository->findOneBy(["name" => $fieldValue]);
+                if(!$fieldValue) {
+                    continue;
+                }
             } elseif($fieldName == ProductEnum::PRODUCT_CHARACTERISTICS) {
                 // 
             }
@@ -52,6 +68,9 @@ class ProductManager {
         return $fields;
     }
 
+    /**
+     * 
+     */
     public function fillProduct(array $fields, ?Product $product = new Product()) {
         $currentTime = new \DateTimeImmutable();
 
@@ -59,7 +78,10 @@ class ProductManager {
             if($product->getId()) {
                 $product->setUpdatedAt($currentTime);
             } else {
-                $product->setCreatedAt($currentTime);
+                $product
+                    ->setIsDeleted(false)
+                    ->setCreatedAt($currentTime)
+                ;
             }
     
             foreach($fields as $fieldName => $fieldValue) {

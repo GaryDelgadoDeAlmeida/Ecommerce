@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../component/utils/DomControl";
 import HeaderAdmin from "../../component/part/HeaderAdmin";
 import Notification from "../../component/part/Notification";
 import PrivateRessource from "../../component/utils/PrivateRessource";
@@ -20,13 +21,15 @@ export default function Home() {
         )
     }
 
-    // if(Object.keys(error).length > 0) {
-    //     return (
-    //         <HeaderAdmin>
-    //             <Notification classname={"danger"} message={error.message} />
-    //         </HeaderAdmin>
-    //     )
-    // }
+    if(Object.keys(error).length > 0) {
+        return (
+            <HeaderAdmin>
+                <Notification classname={"danger"} message={error.message} />
+            </HeaderAdmin>
+        )
+    }
+
+    console.log(items)
 
     return (
         <HeaderAdmin>
@@ -34,10 +37,10 @@ export default function Home() {
             <div className={"d-grid -col-4"}>
                 <div className={"card"}>
                     <div className={"-header"}>
-                        <label>Users</label>
+                        <label>Customers</label>
                     </div>
                     <div className={"-content"}>
-                        <span>1</span>
+                        <span>{items.nbrCustomers}</span>
                     </div>
                 </div>
                 <div className={"card"}>
@@ -45,7 +48,7 @@ export default function Home() {
                         <label>Orders</label>
                     </div>
                     <div className={"-content"}>
-                        <span>3</span>
+                        <span>{items.nbrOrders}</span>
                     </div>
                 </div>
                 <div className={"card"}>
@@ -53,7 +56,7 @@ export default function Home() {
                         <label>Products</label>
                     </div>
                     <div className={"-content"}>
-                        <span>1</span>
+                        <span>{items.nbrProducts}</span>
                     </div>
                 </div>
                 <div className={"card"}>
@@ -61,7 +64,7 @@ export default function Home() {
                         <label>Brands</label>
                     </div>
                     <div className={"-content"}>
-                        <span>1</span>
+                        <span>{items.nbrBrands}</span>
                     </div>
                 </div>
             </div>
@@ -109,24 +112,14 @@ export default function Home() {
                     <div className={"-content"}>
                         <table className={"table -collapse"}>
                             <tbody>
-                                <tr>
-                                    <td className={"-created-at"}>01/10/2023</td>
-                                    <td className={"-firstname"}>Garry</td>
-                                    <td className={"-lastname"}>ALMEIDA</td>
-                                    <td className={"-amount"}>190 €</td>
-                                </tr>
-                                <tr>
-                                    <td className={"-created-at"}>01/10/2023</td>
-                                    <td className={"-firstname"}>Garry</td>
-                                    <td className={"-lastname"}>ALMEIDA</td>
-                                    <td className={"-amount"}>190 €</td>
-                                </tr>
-                                <tr>
-                                    <td className={"-created-at"}>01/10/2023</td>
-                                    <td className={"-firstname"}>Garry</td>
-                                    <td className={"-lastname"}>ALMEIDA</td>
-                                    <td className={"-amount"}>190 €</td>
-                                </tr>
+                                {Object.values(items.activeUsers ?? []).map((item, index) => (
+                                    <tr key={index}>
+                                        <td className={"-created-at"}>{formatDate(item.created_at, "fr")}</td>
+                                        <td className={"-firstname"}>{item.firstname}</td>
+                                        <td className={"-lastname"}>{item.lastname.toUpperCase()}</td>
+                                        <td className={"-amount"}>190 €</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

@@ -28,7 +28,7 @@ class ProductController extends AbstractController
     public function get_products(Request $request): JsonResponse {
         $limit = 25;
         $filters = $request->get("filters", []);
-        $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? $request->get("offset") : 1;
+        $offset = is_numeric($request->get("offset")) && $request->get("offset") >= 1 ? (int)$request->get("offset") : 1;
         
         $products = [];
         if($filters) {
@@ -36,7 +36,7 @@ class ProductController extends AbstractController
             $product = $this->productRepository->getProductsByParamaters($filters, $offset, $limit);
         } else {
             $maxOffset = ceil( $this->productRepository->countProducts() / $limit );
-            $products = $this->productRepository->findBy([], ["id" => "DESC"], $limit, ($offset - 1) * $limit);
+            $products = $this->productRepository->findBy(["isDeleted" => false], ["createdAt" => "DESC"], $limit, ($offset - 1) * $limit);
         }
 
         return $this->json([

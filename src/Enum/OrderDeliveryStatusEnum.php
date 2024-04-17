@@ -8,6 +8,7 @@ abstract class OrderDeliveryStatusEnum {
     public const STATUS_ONGOING = "ongoing";
     public const STATUS_CANCELLED = "cancelled";
     public const STATUS_DELIVERED = "delivery";
+    public const STATUS_REMBOURSEMENT = "remboursement";
 
     public array $typeName = [
         self::STATUS_WAITING => "WAITING",

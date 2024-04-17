@@ -14,7 +14,7 @@ export default function StarRating({rating}) {
             }
 
             $html.push(
-                <img src={`${window.location.origin}${imgPath}`} alt={""} />
+                <img key={index} src={`${window.location.origin}${imgPath}`} alt={""} />
             )
         }
 

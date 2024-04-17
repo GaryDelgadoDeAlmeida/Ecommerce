@@ -60,7 +60,7 @@ export default function Home() {
                             Object.keys(items.products ?? []).length > 0 ? (
                                 <div className={"d-grid -col-4 -m-col-2 m-t-25"}>
                                     {Object.values(items.products).map((item, index) => (
-                                        <ProductCard key={index} />
+                                        <ProductCard key={index} product={item} />
                                     ))}
                                 </div>
                             ) : (

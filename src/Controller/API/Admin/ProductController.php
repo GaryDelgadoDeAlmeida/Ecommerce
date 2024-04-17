@@ -56,21 +56,10 @@ class ProductController extends AbstractController
         ], Response::HTTP_OK);
     }
 
-    #[Route('/product/form-needs', name: "get_product_form_needs", methods: ["GET"])]
-    public function get_product_form_needs(Request $request) : JsonResponse {
-        return $this->json(
-            $this->serializeManager->serializeContent([
-                "brands" => $this->brandRepository->findAll(),
-                "categories" => $this->categoryRepository->findAll()
-            ]), 
-            Response::HTTP_OK
-        );
-    }
-
     #[Route("/product", name: "post_product", methods: ["POST"])]
     public function post_product(Request $request) : JsonResponse {
         // Decode the JSON content into an array
-        $jsonContent = json_decode($request->getContent());
+        $jsonContent = json_decode($request->getContent(), true);
         if(!$jsonContent) {
             return $this->json([
                 "message" => "An error has been encountered with the sended body"
@@ -113,17 +102,41 @@ class ProductController extends AbstractController
         );
     }
 
-    #[Route("/product/{productID}/update", name: "update_product", methods: ["UPDATE", "PUT"])]
+    #[Route("/product/{productID}/update", name: "update_product", methods: ["POST", "UPDATE", "PUT"])]
     public function update_product(int $productID) : JsonResponse {
         // Decode the JSON content into an array
         $jsonContent = json_decode($request->getContent());
         if(!$jsonContent) {
-            return $this->json("Empty body", Response::HTTP_PRECONDITION_FAILED);
+            return $this->json([
+                "message" => "An error has been encountered with the sended body"
+            ], Response::HTTP_PRECONDITION_FAILED);
         }
 
         $product = $this->productRepository->find($productID);
         if(empty($product)) {
-            return $this->json("", Response::HTTP_NOT_FOUND);
+            return $this->json([
+                "message" => "Product not found"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $fields = $this->productManager->checkFields($jsonContent);
+            if(!$fields) {
+                return $this->json([
+                    "message" => "An error has been encountered with the sended body"
+                ]);
+            }
+
+            $response = $this->productManager->fillProduct($fields, $product);
+            if(is_string($response)) {
+                return $this->json([
+                    "message" => $response
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch(\Exception $e) {
+            return $this->json([
+                "message" => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->json("Route Under construction", Response::HTTP_OK);

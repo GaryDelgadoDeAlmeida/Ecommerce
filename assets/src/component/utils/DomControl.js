@@ -17,7 +17,8 @@ export function findParent(element, className) {
     while(element) {
         elements.unshift(element)
         element = element.parentNode
-        if(element !== null && element.className === className) {
+        
+        if(element !== null && element.classList.contains(className)) {
             e = element
             break
         }

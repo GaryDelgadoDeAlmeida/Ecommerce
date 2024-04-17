@@ -51,10 +51,10 @@ button {
         border-color: var(--c-blue);
         background-color: var(--c-blue);
 
-        &:hover {
-            color: var(--c-blue);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-blue);
+        //     background-color: transparent;
+        // }
     }
     
     &.btn-dark-blue {
@@ -64,10 +64,10 @@ button {
         border-color: var(--c-darkBlue);
         background-color: var(--c-darkBlue);
 
-        &:hover {
-            color: var(--c-darkBlue);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-darkBlue);
+        //     background-color: transparent;
+        // }
     }
 
     &.btn-green {
@@ -75,10 +75,10 @@ button {
         border: 1px solid var(--c-green);
         background-color: var(--c-green);
     
-        &:hover {
-            color: var(--c-green);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-green);
+        //     background-color: transparent;
+        // }
     }
 
     &.btn-red {
@@ -97,10 +97,10 @@ button {
         border: 1px solid var(--c-orange);
         background-color: var(--c-orange);
     
-        &:hover {
-            color: var(--c-orange);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-orange);
+        //     background-color: transparent;
+        // }
     }
 
     &.btn-grey {
@@ -108,10 +108,10 @@ button {
         border: 1px solid var(--c-gray);
         background-color: var(--c-gray);
     
-        &:hover {
-            color: var(--c-gray);
-            background-color: transparent;
-        }
+        // &:hover {
+        //     color: var(--c-gray);
+        //     background-color: transparent;
+        // }
     }
 
     &.btn-radient-green {

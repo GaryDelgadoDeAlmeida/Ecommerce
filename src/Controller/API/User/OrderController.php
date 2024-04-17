@@ -4,6 +4,7 @@ namespace App\Controller\API\User;
 
 use App\Entity\User;
 use App\Manager\MailManager;
+use App\Manager\OrderManager;
 use App\Manager\SerializeManager;
 use App\Repository\OrderRepository;
 use App\Enum\OrderDeliveryStatusEnum;
@@ -19,17 +20,20 @@ class OrderController extends AbstractController
 {
     private User $user;
     private MailManager $mailManager;
+    private OrderManager $orderManager;
     private SerializeManager $serializeManager;
     private OrderRepository $orderRepository;
 
     function __construct(
         Security $security,
         MailManager $mailManager,
+        OrderManager $orderManager,
         SerializeManager $serializeManager,
         OrderRepository $orderRepository
     ) {
         $this->user = $security->getUser();
         $this->mailManager = $mailManager;
+        $this->orderManager = $orderManager;
         $this->serializeManager = $serializeManager;
         $this->orderRepository = $orderRepository;
     }
@@ -80,7 +84,14 @@ class OrderController extends AbstractController
         $new_order = null;
         
         try {
-            // 
+            $fields = $this->orderManager->checkFields($jsonContent);
+            if(!$fields) {
+                return $this->json([
+                    "message" => "An error has been encountered with the sended body"
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $this->orderManager->fillOrder($fields);
         } catch(\Exception $e) {
             return $this->json(
                 $e->getMessage(), 

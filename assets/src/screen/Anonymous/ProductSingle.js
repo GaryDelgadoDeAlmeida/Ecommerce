@@ -5,6 +5,9 @@ import CommentCard from "../../component/part/CommentCard";
 import CommentForm from "../../component/form/CommentForm";
 import PrivateRessource from "../../component/utils/PrivateRessource";
 import Notification from "../../component/part/Notification";
+import { useDispatch } from "react-redux";
+import { cartAddProduct } from "../../redux/actions/cart-actions-types";
+import ImageSlider from "../../component/part/ImageSlider";
 
 export default function ProductSingle() {
 
@@ -13,8 +16,8 @@ export default function ProductSingle() {
         return <Navigate to={"/products"} />
     }
 
-    const { loading, items, load, error } = PrivateRessource(`${window.location.origin}/api/product/${productID}`, false)
-    const currentIMG = useState("")
+    const dispatch = useDispatch()
+    const { loading, items: item, load, error } = PrivateRessource(`${window.location.origin}/api/product/${productID}`, false)
     const [credentials, setCredentials] = useState({
         quantity: 1
     })
@@ -22,11 +25,6 @@ export default function ProductSingle() {
     useEffect(() => {
         load()
     }, [])
-
-    const handleClickCarroussel = (e) => {
-        e.preventDefault()
-        console.log("HI handleClickCarroussel")
-    }
 
     const handleClickQuantity = (e) => {
         let operator = e.target.innerText
@@ -47,8 +45,16 @@ export default function ProductSingle() {
     const handleQuantity = (e) => {
         setCredentials({
             ...credentials,
-            quantity: 0
+            quantity: e.currentTarget.value.length > 0 ? e.currentTarget.value : 1
         })
+    }
+
+    const handleAddProductToCart = (e) => {
+        e.preventDefault()
+        dispatch(cartAddProduct({
+            product: item,
+            quantity: credentials.quantity
+        }))
     }
     
     return (
@@ -68,28 +74,25 @@ export default function ProductSingle() {
                     </div>
                 )}
 
-                {Object.keys(items ?? []).length > 0 && (
+                {Object.keys(item ?? []).length > 0 && (
                     <>
                         <div className={"page-product"}>
                             <div className={"product-header"}>
                                 <div className={"-product-image"}>
-                                    <div className={"carroussel"}>
-                                        <div className={"-list"}>
-                                            <img src={`${window.location.origin}/content/img/products/mineral.jpg`} alt={""} onClick={(e) => handleClickCarroussel(e)} />
-                                            <img src={`${window.location.origin}/content/img/products/mineral.jpg`} alt={""} onClick={(e) => handleClickCarroussel(e)} />
-                                            <img src={`${window.location.origin}/content/img/products/mineral.jpg`} alt={""} onClick={(e) => handleClickCarroussel(e)} />
-                                            <img src={`${window.location.origin}/content/img/products/mineral.jpg`} alt={""} onClick={(e) => handleClickCarroussel(e)} />
-                                        </div>
-                                        <div className={"-current"}>
-                                            <img src={`${window.location.origin}/content/img/products/mineral.jpg`} alt={""} />
-                                        </div>
-                                    </div>
+                                    <ImageSlider images={[
+                                        `${window.location.origin}/content/img/products/product.jpg`,
+                                        `${window.location.origin}/content/img/products/product2.jpg`,
+                                        `${window.location.origin}/content/img/products/product3.png`
+                                    ]} />
                                 </div>
                                 <div className={"-product-infos"}>
-                                    <h1>Diamond</h1>
-                                    <p>Price : 4000 €</p>
+                                    <h1>{item.name}</h1>
+                                    
+                                    <p>Price : {item.price} €</p>
+                                    
                                     <div className={"-quantity"}>
                                         <span>Quantity : </span>
+                                        
                                         <div className={"quantity-field"}>
                                             <button onClick={(e) => handleClickQuantity(e)}>-</button>
                                             <input 
@@ -101,52 +104,34 @@ export default function ProductSingle() {
                                             <button onClick={(e) => handleClickQuantity(e)}>+</button>
                                         </div>
                                     </div>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                    <button type={"button"} className={"btn btn-blue"}>Add to order</button>
+                                    
+                                    <p>{item.description}</p>
+                                    
+                                    <button 
+                                        type={"button"} 
+                                        className={"btn btn-blue"}
+                                        onClick={(e) => handleAddProductToCart(e)}
+                                    >Add to order</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className={"page-section"}>
-                            <h2>Description</h2>
+                        {item.characteristics.length > 0 && (
+                            <div className={"page-section"}>
+                                <h2>Description</h2>
 
-                            <table className={"table"}>
-                                <tbody>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                    <tr>
-                                        <td>description_name</td>
-                                        <td>description_value</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                <table className={"table"}>
+                                    <tbody>
+                                        {item.characteristics.map((characteristic, index) => (
+                                            <tr key={index}>
+                                                <td className={"-characteristic-label"}>{characteristic.label}</td>
+                                                <td className={"-characteristic-description"}>{characteristic.description}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
 
                         <div className={"page-section"}>
                             <h2>Comments</h2>
