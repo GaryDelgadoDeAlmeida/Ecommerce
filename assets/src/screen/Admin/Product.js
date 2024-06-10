@@ -14,8 +14,6 @@ export default function Product() {
         load()
     }, [offset])
 
-    console.log(items)
-
     return (
         <HeaderAdmin>
             <Link className={"btn btn-blue"} to={"/admin/product/create"}>Add a new product</Link>

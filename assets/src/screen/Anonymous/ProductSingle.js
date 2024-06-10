@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { cartAddProduct } from "../../redux/actions/cart-actions-types";
 import Header from "../../component/part/Header";
 import CommentCard from "../../component/part/CommentCard";
 import CommentForm from "../../component/form/CommentForm";
-import PrivateRessource from "../../component/utils/PrivateRessource";
-import Notification from "../../component/part/Notification";
-import { useDispatch } from "react-redux";
-import { cartAddProduct } from "../../redux/actions/cart-actions-types";
 import ImageSlider from "../../component/part/ImageSlider";
+import Notification from "../../component/part/Notification";
+import PrivateRessource from "../../component/utils/PrivateRessource";
 
 export default function ProductSingle() {
 
@@ -17,9 +17,10 @@ export default function ProductSingle() {
     }
 
     const dispatch = useDispatch()
+    const order = useSelector(state => state.carts[productID])
     const { loading, items: item, load, error } = PrivateRessource(`${window.location.origin}/api/product/${productID}`, false)
     const [credentials, setCredentials] = useState({
-        quantity: 1
+        quantity: Object.keys(order ?? []).length > 0 ? order.quantity : 1
     })
 
     useEffect(() => {
@@ -79,11 +80,7 @@ export default function ProductSingle() {
                         <div className={"page-product"}>
                             <div className={"product-header"}>
                                 <div className={"-product-image"}>
-                                    <ImageSlider images={[
-                                        `${window.location.origin}/content/img/products/product.jpg`,
-                                        `${window.location.origin}/content/img/products/product2.jpg`,
-                                        `${window.location.origin}/content/img/products/product3.png`
-                                    ]} />
+                                    <ImageSlider images={[item.image]} />
                                 </div>
                                 <div className={"-product-infos"}>
                                     <h1>{item.name}</h1>

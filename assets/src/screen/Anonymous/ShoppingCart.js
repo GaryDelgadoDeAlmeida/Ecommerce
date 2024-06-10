@@ -36,8 +36,8 @@ export default function ShoppingCart() {
                                 <h2 className={"m-0"}>Ordered products</h2>
                                 <span>{carts.length} items</span>
                             </div>
-                            {carts.length > 0 ? (
-                                carts.map((item, index) => (
+                            {Object.keys(carts).length > 0 ? (
+                                Object.values(carts).map((item, index) => (
                                     <CartCard key={index} item={item} />
                                 ))
                             ) : (

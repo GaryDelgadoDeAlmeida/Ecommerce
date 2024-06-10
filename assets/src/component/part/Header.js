@@ -45,9 +45,9 @@ export default function Header(props) {
                             <Link to={"/shopping-cart"} className={"cart"}>
                                 <img src={`${window.location.origin}/content/svg/cart-shopping.svg`} />
 
-                                {carts.length > 0 && (
+                                {Object.keys(carts).length > 0 && (
                                     <div className={"-in-cart"}>
-                                        <span>{carts.length}</span>
+                                        <span>{Object.keys(carts).length}</span>
                                     </div>
                                 )}
                             </Link>
@@ -87,6 +87,7 @@ export default function Header(props) {
                                     <li className={"-item"}><Link to={"/categories"}>Categories</Link></li>
                                     <li className={"-item"}><Link to={"/products"}>Products</Link></li>
                                     <li className={"-item"}><a href={"/#contact"}>Contact</a></li>
+                                    <li className={"-item"}><Link to={"/shopping-cart"}>Shopping Cart</Link></li>
                                     {logged ? (
                                         <li className={"-item"}><Link to={"#logout"} onClick={(e) => handleLogout(e)}>Logout</Link></li>
                                     ) : (

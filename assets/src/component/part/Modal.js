@@ -17,7 +17,7 @@ export default function Modal(props) {
             <div className={"modal-wrapper"}>
                 <div className={"-header txt-right"}>
                     <img 
-                        src={`${window.location.origin}/content/svg/close.svg`} 
+                        src={`${window.location.origin}/content/svg/closemark-red.svg`} 
                         alt={"close"} 
                         onClick={(e) => handleClose(e)}
                     />

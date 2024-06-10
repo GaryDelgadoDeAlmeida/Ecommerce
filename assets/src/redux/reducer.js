@@ -1,4 +1,4 @@
-import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT, deepCardsCopy, CART_RESET } from "./constants/cart";
+import { CART_ADD_PRODUCT, CART_UPDATE_PRODUCT, CART_REMOVE_PRODUCT, deepCartsCopy, CART_RESET } from "./constants/cart";
 import { USER_SIGN_IN_ACCOUNT, USER_LOGOUT_ACCOUNT, USER_EXPIRED_TOKEN } from "./constants/user";
 
 const initialState = {
@@ -16,37 +16,45 @@ const reducer = (state = copyInitialState, action) => {
 
     switch(action.type) {
         case CART_ADD_PRODUCT:
-            carts = deepCardsCopy(state)
-            let existingCarts = carts.filter((item) => item.product.id == action.payload.product.id)
-            console.error(existingCarts, action)
-            
-            if(existingCarts.length > 0) {
-            // if(carts.includes(state.product)) {
-                return {
-                    ...state,
-                    message: "Attention, vous ne pouvez pas ajouter deux fois le même produit"
-                }
-
-                // existingCarts = existingCarts[0]
-                existingCarts.quantity = action.payload.quantity
-                carts[cartIndex] = {...cart}
-            } else {
-                carts = carts.concat(action.payload)
-            }
+            carts = {...state.carts}
+            let existingCarts = carts[action.payload.product.id]
 
             return {
                 ...state,
-                carts: carts
+                carts: {
+                    ...carts,
+                    [action.payload.product.id]: {
+                        product: {...action.payload.product},
+                        quantity: Object.keys(existingCarts ?? []).length > 0 ? existingCarts.quantity + action.payload.quantity : action.payload.quantity
+                    }
+                }
             }
     
         case CART_UPDATE_PRODUCT:
-            carts = deepCardsCopy(state)
-            // carts
+            carts = {...state.carts}
+            carts[action.payload.productID] = {
+                [action.payload.productID]: {
+                    product: {...carts[action.payload.productID].product},
+                    quantity: action.payload.quantity
+                }
+            }
+
+            console.log(
+                action.payload,
+                carts[action.payload.productID]
+            )
+
+            return {
+                ...state,
+                carts: {
+                    ...carts
+                }
+            }
             break;
     
         case CART_REMOVE_PRODUCT:
-            carts = deepCardsCopy(state)
-            carts.filter((item) => item.product.id != action.payload)
+            carts = {...state.carts}
+            delete carts[action.payload.product.id]
             
             return {
                 ...state,

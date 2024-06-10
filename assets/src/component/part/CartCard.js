@@ -6,10 +6,10 @@ export default function CartCard({item}) {
 
     const dispatch = useDispatch();
 
-    const handleQuantity = (e) => {
+    const handleQuantity = (e, action) => {
         dispatch(cartUpdateProduct({
-            id: 1,
-            quantity: 1
+            productID: item.product.id,
+            quantity: action == "plus" ? item.quantity + 1 : item.quantity - 1
         }))
     }
 
@@ -28,9 +28,9 @@ export default function CartCard({item}) {
                 <span className={"name"}>{item.product.name}</span>
                 
                 <div className={"quantity"}>
-                    <button>&minus;</button>
+                    <button onClick={(e) => handleQuantity(e, "minus")}>&minus;</button>
                     <input type={"number"} value={item.quantity} min={1} onChange={(e) => handleQuantity(e)} />
-                    <button>&#43;</button>
+                    <button onClick={(e) => handleQuantity(e, "plus")}>&#43;</button>
                 </div>
                 
                 <span className={"price"}>{item.product.price * item.quantity} €</span>

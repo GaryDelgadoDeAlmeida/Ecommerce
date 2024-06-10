@@ -7,6 +7,7 @@ use App\Enum\ProductEnum;
 use App\Repository\ProductRepository;
 use App\Manager\CharacteristicManager;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductManager {
 
@@ -37,8 +38,21 @@ class ProductManager {
                 continue;
             }
 
+            // Fields that can't be empty
+            if(in_array($fieldName, [ProductEnum::PRODUCT_NAME]) && empty($fieldValue)) {
+                throw new \Exception(
+                    printf("The field %s can't be empty.", $fieldName)
+                );
+            }
+
             if($fieldName == ProductEnum::PRODUCT_IMAGE) {
-                // 
+                if(empty($fieldValue)) {
+                    continue;
+                }
+
+                if(!($fieldValue instanceof UploadedFile)) {
+                    throw new \Exception("The sended image must be an image");
+                }
             } elseif($fieldName == ProductEnum::PRODUCT_NAME) {
                 // 
             } elseif($fieldName == ProductEnum::PRODUCT_DESCRIPTION) {
@@ -59,7 +73,9 @@ class ProductManager {
                     continue;
                 }
             } elseif($fieldName == ProductEnum::PRODUCT_CHARACTERISTICS) {
-                // 
+                if(empty($fieldValue)) {
+                    continue;
+                }
             }
 
             $fields[$fieldName] = $fieldValue;
@@ -85,8 +101,7 @@ class ProductManager {
             }
     
             foreach($fields as $fieldName => $fieldValue) {
-                if($fieldName == ProductEnum::PRODUCT_IMAGE) $product->setImage($fieldValue);
-                elseif($fieldName == ProductEnum::PRODUCT_NAME) $product->setName($fieldValue);
+                if($fieldName == ProductEnum::PRODUCT_NAME) $product->setName($fieldValue);
                 elseif($fieldName == ProductEnum::PRODUCT_DESCRIPTION) $product->setDescription($fieldValue);
                 elseif($fieldName == ProductEnum::PRODUCT_PRICE) $product->setPrice($fieldValue);
                 elseif($fieldName == ProductEnum::PRODUCT_BRAND) $product->setBrand($fieldValue);

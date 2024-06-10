@@ -4,6 +4,7 @@ namespace App\Controller\API\Admin;
 
 use App\Entity\User;
 use App\Manager\CategoryManager;
+use App\Manager\SerializeManager;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,17 +19,20 @@ class CategoryController extends AbstractController
 {
     private User $user;
     private CategoryManager $categoryManager;
+    private SerializeManager $serializeManager;
     private ProductRepository $productRepository;
     private CategoryRepository $categoryRepository;
 
     function __construct(
         Security $security, 
         CategoryManager $categoryManager, 
+        SerializeManager $serializeManager,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository
     ) {
         $this->user = $security->getUser();
         $this->categoryManager = $categoryManager;
+        $this->serializeManager = $serializeManager;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
     }
@@ -75,7 +79,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->json([
-            "results" => $category
+            "results" => $this->serializeManager->serializeContent($category)
         ], Response::HTTP_OK);
     }
 

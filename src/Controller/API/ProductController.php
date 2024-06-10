@@ -33,7 +33,7 @@ class ProductController extends AbstractController
         $products = [];
         if($filters) {
             $maxOffset = ceil( $this->productRepository->counttProductsByParamaters($filters) / $limit );
-            $product = $this->productRepository->getProductsByParamaters($filters, $offset, $limit);
+            $product = $this->productRepository->getProductsByParameters($filters, $offset, $limit);
         } else {
             $maxOffset = ceil( $this->productRepository->countProducts() / $limit );
             $products = $this->productRepository->findBy(["isDeleted" => false], ["createdAt" => "DESC"], $limit, ($offset - 1) * $limit);

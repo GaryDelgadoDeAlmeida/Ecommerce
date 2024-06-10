@@ -20,8 +20,7 @@ export default function ProductCard({product}) {
         <div className={"product-card"}>
             <img 
                 className={"-product-img"} 
-                src={`${window.location.origin}/content/img/products/mineral.jpg`} 
-                // src={`${window.location.origin}/content/img/${product.image}`}
+                src={`${window.location.origin}${product.image}`}
                 alt={""} 
             />
 

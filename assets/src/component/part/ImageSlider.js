@@ -27,13 +27,10 @@ export default function ImageSlider({images = []}) {
         <div className={"carroussel"}>
             <div className={"-list"}>
                 {images.map((item, index) => (
-                    <img key={index} src={item} alt={""} onClick={(e) => handleSlide(e)} />
+                    <img key={index} src={`${window.location.origin}${item}`} alt={""} onClick={(e) => handleSlide(e)} />
                 ))}
             </div>
             <div className={"-current"}>
-                {/* <div className={"-image"}>
-                    <img src={currentImage} alt={""} />
-                </div> */}
                 <img src={currentImage} alt={""} onClick={(e) => handleExpandImage(e)} />
             </div>
             <div className={"-expand-image"} onClick={(e) => handleExpandImage(e)}>

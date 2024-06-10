@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Notification from "../part/Notification";
-import PrivateRessource from "../utils/PrivateRessource";
 import CharacteristicField from "./parts/CharacteristicField";
 import axios from "axios";
 import ImageField from "./parts/ImageField";
@@ -14,6 +13,7 @@ export default function ProductForm({product = null}) {
 
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
+        image: "",
         brand: product && product.brand ? product.brand.name : "",
         category: product && product.category ? product.category.name : "",
         name: product ? product.name : "",
@@ -33,7 +33,7 @@ export default function ProductForm({product = null}) {
     const handleChange = (e, fieldName) => {
         setCredentials({
             ...credentials,
-            [fieldName]: fieldName == "photo" ? e.target.files[0] : e.target.value
+            [fieldName]: e.target.value
         })
     }
 
@@ -48,7 +48,7 @@ export default function ProductForm({product = null}) {
         axios
             .post(url, credentials, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                     "Accept": "application/json+ld",
                     "Authorization": "Bearer " + jsonUser.token
                 }
@@ -56,7 +56,7 @@ export default function ProductForm({product = null}) {
             .then((response) => {
                 setFormResponse({classname: "success", message: "The product has been successfully added"})
             })
-            .error((error) => {
+            .catch((error) => {
                 let errorMessage = "An error has been encountered. Please, retry later"
                 if(error.response.data.message) {
                     errorMessage = error.response.data.message
@@ -76,7 +76,7 @@ export default function ProductForm({product = null}) {
             )}
 
             <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
-                <ImageField updateCredentials={updateCredentials} fieldName={"photo"} />
+                <ImageField updateCredentials={updateCredentials} fieldName={"image"} />
 
                 <div className={"form-field"}>
                     <label htmlFor={"product_name"}>Product name</label>
@@ -98,15 +98,17 @@ export default function ProductForm({product = null}) {
                     ></textarea>
                 </div>
 
-                <CategoryField 
-                    updateCredentials={updateCredentials}
-                    categoryCredential={credentials.category}
-                />
-                
-                <BrandField 
-                    updateCredentials={updateCredentials}
-                    brandCredential={credentials.brand}
-                />
+                <div className={"form-field-inline"}>
+                    <CategoryField 
+                        updateCredentials={updateCredentials}
+                        categoryCredential={credentials.category}
+                    />
+                    
+                    <BrandField 
+                        updateCredentials={updateCredentials}
+                        brandCredential={credentials.brand}
+                    />
+                </div>
                 
                 <div className={"form-field"}>
                     <label>Price</label>

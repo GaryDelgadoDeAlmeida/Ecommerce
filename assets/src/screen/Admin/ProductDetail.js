@@ -57,7 +57,7 @@ export default function ProductDefail() {
                     <div className={"page-product"}>
                         <div className={"product-header"}>
                             <div className={"-product-image"}>
-                                <ImageSlider images={[]} />
+                                <ImageSlider images={[item.image]} />
                             </div>
                             <div className={"-product-infos"}>
                                 <h1>{item.name}</h1>

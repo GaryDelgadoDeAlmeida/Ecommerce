@@ -9,14 +9,14 @@ export default function ImageField({updateCredentials, fieldName}) {
     }, [image])
 
     const handleChange = (e) => {
-        console.log(image, e.target.files)
         setPhoto(e.target.files[0] ?? null)
     }
 
     return (
         <div className={"form-field"}>
-            <label>Photo</label>
+            <label htmlFor={fieldName}>Photo</label>
             <input 
+                id={fieldName}
                 type={"file"} 
                 onChange={(e) => handleChange(e)} 
                 max={1} 

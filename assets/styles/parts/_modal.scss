@@ -21,20 +21,19 @@
         scrollbar-width: 0px;
         background-color: var(--c-white);
 
-        .-header, .-content {
-            padding: 25px;
-        }
-
         .-header {
+            padding: 10px 25px;
             border-bottom: .5px solid var(--c-black);
 
             img {
+                width: 35px;
+                height: 35px;
                 cursor: pointer;
             }
         }
 
         .-content {
-            // 
+            padding: 25px;
         }
     }
 }

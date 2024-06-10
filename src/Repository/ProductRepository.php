@@ -45,7 +45,7 @@ class ProductRepository extends ServiceEntityRepository
      * @param int offset
      * @param int limit
      */
-    public function getProductsByParamters(array $filters, int $offset, int $limit) {
+    public function getProductsByParameters(array $filters, int $offset, int $limit) {
         $qb = $this->createQueryBuilder("product");
 
         if(empty($filters["search"])) {}
@@ -69,7 +69,7 @@ class ProductRepository extends ServiceEntityRepository
         if(empty($filters["price"])) {}
 
         return $qb
-            ->orderBy("product.createdAt", "DESC", "product.name", "ASC")
+            ->orderBy("product.name", "ASC", "product.createdAt", "DESC")
             ->setFirstResult(($offset - 1) * $limit)
             ->setMaxResults($limit)
             ->getQuery()
