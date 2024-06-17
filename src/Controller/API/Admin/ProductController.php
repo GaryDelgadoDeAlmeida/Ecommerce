@@ -118,6 +118,7 @@ class ProductController extends AbstractController
             "quantity" => $request->request->get("quantity", null),
             "price" => $request->request->get("price", null),
             "characteristics" => $request->request->get("characteristics", null),
+            "previews" => $request->files->get("previews", null)
         ];
 
         $product = $this->productRepository->find($productID);
@@ -148,6 +149,16 @@ class ProductController extends AbstractController
                 $this->getParameter("products_img_dir")
             );
             $this->productRepository->save($product, true);
+
+            // TODO:: Add file previews into database
+            foreach($previews as $preview) {
+                (new \App\Entity\ProductImage())
+                    ->setProduct($product)
+                    ->setPath($preview->getPath())
+                    ->setIsLogo(false)
+                    ->setCreatedAt(new \DateTime())
+                ;
+            }
         } catch(\Exception $e) {
             return $this->json([
                 "message" => $e->getMessage()

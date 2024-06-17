@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Notification from "../part/Notification";
 import CharacteristicField from "./parts/CharacteristicField";
-import axios from "axios";
 import ImageField from "./parts/ImageField";
 import BrandField from "./parts/BrandField";
 import CategoryField from "./parts/CategoryField";
+import axios from "axios";
+import MultipleFileField from "./parts/MultipleFileField";
 
 export default function ProductForm({product = null}) {
 
@@ -20,7 +21,8 @@ export default function ProductForm({product = null}) {
         description: product ? product.description : "",
         quantity: 0,
         price: product ? product.price : 0,
-        characteristics: product ? product.characteristics : {}
+        characteristics: product ? product.characteristics : {},
+        previews: []
     })
 
     const updateCredentials = (fieldName, fieldValue) => {
@@ -124,6 +126,11 @@ export default function ProductForm({product = null}) {
                 <CharacteristicField 
                     updateCredentials={updateCredentials}
                     characteristicsCredential={credentials.characteristics}
+                />
+
+                <MultipleFileField
+                    fieldName={"previews"}
+                    updateCredentials={updateCredentials}
                 />
                 
                 <div className={"form-button"}>

@@ -56,39 +56,41 @@ export default function CharacteristicField({updateCredentials, characteristicsC
         <div className={"form-field"}>
             <label>Characteristics</label>
             
-            <div className={"p-b-15 d-col"}>
-                {Object.values(characteristics).map((item, index) => (
-                    <div id={characteristicsKeys[index]} key={index} className={"card"}>
-                        <div className={"-content"}>
-                            <div className={"form-field"}>
-                                <input 
-                                    type={"text"} 
-                                    value={item.label} 
-                                    placeholder={"Label"}
-                                    onChange={(e) => handleChange(e, "label")}
-                                    required
-                                />
+            {Object.keys(characteristics).length > 0 && (
+                <div className={"p-b-15 d-col"}>
+                    {Object.values(characteristics).map((item, index) => (
+                        <div id={characteristicsKeys[index]} key={index} className={"card"}>
+                            <div className={"-content"}>
+                                <div className={"form-field"}>
+                                    <input 
+                                        type={"text"} 
+                                        value={item.label} 
+                                        placeholder={"Label"}
+                                        onChange={(e) => handleChange(e, "label")}
+                                        required
+                                    />
+                                </div>
+                                
+                                <div className={"form-field"}>
+                                    <textarea 
+                                        value={item.description} 
+                                        placeholder={"Description"}
+                                        onChange={(e) => handleChange(e, "description")}
+                                        required
+                                    ></textarea>
+                                </div>
                             </div>
-                            
-                            <div className={"form-field"}>
-                                <textarea 
-                                    value={item.description} 
-                                    placeholder={"Description"}
-                                    onChange={(e) => handleChange(e, "description")}
-                                    required
-                                ></textarea>
+                            <div className={"-footer txt-right"}>
+                                <button 
+                                    type={"button"} 
+                                    className={"btn btn-red"}
+                                    onClick={(e) => handleRemove(e)}
+                                >&minus;</button>
                             </div>
                         </div>
-                        <div className={"-footer txt-right"}>
-                            <button 
-                                type={"button"} 
-                                className={"btn btn-red"}
-                                onClick={(e) => handleRemove(e)}
-                            >&minus;</button>
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
             
             <button type={"button"} className={"btn btn-blue"} onClick={() => handleNewRow()}>+</button>
         </div>

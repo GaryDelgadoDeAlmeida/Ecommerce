@@ -18,12 +18,10 @@ export default function ProductCard({product}) {
 
     return (
         <div className={"product-card"}>
-            <img 
-                className={"-product-img"} 
-                src={`${window.location.origin}${product.image}`}
-                alt={""} 
-            />
-
+            <div className={"-product-img"}>
+                {/* <img src={`${window.location.origin}${product.image}`} alt={""} /> */}
+                <img src={`${window.location.origin}/content/img/products/product2.jpg`} alt={""} />
+            </div>
             <div className={"-content"}>
                 <h3 className={"-title"}>{product.name}</h3>
                 <span className={"-category"}>{product.category ? product.category.name : ""}</span>

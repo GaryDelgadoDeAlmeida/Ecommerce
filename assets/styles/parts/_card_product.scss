@@ -1,9 +1,21 @@
 .product-card {
+    height: fit-content;
     background-color: var(--c-white);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.17);
 
     .-product-img {
         width: 100%;
+        text-align: center;
+
+        img {
+            height: 100%;
+            padding: 15px;
+            max-height: 150px;
+            
+            @include tablet {
+                max-height: 250px;
+            }
+        }
     }
 
     .-content {

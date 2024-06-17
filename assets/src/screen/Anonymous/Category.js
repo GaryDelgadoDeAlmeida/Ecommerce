@@ -41,7 +41,7 @@ export default function Category() {
                     {!loading ? (
                         Object.keys(items.results ?? []).length > 0 ? (
                             <>
-                                <div className={"d-grid -col-5"}>
+                                <div className={"d-grid -col-4"}>
                                     {Object.values(items.results).map((item, index) => (
                                         <CategoryCard 
                                             key={index} 

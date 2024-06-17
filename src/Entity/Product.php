@@ -22,9 +22,6 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $image = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -58,12 +55,16 @@ class Product
     #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
     private ?Stock $stock = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductImage::class)]
+    private Collection $productImages;
+
     public function __construct()
     {
         $this->productPriceHistories = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
         $this->characteristics = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->productImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,18 +92,6 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): static
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -317,6 +306,36 @@ class Product
         }
 
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductImage>
+     */
+    public function getProductImages(): Collection
+    {
+        return $this->productImages;
+    }
+
+    public function addProductImage(ProductImage $productImage): static
+    {
+        if (!$this->productImages->contains($productImage)) {
+            $this->productImages->add($productImage);
+            $productImage->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductImage(ProductImage $productImage): static
+    {
+        if ($this->productImages->removeElement($productImage)) {
+            // set the owning side to null (unless already changed)
+            if ($productImage->getProduct() === $this) {
+                $productImage->setProduct(null);
+            }
+        }
 
         return $this;
     }

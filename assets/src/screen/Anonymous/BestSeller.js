@@ -36,7 +36,7 @@ export default function BestSeller() {
                     {!loading && Object.keys(items.results ?? []).length > 0 ? (
                         <>
                             {/* Best seller */}
-                            <div className={"d-grid -col-5 -m-col-2"}>
+                            <div className={"d-grid -col-4 -m-col-2"}>
                                 {Object.values(items.results).map((item, index) => (
                                     <ProductCard key={index} product={item} />
                                 ))}

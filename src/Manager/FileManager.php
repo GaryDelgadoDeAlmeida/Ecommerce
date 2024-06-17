@@ -27,4 +27,19 @@ class FileManager {
         $product->setImage($filepath);
         return $product;
     }
+
+    /**
+     * @param UploadedFile[] files
+     * @param string destination_path
+     */
+    public function saveProductPreviews(array $files, string $destination_path) {
+        foreach($files as $file) {
+            (new \App\Entity\ProductImage())
+                ->setProduct($product)
+                ->setPath($file->getPath())
+                ->setIsLogo(false)
+                ->setCreatedAt(new \DateTime())
+            ;
+        }
+    }
 }
