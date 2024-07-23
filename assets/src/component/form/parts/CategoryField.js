@@ -31,8 +31,8 @@ export default function CategoryField({updateCredentials, categoryCredential = "
         <div className={"form-field"}>
             <label>Category</label>
             
-            <select onChange={(e) => handleChange(e)}>
-                <option value={category}>Select a category</option>
+            <select value={category} onChange={(e) => handleChange(e)}>
+                <option value={""}>Select a category</option>
                 {Object.values(items.results ?? []).map((item, index) => (
                     <option key={index} value={item.name}>{item.name}</option>
                 ))}

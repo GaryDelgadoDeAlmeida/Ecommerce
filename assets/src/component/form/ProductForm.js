@@ -14,7 +14,7 @@ export default function ProductForm({product = null}) {
 
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
-        image: "",
+        image: product ? product.productLogo : null,
         brand: product && product.brand ? product.brand.name : "",
         category: product && product.category ? product.category.name : "",
         name: product ? product.name : "",
@@ -22,7 +22,7 @@ export default function ProductForm({product = null}) {
         quantity: 0,
         price: product ? product.price : 0,
         characteristics: product ? product.characteristics : {},
-        previews: []
+        previews: product ? {...product.productImages} : []
     })
 
     const updateCredentials = (fieldName, fieldValue) => {
@@ -60,6 +60,7 @@ export default function ProductForm({product = null}) {
             })
             .catch((error) => {
                 let errorMessage = "An error has been encountered. Please, retry later"
+                console.log(error)
                 if(error.response.data.message) {
                     errorMessage = error.response.data.message
                 } else if(error.response.data.detail) {
@@ -78,7 +79,12 @@ export default function ProductForm({product = null}) {
             )}
 
             <form className={"form"} onSubmit={(e) => handleSubmit(e)}>
-                <ImageField updateCredentials={updateCredentials} fieldName={"image"} />
+                <ImageField 
+                    updateCredentials={updateCredentials} 
+                    fieldName={"image"} 
+                    uploadedImgCredentials={credentials.image}
+                    required={false} 
+                />
 
                 <div className={"form-field"}>
                     <label htmlFor={"product_name"}>Product name</label>
@@ -131,6 +137,7 @@ export default function ProductForm({product = null}) {
                 <MultipleFileField
                     fieldName={"previews"}
                     updateCredentials={updateCredentials}
+                    uploadedFilesCredentials={credentials.previews}
                 />
                 
                 <div className={"form-button"}>

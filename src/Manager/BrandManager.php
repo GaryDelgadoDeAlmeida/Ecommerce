@@ -38,6 +38,8 @@ class BrandManager {
             } elseif($fieldName == BrandEnum::BRAND_COUNTRY) {
                 // 
             }
+
+            $fields[$fieldName] = $fieldValue;
         }
         
         return $fields;

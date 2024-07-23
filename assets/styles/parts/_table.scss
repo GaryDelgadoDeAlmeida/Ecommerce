@@ -68,6 +68,7 @@
 
                 @include tablet {
                     margin: 5px 0;
+                    min-height: 10px;
                     text-align: left;
                     padding-left: 40%;
                     position: relative;
@@ -111,6 +112,10 @@
 
                     &.-nbr-orders::before {
                         content: "Nombre de commandes";
+                    }
+
+                    &.-nbr-products::before {
+                        content: "Nombre de produits";
                     }
 
                     // Product

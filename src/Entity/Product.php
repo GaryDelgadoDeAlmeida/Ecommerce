@@ -318,6 +318,19 @@ class Product
         return $this->productImages;
     }
 
+    public function getProductLogo() {
+        $file_logo = null;
+
+        foreach($this->productImages as $file) {
+            if($file->isIsLogo()) {
+                $file_logo = $file;
+                break;
+            }
+        }
+
+        return $file_logo;
+    }
+
     public function addProductImage(ProductImage $productImage): static
     {
         if (!$this->productImages->contains($productImage)) {

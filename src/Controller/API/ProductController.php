@@ -66,7 +66,9 @@ class ProductController extends AbstractController
     public function get_product(int $product_id) : JsonResponse {
         $product = $this->productRepository->find($product_id);
         if(!$product) {
-            return $this->json("Product not found", Response::HTTP_NOT_FOUND);
+            return $this->json([
+                "message" => "Product not found"
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return $this->json(

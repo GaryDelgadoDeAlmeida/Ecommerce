@@ -31,7 +31,7 @@ export default function BrandField({updateCredentials, brandCredential = ""}) {
         <div className={"form-field"}>
             <label>Brand</label>
             
-            <select onChange={(e) => handleChange(e)}>
+            <select value={brand} onChange={(e) => handleChange(e)}>
                 <option value={""}>Select a brand</option>
                 {Object.values(items.results ?? []).map((item, index) => (
                     <option key={index} value={item.name}>{item.name}</option>

@@ -10,6 +10,7 @@ abstract class ProductEnum {
     public const PRODUCT_DESCRIPTION = "description";
     public const PRODUCT_PRICE = "price";
     public const PRODUCT_CHARACTERISTICS = "characteristics";
+    public const PRODUCT_PREVIEWS = "previews";
 
     public array $typeName = [
         self::PRODUCT_IMAGE => "Image",
@@ -18,7 +19,8 @@ abstract class ProductEnum {
         self::PRODUCT_PRICE => "Price",
         self::PRODUCT_CATEGORY => "Category",
         self::PRODUCT_BRAND => "Brand",
-        self::PRODUCT_CHARACTERISTICS => "Characteristics"
+        self::PRODUCT_CHARACTERISTICS => "Characteristics",
+        self::PRODUCT_PREVIEWS => "Previews"
     ];
 
     public static function getAvalaibleChoices() {
@@ -29,7 +31,8 @@ abstract class ProductEnum {
             self::PRODUCT_PRICE,
             self::PRODUCT_CATEGORY,
             self::PRODUCT_BRAND,
-            self::PRODUCT_CHARACTERISTICS
+            self::PRODUCT_CHARACTERISTICS,
+            self::PRODUCT_PREVIEWS
         ];
     }
 

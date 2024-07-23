@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export default function SearchProductForm() {
+export default function SearchProductForm({updateProducts}) {
 
     const [search, setSearch] = useState("")
 

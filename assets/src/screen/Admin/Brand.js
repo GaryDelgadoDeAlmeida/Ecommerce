@@ -14,6 +14,8 @@ export default function Brand() {
         load()
     }, [offset])
 
+    console.log(items)
+
     return (
         <HeaderAdmin>
             <Link className={"btn btn-blue"} to={"/admin/brand/create"}>Add a brand</Link>
@@ -24,7 +26,6 @@ export default function Brand() {
                         <tr>
                             <th>Brand</th>
                             <th>Address</th>
-                            <th>Category</th>
                             <th>Nbr products</th>
                             <th></th>
                         </tr>
@@ -34,12 +35,11 @@ export default function Brand() {
                             Object.values(items.results).map((item, index) => (
                                 <tr key={index}>
                                     <td className={"-brand"}>{item.name}</td>
-                                    <td className={"-address"}></td>
-                                    <td className={"-category"}></td>
+                                    <td className={"-address"}>{item.address}, {item.zipCode} {item.city}, {item.country}</td>
                                     <td className={"-nbr-products"}>{item.products.length}</td>
                                     <td className={"-actions"}>
                                         <Link className={"btn btn-blue -inline-flex"} to={`/admin/brand/${item.id}`}>
-                                            <img src={`${window.location.origin}/content/svg/eye.svg`} alt={""} />
+                                            <img src={`${window.location.origin}/content/svg/eye-white.svg`} alt={""} />
                                         </Link>
                                     </td>
                                 </tr>

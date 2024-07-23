@@ -39,7 +39,9 @@ export default function BrandDetail() {
                 <span>Retour</span>
             </Link>
 
-            <div className={"m-t-25"}></div>
+            <div className={"m-t-25"}>
+                <h1>Detail about the brand</h1>
+            </div>
         </HeaderAdmin>
     )
 }

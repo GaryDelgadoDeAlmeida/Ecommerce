@@ -4,7 +4,7 @@ namespace App\Controller\API\Admin;
 
 use App\Entity\User;
 use App\Enum\ProductEnum;
-use App\Manager\FileManager;
+use App\Manager\ProductImageManager;
 use App\Manager\ProductManager;
 use App\Manager\SerializeManager;
 use App\Repository\BrandRepository;
@@ -21,26 +21,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     private User $user;
-    private FileManager $fileManager;
     private ProductManager $productManager;
     private SerializeManager $serializeManager;
+    private ProductImageManager $productImageManager;
     private BrandRepository $brandRepository;
     private ProductRepository $productRepository;
     private CategoryRepository $categoryRepository;
 
     public function __construct(
         Security $security,
-        FileManager $fileManager,
         ProductManager $productManager,
         SerializeManager $serializeManager,
+        ProductImageManager $productImageManager,
         BrandRepository $brandRepository,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository
     ) {
         $this->user = $security->getUser();
-        $this->fileManager = $fileManager;
         $this->productManager = $productManager;
         $this->serializeManager = $serializeManager;
+        $this->productImageManager = $productImageManager;
         $this->brandRepository = $brandRepository;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -112,12 +112,12 @@ class ProductController extends AbstractController
         $jsonContent = [
             "brand" => $request->request->get("brand", null),
             "category" => $request->request->get("category", null),
-            "image" => $request->files->get("image", null),
             "name" => $request->request->get("name", null),
             "description" => $request->request->get("description", null),
             "quantity" => $request->request->get("quantity", null),
             "price" => $request->request->get("price", null),
             "characteristics" => $request->request->get("characteristics", null),
+            "image" => $request->files->get("image", null),
             "previews" => $request->files->get("previews", null)
         ];
 
@@ -143,21 +143,22 @@ class ProductController extends AbstractController
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            $product = $this->fileManager->saveProductImage(
-                $fields[ProductEnum::PRODUCT_IMAGE], 
+            // Save change on the product into database
+            $this->productRepository->save($product, true);
+
+            // Save product image & previews
+            $response = $this->productImageManager->saveProductPreviews(
+                array_merge(
+                    [isset($fields[ProductEnum::PRODUCT_IMAGE]) ? $fields[ProductEnum::PRODUCT_IMAGE] : null], 
+                    $fields[ProductEnum::PRODUCT_PREVIEWS] ?? []
+                ), 
                 $product, 
                 $this->getParameter("products_img_dir")
             );
-            $this->productRepository->save($product, true);
-
-            // TODO:: Add file previews into database
-            foreach($previews as $preview) {
-                (new \App\Entity\ProductImage())
-                    ->setProduct($product)
-                    ->setPath($preview->getPath())
-                    ->setIsLogo(false)
-                    ->setCreatedAt(new \DateTime())
-                ;
+            if(is_string($response)) {
+                return $this->json([
+                    "message" => $response
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         } catch(\Exception $e) {
             return $this->json([

@@ -3,6 +3,7 @@
 namespace App\Controller\API\Admin;
 
 use App\Entity\User;
+use App\Manager\BrandManager;
 use App\Manager\SerializeManager;
 use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
@@ -17,17 +18,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BrandController extends AbstractController
 {
     private User $user;
+    private BrandManager $brandManager;
     private SerializeManager $serializeManager;
     private BrandRepository $brandRepository;
     private ProductRepository $productRepository;
 
     function __construct(
         Security $security, 
+        BrandManager $brandManager,
         SerializeManager $serializeManager, 
         BrandRepository $brandRepository,
         ProductRepository $productRepository
     ) {
         $this->user = $security->getUser();
+        $this->brandManager = $brandManager;
         $this->serializeManager = $serializeManager;
         $this->brandRepository = $brandRepository;
         $this->productRepository = $productRepository;

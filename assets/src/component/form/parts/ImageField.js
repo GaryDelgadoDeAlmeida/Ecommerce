@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function ImageField({updateCredentials, fieldName}) {
+export default function ImageField({updateCredentials, fieldName, required = true, uploadedImgCredentials = null}) {
 
     const [image, setPhoto] = useState(null)
 
@@ -20,7 +20,7 @@ export default function ImageField({updateCredentials, fieldName}) {
                 type={"file"} 
                 onChange={(e) => handleChange(e)} 
                 max={1} 
-                required 
+                required={required}
             />
         </div>
     )

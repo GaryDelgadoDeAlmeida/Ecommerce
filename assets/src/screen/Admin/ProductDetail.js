@@ -54,25 +54,32 @@ export default function ProductDefail() {
             
             {!loading && Object.keys(item).length > 0 && (
                 <>
-                    <div className={"page-product"}>
-                        <div className={"product-header"}>
-                            <div className={"-product-image"}>
-                                <ImageSlider images={[item.image]} />
-                            </div>
-                            <div className={"-product-infos"}>
-                                <h1>{item.name}</h1>
-                                <p>Price : {item.price} €</p>
-                                <p>{item.description}</p>
-                                <button 
-                                    type={"button"} 
-                                    className={"btn btn-blue -inline-flex"}
-                                    onClick={(e) => handleShowModal(e)}
-                                >
-                                    <img src={`${window.location.origin}/content/svg/pencil-white.svg`} alt={""} />
-                                </button>
+                    {item.image.length > 0 && (
+                        <div className={"page-product"}>
+                            <div className={"product-header"}>
+                                <div className={"-product-image"}>
+                                    {item.image.length > 0 && (
+                                        <ImageSlider images={[item.image]} />
+                                    )}
+                                </div>
+                                <div className={"-product-infos"}>
+                                    <h1>{item.name}</h1>
+                                    <p>Price : {item.price} €</p>
+                                    <p>{item.description}</p>
+                                    {/* <button 
+                                        type={"button"} 
+                                        className={"btn btn-blue -inline-flex"}
+                                        onClick={(e) => handleShowModal(e)}
+                                    >
+                                        <img src={`${window.location.origin}/content/svg/pencil-white.svg`} alt={""} />
+                                    </button> */}
+                                    <Link to={"/admin/product/" + item.id + "/edit"} className={"btn btn-blue -inline-flex"}>
+                                        <img src={`${window.location.origin}/content/svg/pencil-white.svg`} alt={""} />
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     <div className={"page-product"}>
                         <table className={"table"}>
