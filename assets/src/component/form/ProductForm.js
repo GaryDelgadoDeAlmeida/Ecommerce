@@ -14,7 +14,6 @@ export default function ProductForm({product = null}) {
 
     const [formResponse, setFormResponse] = useState({})
     const [credentials, setCredentials] = useState({
-        image: product ? product.productLogo : null,
         brand: product && product.brand ? product.brand.name : "",
         category: product && product.category ? product.category.name : "",
         name: product ? product.name : "",
@@ -22,6 +21,9 @@ export default function ProductForm({product = null}) {
         quantity: 0,
         price: product ? product.price : 0,
         characteristics: product ? product.characteristics : {},
+    })
+    const [credentialAttachments, setCredentialAttachment] = useState({
+        image: product ? product.productLogo : null,
         previews: product ? {...product.productImages} : []
     })
 
@@ -57,10 +59,33 @@ export default function ProductForm({product = null}) {
             })
             .then((response) => {
                 setFormResponse({classname: "success", message: "The product has been successfully added"})
+
+                if(response.status == 204) {
+                    axios
+                        .post(`${window.location.origin}/api/admin/product/${response.data.id}/photo/update`, credentialAttachments, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                                "Authorization": "Bearer " + jsonUser.token
+                            }
+                        })
+                        .then((response) => {
+                            setFormResponse({classname: "success", message: ""})
+                        })
+                        .catch((error) => {
+                            let errorMessage = "An error has been encountered. Please, retry later"
+                            if(error.response.data.message) {
+                                errorMessage = error.response.data.message
+                            } else if(error.response.data.detail) {
+                                errorMessage = error.response.data.detail
+                            }
+
+                            setFormResponse({classname: "danger", message: errorMessage})
+                        })
+                    ;
+                }
             })
             .catch((error) => {
                 let errorMessage = "An error has been encountered. Please, retry later"
-                console.log(error)
                 if(error.response.data.message) {
                     errorMessage = error.response.data.message
                 } else if(error.response.data.detail) {

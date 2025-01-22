@@ -54,7 +54,7 @@ export default function ProductDefail() {
             
             {!loading && Object.keys(item).length > 0 && (
                 <>
-                    {item.image.length > 0 && (
+                    {item.image && (
                         <div className={"page-product"}>
                             <div className={"product-header"}>
                                 <div className={"-product-image"}>
